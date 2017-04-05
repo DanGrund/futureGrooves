@@ -1,8 +1,14 @@
+const { resolve } = require('path')
+
 module.exports = {
-  entry: './lib',
+  entry: [
+    './lib',
+    'webpack/hot/dev-server',
+    'webpack-hot-middleware/client',
+  ],
   output: {
-    path: './build',
-    filename: 'bundle.js'
+    path: resolve(__dirname, 'build'),
+    filename: 'bundle.js',
   },
   module: {
     loaders: [
