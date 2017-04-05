@@ -1,26 +1,24 @@
 {
-  "name": "Bracket-Builder",
-  "version": "1.0.0",
-  "description": "",
+  "name": "futureGrooves",
+  "version": "0.0.1",
+  "description": "it's so groovy",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --config ./webpack.config.js",
     "start": "webpack-dev-server --inline --content-base --history-api-fallback",
     "test": "mocha -w --compilers js:babel-core/register --require helpers/test-setup.js app/**/*.test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mlimberg/Bracket-Builder"
+    "url": "git+https://github.com/DanGrund/futureGrooves"
   },
-  "keywords": [
-    "Bracket",
-    "Builder"
-  ],
-  "author": "Mike Limberg",
-  "license": "ISC",
+  "keywords": [],
+  "author": "Dylan Avery, Dan Grund, Mike Limberg, Eric Sayler",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mlimberg/Bracket-Builder/issues"
+    "url": "https://github.com/dangrund/futureGrooves/issues"
   },
-  "homepage": "https://github.com/mlimberg/Bracket-Builder#readme",
+  "homepage": "",
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
@@ -33,6 +31,7 @@
     "jsdom": "^9.9.1",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
+    "nodemon": "^1.11.0",
     "react-addons-test-utils": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
@@ -44,7 +43,12 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "fs": "0.0.1-security",
     "knex": "^0.12.9",
+    "path": "^0.12.7",
     "pg": "^6.1.5",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
