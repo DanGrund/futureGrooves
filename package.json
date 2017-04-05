@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
-    "start": "webpack-dev-server --inline --content-base --history-api-fallback",
-    "test": "mocha -w --compilers js:babel-core/register --require helpers/test-setup.js app/**/*.test.js"
+    "dev": "webpack-dev-server --inline --content-base --history-api-fallback",
+    "test": "mocha -w --compilers js:babel-core/register --require helpers/test-setup.js app/**/*.test.js",
+    "start": "npm build && nodemon server.js --ignore /lib"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "express": "^4.15.2",
     "fs": "0.0.1-security",
     "knex": "^0.12.9",
+    "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "pg": "^6.1.5",
     "react": "^15.4.2",
