@@ -13,7 +13,7 @@ export class App extends Component {
   render() {
     return(
       <div>
-        <div>Hi der hey der ho der World!</div>
+        <div>Hi der World!</div>
         <button onClick={this.props.increase.bind(this)}>Increase</button>
         <button onClick={this.props.decrease.bind(this)}>
           Decrease

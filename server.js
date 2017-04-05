@@ -7,8 +7,31 @@ const path = require('path');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
+const historyFallback = require('connect-history-api-fallback');
+
 
 app.use(cors());
+
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const config = require('./webpack.config.js');
+  const compiler = webpack(config);
+
+  app.use(webpackHotMiddleware(compiler));
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: '/',
+    filename: config.output.filename,
+    hot: true,
+    stats: {
+      colors: true,
+    },
+  }));
+  app.use(historyFallback());
+}
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
