@@ -41,7 +41,9 @@
     "sinon": "^1.17.7",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
@@ -53,6 +55,10 @@
     "path": "^0.12.7",
     "pg": "^6.1.5",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   }
 }

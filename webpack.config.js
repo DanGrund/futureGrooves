@@ -1,14 +1,17 @@
 const { resolve } = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   entry: [
-    './lib',
-    'webpack/hot/dev-server',
+    'react-hot-loader/patch',
     'webpack-hot-middleware/client',
+    './lib/index.js',
   ],
+  context: __dirname,
   output: {
     path: resolve(__dirname, 'build'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -21,10 +24,7 @@ module.exports = {
       { test: /\.scss$/, loader: 'style!css!sass' },
     ]
   },
-  devServer: {
-    contentBase: './build',
-    inline: true
-  },
+ 
   resolve: {
     extensions: ['', '.js', '.json', '.jsx', '.css', '.scss']
   },
@@ -33,4 +33,10 @@ module.exports = {
     'react/lib/ExecutionEnvironment': true,
     'react/lib/ReactContext': true,
   },
+  plugins: [
+    // OccurenceOrderPlugin is needed for webpack 1.x only
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+]
 }
