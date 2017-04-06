@@ -1,19 +1,19 @@
-import React from 'react';
-import './header-style';
-
-import Button from '../Button/';
-
-const logStuff = () => {
-  console.log('clicked!');
-}
+import React from 'react'
+import './header-style'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
     <div className="Header">
-      <h1>FutureGrooves</h1>
-      <Button handleClick={() => logStuff()} />
+      <Link to='/'><h1>FutureGrooves</h1></Link>
+      <nav>
+        <Link to='/'>Home</Link>
+        <Link to='/newsound'>About</Link>
+        <Link to='/sequencer'></Link>
+        <Link to='/profile'>Profile</Link>
+      </nav>
     </div>
-  );
+  )
 }
 
 export default Header;
