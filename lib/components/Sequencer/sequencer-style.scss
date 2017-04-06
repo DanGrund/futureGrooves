@@ -1,0 +1,48 @@
+$main-color: #fff;
+
+
+#composition-maker {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  #play-controls {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid pink;
+    margin: 5px;
+  }
+  #drum-racks {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid blue;
+    margin: 5px;
+  }
+}
+
+.single-rack {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+  margin: 5px;
+  .sample-name {
+    border: 1px solid teal;
+    margin: 5px;
+  }
+}
+
+.single-step {
+  border: 1px solid yellowgreen;
+  margin: 5px;
+  .step-on {
+    border: 1px solid magenta;
+    margin: 5px;
+  }
+  .step-off {
+    border: 1px solid purple;
+    margin: 5px;
+  }
+}
+
+.current {
+  background-color: red;
+}
