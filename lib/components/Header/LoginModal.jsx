@@ -1,25 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Login = () => {
-  return (
-    <div className='login-modal'>
-      <label>
-        Email
-        <input className='input email'
-          placeholder='Email'
-          type='text'/>
-      </label>
+export default class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
 
-      <label>
-        Password
-        <input className='input password'
-          placeholder='Password'
-          type='password'/>
-      </label>
+  attemptLogin(event) {
+    const email = this.refs.email
+    const password = this.refs.password
+    const creds = { email: email.value.trim(), password: password.value.trim() }
+    console.log(creds);
+    // this.props.onLoginClick(creds)
+  }
 
-      <button className='btn submit'>Submit</button>
-    </div>
-  )
+  render() {
+    return (
+      <div className='login-modal'>
+        <label>
+          Email
+          <input className='input email'
+                 placeholder='Email'
+                 type='text'
+                 ref='email'
+                 onChange={(e) => this.setState({ email: e.target.value })}/>
+        </label>
+
+        <label>
+          Password
+          <input className='input password'
+                 placeholder='Password'
+                 type='password'
+                 ref='password'
+                 onChange={(e) => this.setState({ password: e.target.value })} />
+        </label>
+
+        <button className='btn submit'
+                onClick={this.attemptLogin.bind(this)}>
+          Submit
+        </button>
+      </div>
+        )
+  }
 }
-
-export default Login;
