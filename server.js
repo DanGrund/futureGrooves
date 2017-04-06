@@ -21,15 +21,16 @@ if (process.env.NODE_ENV !== 'production') {
 
   app.use(webpackHotMiddleware(compiler));
   app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
     publicPath: '/',
-    filename: config.output.filename,
-    hot: true,
     stats: {
       colors: true,
     },
+    hot: true,
+    inline: true,
+    noInfo: true,
+
   }));
-  app.use(historyFallback());
+  // app.use(historyFallback());
 }
 
 app.use(function(req, res, next) {
@@ -46,8 +47,8 @@ app.listen(app.get('port'), () => {
 })
 
 //display something at the root
-app.get('/', function (request, response) {
-  res.sendFile(path.join(__dirname, "build", "index.html"))
+app.get('*', function (request, response) {
+  response.sendFile(path.join(__dirname, "build", "index.html"))
 })
 
 
