@@ -8,8 +8,8 @@ const Header = () => {
       <Link to='/'><h1>FutureGrooves</h1></Link>
       <nav>
         <Link to='/'>Home</Link>
-        <Link to='/newsound'>About</Link>
-        <Link to='/sequencer'></Link>
+        <Link to='/newsound'>New Sound</Link>
+        <Link to='/sequencer'>Sequencer</Link>
         <Link to='/profile'>Profile</Link>
       </nav>
     </div>
