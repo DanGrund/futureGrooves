@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import UserProfile from '../UserProfile'
+import UserContainer from '../../containers/UserContainer'
 import Sequencer from '../Sequencer'
 import SoundMaker from '../SoundMaker'
 import Header from '../Header'
@@ -15,7 +16,7 @@ export class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/newsound' component={SoundMaker} />
           <Route path='/sequencer' component={Sequencer} />
-          <Route path='/profile' component={UserProfile} />
+          <Route path='/profile' component={UserContainer} />
         </Switch>
       </div>
     )

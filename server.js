@@ -47,9 +47,6 @@ app.listen(app.get('port'), () => {
 })
 
 //display something at the root
-app.get('*', function (request, response) {
-  response.sendFile(path.join(__dirname, "build", "index.html"))
-})
 
 
 //get all users
@@ -103,6 +100,7 @@ app.get('/api/v1/users/:id', (request, response) => {
 
 //post a user
 app.post('/api/v1/users', (request, response) => {
+  console.log(request.body)
   const { name, email } = request.body
   const newUser = { name, email, deleted:false }
 
@@ -441,6 +439,10 @@ app.delete('/api/v1/sounds/:id', (request, response) => {
         });
     }
   })
+})
+
+app.get('*', function (request, response) {
+  response.sendFile(path.join(__dirname, "build", "index.html"))
 })
 
 module.exports = app;
