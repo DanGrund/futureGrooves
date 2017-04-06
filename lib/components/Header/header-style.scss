@@ -1,1 +1,30 @@
 $main-color: #fff;
+
+.header {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-modal {
+  width: 30vw;
+  height: 8vh;
+  z-index: 10;
+  position: absolute;
+  right: 0;
+  background: #FFF;
+  box-shadow: 2px 2px 3px -1px rgba(120, 120, 120, .9);
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-modal .input {
+  height: 25px;
+}
+
+.sign-in-container {
+  display: inline-block;
+  position: relative;
+}
