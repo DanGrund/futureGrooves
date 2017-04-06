@@ -1,8 +1,21 @@
 $main-color: #fff;
+$header-background: #D8D8D8;
 
 .header {
   display: flex;
   flex-direction: row;
+  width: 100vw;
+  height: 10vh;
+  min-height: 80px;
+  background-color: $header-background;
+  align-items: center;
+}
+
+.header nav {
+  margin-left: 50%;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .login-modal {
