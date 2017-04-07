@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { increase, decrease, store } from '../actions'
 import App from '../components/App'
 
 const mapDispatchToProps = (dispatch) => {

@@ -18,11 +18,11 @@ export class SoundMaker extends Component {
         detune: 0,
         panning: 0,
         env: {
-          attack: 0.5,
-          decay: 0.5,
-          sustain: 1.0,
-          hold: 2,
-          release: 1,
+          attack: 1,
+          decay: 1,
+          sustain: 0,
+          hold: 0,
+          release: 0,
         },
         filter: {
           type: 'allpass',
@@ -36,35 +36,52 @@ export class SoundMaker extends Component {
         // reverb: {
         //   wet: 1,
         // },
-        delay: {
-          delayTime: .5,
-          wet: .25,
-          feedback: .25,
-        },
-        vibrato: {
-          shape: 'sine',
-          magnitude: 3,
-          speed: 4,
-          attack: 0,
-        }
+        // delay: {
+        //   delayTime: .5,
+        //   wet: .25,
+        //   feedback: .25,
+        // },
+        // vibrato: {
+        //   shape: 'sine',
+        //   magnitude: 3,
+        //   speed: 4,
+        //   attack: 0,
+        // },
+        // tremolo: {
+        //   shape: 'sine',
+        //   magnitude: 3,
+        //   speed: 4,
+        //   attack: 0,
+        // },
+        // tuna: {
+        //   Chorus: {
+        //     intensity: 0.3,
+        //     rate: 4,
+        //     stereoPhase: 0,
+        //     bypass: 0,
+        //   },
+        // },
       },
-      oscillator: null,
+      oscillators: [],
     }
   }
 
-  playSound() {
-    console.log(this.state.spec)
-    this.setState({ oscillator: new Wad(this.state.spec) }, () => this.state.oscillator.play({ label: 'note' }))
+  previewSound() {
+    this.props.previewSound(this.state.spec)
   }
-  
+
   stopSound() {
-    this.state.oscillator.stop('note')
+    this.props.stopSound()
+  }
+
+  stopAllSounds() {
+    this.props.stopAllSounds()
   }
 
   updateVolume(e) {
     this.setState(update(this.state, { spec: { volume: { $set: e.target.value } } }))
   }
-  
+
   updatePitch(e) {
     const newPitch = e.target.value.toUpperCase()
     this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }))
@@ -93,43 +110,43 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { env: { decay: { $set: newDecay } } } }))
   }
 
-   updateSustain(e) {
-     const newSustain = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { env: { sustain: { $set: newSustain } } } }))
+  updateSustain(e) {
+    const newSustain = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { env: { sustain: { $set: newSustain } } } }))
   }
 
-   updateHold(e) {
-     const newHold = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { env: { hold: { $set: newHold } } } }))
+  updateHold(e) {
+    const newHold = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { env: { hold: { $set: newHold } } } }))
   }
 
   updateRelease(e) {
-     const newRelease = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { env: { release: { $set: newRelease } } } }))
+    const newRelease = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { env: { release: { $set: newRelease } } } }))
   }
 
   updateFilterType(e) {
     this.setState(update(this.state, { spec: { filter: { type: { $set: e.target.value } } } }))
   }
 
-   updateFilterFrequency(e) {
-     const newFilterFrequency = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { filter: { frequency: { $set: newFilterFrequency } } } }))
+  updateFilterFrequency(e) {
+    const newFilterFrequency = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { filter: { frequency: { $set: newFilterFrequency } } } }))
   }
 
-   updateFilterQFactor(e) {
-     const newFilterQFactor = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { filter: { q: { $set: newFilterQFactor } } } }))
+  updateFilterQFactor(e) {
+    const newFilterQFactor = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { filter: { q: { $set: newFilterQFactor } } } }))
   }
 
   updateFilterEnvelopeFrequency(e) {
-     const newFilterEnvelopeFrequency = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { filter: { env: { frequency: { $set: newFilterEnvelopeFrequency } } } } }))
+    const newFilterEnvelopeFrequency = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { filter: { env: { frequency: { $set: newFilterEnvelopeFrequency } } } } }))
   }
 
   updateFilterEnvelopeAttack(e) {
-     const newFilterEnvelopeAttack = Math.fround(e.target.value)
-     this.setState(update(this.state, { spec: { filter: { env: { attack: { $set: newFilterEnvelopeAttack } } } } }))
+    const newFilterEnvelopeAttack = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { filter: { env: { attack: { $set: newFilterEnvelopeAttack } } } } }))
   }
 
   updateReverbWet(e) {
@@ -142,8 +159,9 @@ export class SoundMaker extends Component {
     return (
       <div>
         <div className='btn-group'>
-          <Button text='Play' handleClick={() => this.playSound()} />
+          <Button text='Play' handleClick={() => this.previewSound()} />
           <Button text='Stop' handleClick={() => this.stopSound()} />
+          <Button text='Stop All' handleClick={() => this.stopAllSounds()} />
         </div>
 
         <div className='basics'>
@@ -190,56 +208,56 @@ export class SoundMaker extends Component {
         <h4> ADSR </h4>
         <Slider
           label='Attack'
-          className='adsr-env-attack' 
+          className='adsr-env-attack'
           id='slider-adsr-env-attack'
           min={0}
           max={1}
           step={0.01}
-          handleChange={(e) => this.updateAttack(e)} 
+          handleChange={(e) => this.updateAttack(e)}
           value={this.state.spec.env.attack}
         />
         <Slider
           label='Decay'
-          className='adsr-env-decay' 
+          className='adsr-env-decay'
           id='slider-adsr-env-decay'
           min={0}
           max={5}
           step={0.01}
-          handleChange={(e) => this.updateDecay(e)} 
+          handleChange={(e) => this.updateDecay(e)}
           value={this.state.spec.env.decay}
         />
         <Slider
           label='Sustain'
-          className='adsr-env-sustain' 
+          className='adsr-env-sustain'
           id='slider-adsr-env-sustain'
           min={0}
           max={1}
           step={0.01}
-          handleChange={(e) => this.updateSustain(e)} 
+          handleChange={(e) => this.updateSustain(e)}
           value={this.state.spec.env.sustain}
         />
         <Slider
           label='Hold'
-          className='adsr-env-hold' 
+          className='adsr-env-hold'
           id='slider-adsr-env-hold'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateHold(e)} 
+          handleChange={(e) => this.updateHold(e)}
           value={this.state.spec.env.hold}
         />
          <Slider
           label='Release'
-          className='adsr-env-release' 
+          className='adsr-env-release'
           id='slider-adsr-env-release'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateRelease(e)} 
+          handleChange={(e) => this.updateRelease(e)}
           value={this.state.spec.env.release}
         />
       </div>
-      
+
       <div className='filter'>
         <h4> Filter </h4>
         <Select
@@ -249,17 +267,17 @@ export class SoundMaker extends Component {
         />
         <Slider
           label='Frequency'
-          className='filter-freq' 
+          className='filter-freq'
           id='slider-filter-freq'
           min={0}
           max={5000}
           step={1}
-          handleChange={(e) => this.updateFilterFrequency(e)} 
+          handleChange={(e) => this.updateFilterFrequency(e)}
           value={this.state.spec.filter.frequency}
         />
          <Slider
           label='Q-factor'
-          className='filter-q-factor' 
+          className='filter-q-factor'
           id='slider-filter-q-factor'
           min={0}
           max={10}
@@ -274,7 +292,7 @@ export class SoundMaker extends Component {
           min={0}
           max={5000}
           step={1}
-          handleChange={(e) => this.updateFilterEnvelopeFrequency(e)} 
+          handleChange={(e) => this.updateFilterEnvelopeFrequency(e)}
           value={this.state.spec.filter.env.frequency}
         />
          <Slider
@@ -284,7 +302,7 @@ export class SoundMaker extends Component {
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateFilterEnvelopeAttack(e)} 
+          handleChange={(e) => this.updateFilterEnvelopeAttack(e)}
           value={this.state.spec.filter.env.attack}
         />
       </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import UserProfile from '../UserProfile'
 import Sequencer from '../Sequencer'
-import SoundMaker from '../SoundMaker'
+import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import Header from '../Header'
 import Home from '../Home'
 
@@ -13,7 +13,7 @@ export class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/newsound' component={SoundMaker} />
+          <Route path='/newsound' component={SoundMakerContainer} />
           <Route path='/sequencer' component={Sequencer} />
           <Route path='/profile' component={UserProfile} />
         </Switch>
