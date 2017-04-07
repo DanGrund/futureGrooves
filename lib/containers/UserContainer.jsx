@@ -8,10 +8,9 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.UserReducer.user)
   return {
     user: state.UserReducer.user,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)
+export default connect(mapStateToProps, mapDispatchToProps)

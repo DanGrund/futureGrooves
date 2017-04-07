@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import UserContainer from '../../containers/UserContainer'
+
 var sampleAudio = "https://www.random.org/audio-noise/?channels=2&volume=100&rate=16000&size=8&date=2017-04-06&format=wav&deliver=browser"
 
 export class UserProfile extends Component {
@@ -49,4 +51,4 @@ export class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+export default UserContainer(UserProfile);
