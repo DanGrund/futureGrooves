@@ -5,3 +5,26 @@ $variable-test: white;
 body {
   background-color: $variable-test;
 }
+
+#user-sounds {
+  color: #C80404;
+  background: #d8d8d8;
+  display: inline-block;
+  width: 45%;
+  padding: 20px;
+}
+
+#user-stream-audio {
+  display: inline-block;
+  width: 45%;
+}
+
+#user-stream {
+  color: #C80404;
+  background: white;
+}
+
+#user-stream h2, h3 {
+  display: inline-block;
+  margin: 10px;
+}
