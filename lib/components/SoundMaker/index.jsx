@@ -53,10 +53,9 @@ export class SoundMaker extends Component {
   }
 
   playSound() {
-    console.log(this.state.spec)
     this.setState({ oscillator: new Wad(this.state.spec) }, () => this.state.oscillator.play({ label: 'note' }))
   }
-  
+
   stopSound() {
     this.state.oscillator.stop('note')
   }
@@ -64,7 +63,7 @@ export class SoundMaker extends Component {
   updateVolume(e) {
     this.setState(update(this.state, { spec: { volume: { $set: e.target.value } } }))
   }
-  
+
   updatePitch(e) {
     const newPitch = e.target.value.toUpperCase()
     this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }))
@@ -190,101 +189,101 @@ export class SoundMaker extends Component {
         <h4> ADSR </h4>
         <Slider
           label='Attack'
-          className='adsr-env-attack' 
+          className='adsr-env-attack'
           id='slider-adsr-env-attack'
           min={0}
           max={1}
           step={0.01}
-          handleChange={(e) => this.updateAttack(e)} 
+          handleChange={(e) => this.updateAttack(e)}
           value={this.state.spec.env.attack}
         />
         <Slider
           label='Decay'
-          className='adsr-env-decay' 
+          className='adsr-env-decay'
           id='slider-adsr-env-decay'
           min={0}
           max={5}
           step={0.01}
-          handleChange={(e) => this.updateDecay(e)} 
+          handleChange={(e) => this.updateDecay(e)}
           value={this.state.spec.env.decay}
         />
         <Slider
           label='Sustain'
-          className='adsr-env-sustain' 
+          className='adsr-env-sustain'
           id='slider-adsr-env-sustain'
           min={0}
           max={1}
           step={0.01}
-          handleChange={(e) => this.updateSustain(e)} 
+          handleChange={(e) => this.updateSustain(e)}
           value={this.state.spec.env.sustain}
         />
         <Slider
           label='Hold'
-          className='adsr-env-hold' 
+          className='adsr-env-hold'
           id='slider-adsr-env-hold'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateHold(e)} 
+          handleChange={(e) => this.updateHold(e)}
           value={this.state.spec.env.hold}
         />
          <Slider
           label='Release'
-          className='adsr-env-release' 
+          className='adsr-env-release'
           id='slider-adsr-env-release'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateRelease(e)} 
+          handleChange={(e) => this.updateRelease(e)}
           value={this.state.spec.env.release}
         />
       </div>
-      
+
       <div className='filter'>
         <h4> Filter </h4>
         <Select
           name='filter-type'
-          options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']} 
+          options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']}
           updateSelection={e => this.updateFilterType(e)}
         />
         <Slider
           label='Frequency'
-          className='filter-freq' 
+          className='filter-freq'
           id='slider-filter-freq'
           min={0}
           max={5000}
           step={1}
-          handleChange={(e) => this.updateFilterFrequency(e)} 
+          handleChange={(e) => this.updateFilterFrequency(e)}
           value={this.state.spec.filter.frequency}
         />
          <Slider
           label='Q-factor'
-          className='filter-q-factor' 
+          className='filter-q-factor'
           id='slider-filter-q-factor'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateFilterQFactor(e)} 
+          handleChange={(e) => this.updateFilterQFactor(e)}
           value={this.state.spec.filter.q}
         />
          <Slider
           label='Filter Envelope Frequency'
-          className='filter-env-frequency' 
+          className='filter-env-frequency'
           id='slider-filter-env-frequency'
           min={0}
           max={5000}
           step={1}
-          handleChange={(e) => this.updateFilterEnvelopeFrequency(e)} 
+          handleChange={(e) => this.updateFilterEnvelopeFrequency(e)}
           value={this.state.spec.filter.env.frequency}
         />
          <Slider
           label='Filter Envelope Attack'
-          className='filter-env-attack' 
+          className='filter-env-attack'
           id='slider-filter-env-attack'
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateFilterEnvelopeAttack(e)} 
+          handleChange={(e) => this.updateFilterEnvelopeAttack(e)}
           value={this.state.spec.filter.env.attack}
         />
       </div>

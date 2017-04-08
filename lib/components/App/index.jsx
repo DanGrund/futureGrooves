@@ -16,7 +16,7 @@ export class App extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/newsound' component={SoundMaker} />
           <Route path='/sequencer' component={Sequencer} />
-          <Route path='/profile' component={UserContainer} />
+          <Route path='/profile' component={UserProfile} />
         </Switch>
       </div>
     )
