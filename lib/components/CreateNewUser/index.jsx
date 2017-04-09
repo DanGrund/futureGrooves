@@ -21,6 +21,9 @@ export class CreateNewUser extends Component {
 
 
   render() {
+    const { username, email, password } = this.state
+
+
     return (
       <div className='new-user-form-container'>
         <h1>New User!</h1>
@@ -35,6 +38,7 @@ export class CreateNewUser extends Component {
                  className='new-user-input'
                  onChange={(e) => this.setState({ password: e.target.value})}/>
           <button className='new-user-submit'
+                  disabled={!username || !email || !password}
                   onClick={this.submitNewUser.bind(this)}>
             Submit
           </button>

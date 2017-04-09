@@ -28,7 +28,6 @@ if (process.env.NODE_ENV !== 'production') {
     hot: true,
     inline: true,
     noInfo: true,
-
   }));
   // app.use(historyFallback());
 }
