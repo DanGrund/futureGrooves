@@ -35,7 +35,6 @@ export class SoundMaker extends Component {
         },
         // reverb: {
         //   wet: 1,
-        //   impulse: '../../assets/audio/reverbs/Block Inside.wav'
         // },
         delay: {
           delayTime: .5,
