@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import UserProfile from '../UserProfile'
+import UserContainer from '../../containers/UserContainer'
 import Sequencer from '../Sequencer'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import Header from '../Header'

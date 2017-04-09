@@ -35,6 +35,7 @@ export class SoundMaker extends Component {
         },
         // reverb: {
         //   wet: 1,
+        //   impulse: '../../assets/audio/reverbs/Block Inside.wav'
         // },
         // delay: {
         //   delayTime: .5,
@@ -262,7 +263,7 @@ export class SoundMaker extends Component {
         <h4> Filter </h4>
         <Select
           name='filter-type'
-          options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']} 
+          options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']}
           updateSelection={e => this.updateFilterType(e)}
         />
         <Slider
@@ -282,12 +283,12 @@ export class SoundMaker extends Component {
           min={0}
           max={10}
           step={0.01}
-          handleChange={(e) => this.updateFilterQFactor(e)} 
+          handleChange={(e) => this.updateFilterQFactor(e)}
           value={this.state.spec.filter.q}
         />
          <Slider
           label='Filter Envelope Frequency'
-          className='filter-env-frequency' 
+          className='filter-env-frequency'
           id='slider-filter-env-frequency'
           min={0}
           max={5000}
@@ -297,7 +298,7 @@ export class SoundMaker extends Component {
         />
          <Slider
           label='Filter Envelope Attack'
-          className='filter-env-attack' 
+          className='filter-env-attack'
           id='slider-filter-env-attack'
           min={0}
           max={10}

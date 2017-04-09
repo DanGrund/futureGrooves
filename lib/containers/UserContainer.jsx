@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchUser } from '../actions'
-import App from '../components/App'
+import UserProfile from '../components/UserProfile'
 
 const mapDispatchToProps = {
   fetchUser,
@@ -9,8 +9,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   return {
-    count: state.handleCount
+    user: state.UserReducer.user,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)
