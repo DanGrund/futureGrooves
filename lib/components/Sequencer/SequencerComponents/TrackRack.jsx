@@ -11,6 +11,9 @@ const TrackRack = (props) => {
           key={i}
           index={i}
           step={step}
+          name={props.name}
+          currentStep={props.currentStep}
+          toggleStep={props.toggleStep}
         />
       )}
     </div>

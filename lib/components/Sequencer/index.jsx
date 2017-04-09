@@ -56,13 +56,18 @@ export class Sequencer extends Component {
           wad.play()
         }
       })
-
       if (this.state.currentStep < 15) {
         this.setState({currentStep: this.state.currentStep + 1})
       } else {
         this.setState({currentStep: 0})
       }
     }
+  }
+
+  toggleStep(key, index) {
+    let newRack = this.state.trackRacks
+    newRack[key].steps[index] = !newRack[key].steps[index]
+    this.setState({ trackRacks: newRack })
   }
 
   render() {
@@ -81,6 +86,7 @@ export class Sequencer extends Component {
                        name={trackRack}
                        steps={this.state.trackRacks[trackRack].steps}
                        currentStep={this.state.currentStep}
+                       toggleStep={this.toggleStep.bind(this)}
             />
           )}
         </div>
