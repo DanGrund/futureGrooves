@@ -7,6 +7,7 @@ module.exports = {
     'webpack-hot-middleware/client',
     './lib/index.js',
   ],
+  devtool: 'inline-source-map',
   context: __dirname,
   output: {
     path: resolve(__dirname, 'build'),
