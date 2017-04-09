@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   module: {
     loaders: [
@@ -23,9 +23,9 @@ module.exports = {
       },
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.scss$/, loader: 'style!css!sass' },
-    ]
+    ],
   },
- 
+
   resolve: {
     extensions: ['', '.js', '.json', '.jsx', '.css', '.scss']
   },
