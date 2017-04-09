@@ -3,7 +3,9 @@ import { Link } from 'react-router'
 import Select from './Select'
 import Slider from './Slider'
 import Button from '../Button'
-import Wad from 'web-audio-daw'
+// import Wad from 'web-audio-daw'
+// import Tuna from 'tunajs'
+// window.Tuna = Tuna
 
 import update from 'immutability-helper'
 
@@ -34,33 +36,33 @@ export class SoundMaker extends Component {
           },
         },
         // reverb: {
-        //   wet: 1,
+        //   wet: 0,
         // },
-        // delay: {
-        //   delayTime: .5,
-        //   wet: .25,
-        //   feedback: .25,
-        // },
-        // vibrato: {
-        //   shape: 'sine',
-        //   magnitude: 3,
-        //   speed: 4,
-        //   attack: 0,
-        // },
-        // tremolo: {
-        //   shape: 'sine',
-        //   magnitude: 3,
-        //   speed: 4,
-        //   attack: 0,
-        // },
-        // tuna: {
-        //   Chorus: {
-        //     intensity: 0.3,
-        //     rate: 4,
-        //     stereoPhase: 0,
-        //     bypass: 0,
-        //   },
-        // },
+        delay: {
+          delayTime: 0.5,
+          wet: 0.25,
+          feedback: 0.25,
+        },
+        vibrato: {
+          shape: 'sine',
+          magnitude: 3,
+          speed: 4,
+          attack: 0,
+        },
+        tremolo: {
+          shape: 'sine',
+          magnitude: 3,
+          speed: 4,
+          attack: 0,
+        },
+        tuna: {
+          Chorus: {
+            intensity: 0.3,
+            rate: 4,
+            stereoPhase: 0,
+            bypass: 0,
+          },
+        },
       },
       oscillators: [],
     }
@@ -154,6 +156,59 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
   }
 
+  updateDelayTime(e) {
+    const newDelayTime = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { delay: { delayTime: { $set: newDelayTime } } } }))
+  }
+
+  updateDelayWet(e) {
+    const newDelayWet = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { delay: { wet: { $set: newDelayWet } } } }))
+  }
+
+  updateDelayFeedback(e) {
+    const newDelayFeedback = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { delay: { feedback: { $set: newDelayFeedback } } } }))
+  }
+
+
+  updateVibratoShape(e) {
+    this.setState(update(this.state, { spec: { vibrato: { shape: { $set: e.target.value } } } }))
+  }
+
+  updateTemoloShape(e) {
+    this.setState(update(this.state, { spec: { tremolo: { shape: { $set: e.target.value } } } }))
+  }
+
+  updateVibratoMagnitude(e) {
+    const newVibratoMagnitude = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { vibrato: { magnitude: { $set: newVibratoMagnitude } } } }))
+  }
+
+  updateTremoloMagnitude(e) {
+    const newTemoloMagnitude = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { tremolo: { magnitude: { $set: newTemoloMagnitude } } } }))
+  }
+
+  updateVibratoSpeed(e) {
+    const newVibratoSpeed = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { vibrato: { speed: { $set: newVibratoSpeed } } } }))
+  }
+
+  updateTremoloSpeed(e) {
+    const newTremoloSpeed = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { tremolo: { speed: { $set: newTremoloSpeed } } } }))
+  }
+
+  updateVibratoAttack(e) {
+    const newVibratoAttack = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { vibrato: { attack: { $set: newVibratoAttack } } } }))
+  }
+
+  updateTremoloAttack(e) {
+    const newTremoloAttack = Math.fround(e.target.value)
+    this.setState(update(this.state, { spec: { tremolo: { attack: { $set: newTremoloAttack } } } }))
+  }
 
   render() {
     return (
@@ -166,12 +221,14 @@ export class SoundMaker extends Component {
 
         <div className='basics'>
           <Select
+            name='source-shape'
+            className='select source-shape'
             options={['sine', 'sawtooth', 'square', 'triangle']}
             updateSelection={e => this.updateSource(e)}
           />
           <Slider
             label='Volume'
-            className='slider'
+            className='slider volume'
             id='slider-volume'
             min={0}
             max={1}
@@ -181,7 +238,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Detune'
-            className='detune'
+            className='slider detune'
             id='slider-detune'
             min={0}
             max={1200}
@@ -191,7 +248,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Panning'
-            className='panning'
+            className='slider panning'
             id='slider-panning'
             min={-1}
             max={1}
@@ -208,7 +265,7 @@ export class SoundMaker extends Component {
         <h4> ADSR </h4>
         <Slider
           label='Attack'
-          className='adsr-env-attack'
+          className='slider adsr-env-attack'
           id='slider-adsr-env-attack'
           min={0}
           max={1}
@@ -218,7 +275,7 @@ export class SoundMaker extends Component {
         />
         <Slider
           label='Decay'
-          className='adsr-env-decay'
+          className='slider adsr-env-decay'
           id='slider-adsr-env-decay'
           min={0}
           max={5}
@@ -228,7 +285,7 @@ export class SoundMaker extends Component {
         />
         <Slider
           label='Sustain'
-          className='adsr-env-sustain'
+          className='slider adsr-env-sustain'
           id='slider-adsr-env-sustain'
           min={0}
           max={1}
@@ -238,7 +295,7 @@ export class SoundMaker extends Component {
         />
         <Slider
           label='Hold'
-          className='adsr-env-hold'
+          className='slider slider adsr-env-hold'
           id='slider-adsr-env-hold'
           min={0}
           max={10}
@@ -248,7 +305,7 @@ export class SoundMaker extends Component {
         />
          <Slider
           label='Release'
-          className='adsr-env-release'
+          className='slider adsr-env-release'
           id='slider-adsr-env-release'
           min={0}
           max={10}
@@ -262,12 +319,13 @@ export class SoundMaker extends Component {
         <h4> Filter </h4>
         <Select
           name='filter-type'
+          className='select filter-type'
           options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']}
           updateSelection={e => this.updateFilterType(e)}
         />
         <Slider
           label='Frequency'
-          className='filter-freq'
+          className='slider filter-freq'
           id='slider-filter-freq'
           min={0}
           max={5000}
@@ -277,7 +335,7 @@ export class SoundMaker extends Component {
         />
          <Slider
           label='Q-factor'
-          className='filter-q-factor'
+          className='slider filter-q-factor'
           id='slider-filter-q-factor'
           min={0}
           max={10}
@@ -287,7 +345,7 @@ export class SoundMaker extends Component {
         />
          <Slider
           label='Filter Envelope Frequency'
-          className='filter-env-frequency'
+          className='slider filter-env-frequency'
           id='slider-filter-env-frequency'
           min={0}
           max={5000}
@@ -297,7 +355,7 @@ export class SoundMaker extends Component {
         />
          <Slider
           label='Filter Envelope Attack'
-          className='filter-env-attack'
+          className='slider filter-env-attack'
           id='slider-filter-env-attack'
           min={0}
           max={10}
@@ -306,6 +364,124 @@ export class SoundMaker extends Component {
           value={this.state.spec.filter.env.attack}
         />
       </div>
+       <div className='reverb'>
+        <h4> Reverb </h4>
+      </div>
+
+       <div className='lfo-container'>
+          <h2> LFOs </h2>
+         <div className='delay'>
+           <h4> Delay </h4>
+           <Slider
+             label='Delay Time'
+             className='slider delay-time'
+             id='slider-delay-time'
+             min={0}
+             max={2}
+             step={0.01}
+             handleChange={(e) => this.updateDelayTime(e)}
+             value={this.state.spec.delay.delayTime}
+           />
+           <Slider
+             label='Delay Wet'
+             className='slider delay-wet'
+             id='slider-delay-wet'
+             min={0}
+             max={1}
+             step={0.01}
+             handleChange={(e) => this.updateDelayWet(e)}
+             value={this.state.spec.delay.wet}
+           />
+           <Slider
+             label='Delay Feedback'
+             className='slider delay-feedback'
+             id='slider-delay-feedback'
+             min={0}
+             max={1}
+             step={0.01}
+             handleChange={(e) => this.updateDelayFeedback(e)}
+             value={this.state.spec.delay.feedback}
+           />
+         </div>
+         <div className='vibrato'>
+           <h4> Vibrato </h4>
+           <Select
+             name='vibrato-shape'
+             className='select vibrato-shape'
+             options={['sine', 'sawtooth', 'square', 'triangle']}
+             updateSelection={e => this.updateVibratoShape(e)}
+           />
+           <Slider
+             label='Vibrato Magnitude'
+             className='slider vibrato-magnitude'
+             id='slider-vibrato-magnitude'
+             min={1}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateVibratoMagnitude(e)}
+             value={this.state.spec.vibrato.magnitude}
+           />
+           <Slider
+             label='Vibrato Speed'
+             className='slider vibrato-speed'
+             id='slider-vibrato-speed'
+             min={0}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateVibratoSpeed(e)}
+             value={this.state.spec.vibrato.speed}
+           />
+           <Slider
+             label='Vibrato Attack'
+             className='slider vibrato-attack'
+             id='slider-vibrato-attack'
+             min={0}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateVibratoAttack(e)}
+             value={this.state.spec.vibrato.attack}
+           />
+         </div>
+         <div className='tremolo'>
+           <h4> Tremolo </h4>
+           <Select
+             name='tremolo-shape'
+             className='select tremolo-shape'
+             options={['sine', 'sawtooth', 'square', 'triangle']}
+             updateSelection={e => this.updateTremoloShape(e)}
+           />
+           <Slider
+             label='Tremolo Magnitude'
+             className='slider tremolo-magnitude'
+             id='slider-tremolo-magnitude'
+             min={1}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateTremoloMagnitude(e)}
+             value={this.state.spec.tremolo.magnitude}
+           />
+           <Slider
+             label='Tremolo Speed'
+             className='slider tremolo-speed'
+             id='slider-tremolo-speed'
+             min={0}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateTremoloSpeed(e)}
+             value={this.state.spec.tremolo.speed}
+           />
+           <Slider
+             label='Tremolo Attack'
+             className='slider tremolo-attack'
+             id='slider-tremolo-attack'
+             min={0}
+             max={10}
+             step={0.1}
+             handleChange={(e) => this.updateTremoloAttack(e)}
+             value={this.state.spec.tremolo.attack}
+           />
+         </div>
+       </div>
       </div>
     )
   }

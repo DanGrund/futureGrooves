@@ -66,6 +66,7 @@
     "react-router-redux": "^5.0.0-alpha.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "tunajs": "^1.0.0",
     "web-audio-daw": "^2.3.1"
   }
 }

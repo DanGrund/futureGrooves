@@ -5,7 +5,7 @@ export default class Slider extends React.Component {
     return (
       <div>
         <span> {this.props.label} </span>
-        <input 
+        <input
           value={this.props.value}
           id={this.props.id}
           type='range'
