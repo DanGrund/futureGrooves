@@ -61,31 +61,62 @@ app.get('/api/v1/users', (request, response) => {
 })
 
 //get one user by ID
-app.get('/api/v1/users/:id', (request, response) => {
-  const { id } = request.params;
-  const userFiles = [];
+// app.get('/api/v1/users/:id', (request, response) => {
+//   const { id } = request.params;
+//   const userFiles = [];
+//
+//   database('users').where('id', id).select()
+//   .then((user) => {
+//     userFiles.push({user})
+//   })
+//   .then(()=>{
+//     database('compositions').where('user_id', id).select()
+//     .then((compositions) => {
+//       userFiles.push({compositions})
+//     })
+//   })
+//   .then(()=>{
+//     database('sounds').where('user_id', id).select()
+//     .then((sounds) => {
+//       userFiles.push({sounds})
+//       if(userFiles[0].user.length<1){
+//         response.status(404).send({
+//           error: 'ID did not match any existing users'
+//         })
+//       } else {
+//         response.status(202).json(userFiles)
+//       }
+//     })
+//   })
+//   .catch((error)=>{
+//     response.status(404).send({
+//       error
+//     })
+//   })
+// })
 
-  database('users').where('id', id).select()
+app.get('/api/v1/users/:email', (request, response) => {
+  const { email } = request.params;
+
+  database('users').where('email', email).select()
   .then((user) => {
-    userFiles.push({user})
+    return user[0]
   })
-  .then(()=>{
-    database('compositions').where('user_id', id).select()
-    .then((compositions) => {
-      userFiles.push({compositions})
+  .then(user => {
+    database('compositions').where('user_id', user.id).select()
+    .then(compositions => {
+      user.compositions = compositions
+      return user
     })
-  })
-  .then(()=>{
-    database('sounds').where('user_id', id).select()
-    .then((sounds) => {
-      userFiles.push({sounds})
-      if(userFiles[0].user.length<1){
-        response.status(404).send({
-          error: 'ID did not match any existing users'
-        })
-      } else {
-        response.status(202).json(userFiles)
-      }
+    .then(user => {
+      database('sounds').where('user_id', user.id).select()
+      .then(sounds => {
+        user.sounds = sounds
+        return user
+      })
+      .then(user => {
+        response.status(200).send(user)
+      })
     })
   })
   .catch((error)=>{
@@ -93,7 +124,6 @@ app.get('/api/v1/users/:id', (request, response) => {
       error
     })
   })
-
 })
 
 //post a user

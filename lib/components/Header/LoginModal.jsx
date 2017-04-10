@@ -10,9 +10,10 @@ export default class Login extends Component {
   }
 
   attemptLogin(event) {
-    const email = this.refs.email
-    const password = this.refs.password
+    const email = this.refs.email.value
+    const password = this.refs.password.value
     const creds = { email, password };
+    this.props.attemptLogin(creds)
   }
 
   render() {

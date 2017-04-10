@@ -18,11 +18,15 @@ class Header extends Component {
     this.props.logoutUser()
   }
 
+  loginUser(creds) {
+    this.props.attemptLogin(creds)
+  }
+
   render() {
     const { user } = this.state
 
     const displayLoginModal = () => {
-      if(this.state.loginModal) { return <LoginModal /> }
+      if(this.state.loginModal) { return <LoginModal attemptLogin={this.loginUser.bind(this)}/> }
     }
 
     const noUserOptions = () => {
