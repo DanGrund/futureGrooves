@@ -119,6 +119,15 @@ export class Sequencer extends Component {
     this.setState({ trackRacks: newRack})
   }
 
+  soloTrack(key) {
+    let newRack = this.state.trackRacks;
+    Object.keys(newRack).forEach((rack)=> {
+      if (rack !== key) {
+        newRack[rack].mute = !newRack[rack].mute
+      }
+    })
+  }
+
   render() {
     return(
       <div id='composition-maker'>
@@ -142,6 +151,7 @@ export class Sequencer extends Component {
                        changeFilter={this.changeFilter.bind(this)}
                        changePitch={this.changePitch.bind(this)}
                        muteTrack={this.muteTrack.bind(this)}
+                       soloTrack={this.soloTrack.bind(this)}
             />
           )}
         </div>

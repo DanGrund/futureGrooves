@@ -7,6 +7,7 @@ const TrackRack = (props) => {
     <div className="single-rack">
       <div className='extended-controls'>
         <button onClick={()=>props.muteTrack(props.name)}>mute</button>
+        <button onClick={()=>props.soloTrack(props.name)}>solo</button>
         <span>volume</span>
         <Slider
           value={props.volume}
