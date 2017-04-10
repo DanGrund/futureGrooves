@@ -25,6 +25,7 @@ export default class Login extends Component {
                  placeholder='Email'
                  type='text'
                  ref='email'
+                 autoFocus
                  onChange={(e) => this.setState({ email: e.target.value })}/>
         </label>
 

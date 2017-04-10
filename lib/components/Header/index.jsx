@@ -16,7 +16,7 @@ export default class Header extends Component {
 
   render() {
     const displayLoginModal = () => {
-      if(this.state.loginModal) { return( <LoginModal />) }
+      if(this.state.loginModal) { return <LoginModal /> }
     }
 
     return (
@@ -27,9 +27,10 @@ export default class Header extends Component {
           <Link to='/newsound'>New Sound</Link>
           <Link to='/sequencer'>Sequencer</Link>
           <Link to='/profile'>Profile</Link>
-          <Link to='/sign-up'>Sign Up</Link>
+
 
           <div className='sign-in-container'>
+            <Link to='/sign-up'>Sign Up</Link>
             <button onClick={() => this.setState({ loginModal: !this.state.loginModal })}>Sign-in</button>
             {displayLoginModal()}
           </div>
