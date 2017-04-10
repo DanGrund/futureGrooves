@@ -1,0 +1,26 @@
+$error-background: #D77E7E;
+
+.new-user-form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-user-input {
+  height: 25px;
+  width: 200px;
+  margin: 10px;
+}
+
+.error-msg {
+  width: 100%;
+  background-color: $error-background;
+  color: white;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

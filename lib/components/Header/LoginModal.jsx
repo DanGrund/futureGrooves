@@ -12,8 +12,7 @@ export default class Login extends Component {
   attemptLogin(event) {
     const email = this.refs.email
     const password = this.refs.password
-    const creds = { email: email.value.trim(), password: password.value.trim() }
-    // this.props.onLoginClick(creds)
+    const creds = { email, password };
   }
 
   render() {
@@ -25,6 +24,7 @@ export default class Login extends Component {
                  placeholder='Email'
                  type='text'
                  ref='email'
+                 autoFocus
                  onChange={(e) => this.setState({ email: e.target.value })}/>
         </label>
 

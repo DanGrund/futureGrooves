@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Logout = () => {
+const Logout = ({ username, handleLogout }) => {
   return (
-    <div className='login-modal'>
-      <h1>Login!</h1>
+    <div className='logout'>
+      <h1>Welcome, {username}</h1>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }

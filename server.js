@@ -9,7 +9,6 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const historyFallback = require('connect-history-api-fallback');
 
-
 app.use(cors());
 
 if (process.env.NODE_ENV !== 'production') {
@@ -28,7 +27,6 @@ if (process.env.NODE_ENV !== 'production') {
     hot: true,
     inline: true,
     noInfo: true,
-
   }));
   // app.use(historyFallback());
 }
@@ -100,24 +98,24 @@ app.get('/api/v1/users/:id', (request, response) => {
 
 //post a user
 app.post('/api/v1/users', (request, response) => {
-  console.log(request.body)
-  const { name, email } = request.body
-  const newUser = { name, email, deleted:false }
+  const { username, email, password } = request.body
+  const newUser = { username, email, password, deleted:false }
 
-  if(!name || !email){
+  if(!username || !email){
     response.status(422).json("[]")
   } else {
     database('users').insert(newUser)
     .then(()=> {
-      database('users').select()
-        .then((users) => {
-          response.status(200).json(users);
+      database('users').where('username', username).select()
+        .then((user) => {
+          response.status(200).json(user);
         })
         .catch((error) => {
           response.status(422)
           console.error(error)
         });
     })
+    .catch(err => response.send({ error: err.constraint }))
   }
 })
 
