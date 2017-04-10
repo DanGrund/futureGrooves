@@ -16,7 +16,7 @@ export class CreateNewUser extends Component {
     const { username, email, password } = this.state
     if(username && email && password) {
       this.props.postNewUser({ username, email, password })
-      this.setState({ username: '', email: '', password: ''})
+      this.setState({ username: '', email: '', password: '' })
     }
   }
 
@@ -35,15 +35,6 @@ export class CreateNewUser extends Component {
     return (
       <div className='new-user-form-container'>
         {errorMessage()}
-
-    }
-  }
-
-
-  render() {
-    return (
-      <div className='new-user-form-container'>
-
         <h1>New User!</h1>
         <div className='new-user-form'>
           <input placeholder='username'
