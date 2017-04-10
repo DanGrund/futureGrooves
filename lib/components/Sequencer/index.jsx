@@ -17,7 +17,7 @@ export class Sequencer extends Component {
           steps:[true,false,false,false,true,false,false,false,true,false,false,false,true,false,false,false],
           sound:{
            source : 'noise',
-           volume: 0,
+           volume: .5,
             env : {
                 attack : .001,
                 decay : .12,
@@ -31,7 +31,26 @@ export class Sequencer extends Component {
                 q : .180
             }
           }
-        }
+        },
+        snap:{
+          steps:[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],
+          sound:{
+           source : 'sine',
+           volume: .5,
+            env : {
+                attack : .001,
+                decay : .12,
+                sustain : .3,
+                hold : .07,
+                release : .02
+            },
+            filter : {
+                type : 'bandpass',
+                frequency : 300,
+                q : .180
+            }
+          }
+        },
       },
     }
   }
@@ -72,9 +91,7 @@ export class Sequencer extends Component {
   }
   changeVolume(key, newVolume) {
     let newRack = this.state.trackRacks
-    // console.log(this.state.trackRacks[key].sound.volume)
     newRack[key].sound.volume = parseFloat(newVolume)
-    // console.log(newRack[key].sound.volume)
     this.setState({ trackRacks: newRack })
   }
 
