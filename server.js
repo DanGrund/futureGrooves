@@ -9,7 +9,6 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const historyFallback = require('connect-history-api-fallback');
 
-
 app.use(cors());
 
 if (process.env.NODE_ENV !== 'production') {
@@ -116,6 +115,7 @@ app.post('/api/v1/users', (request, response) => {
           console.error(error)
         });
     })
+    .catch(err => response.send({ error: err.constraint }))
   }
 })
 

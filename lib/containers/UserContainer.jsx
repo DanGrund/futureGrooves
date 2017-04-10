@@ -11,6 +11,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   return {
     user: state.ActiveUser.username,
+    error: state.ActiveUser.error || false
   }
 }
 

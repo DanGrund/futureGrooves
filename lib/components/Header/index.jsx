@@ -14,6 +14,10 @@ export default class Header extends Component {
     }
   }
 
+  componentWillMount() {
+    
+  }
+
   render() {
     const displayLoginModal = () => {
       if(this.state.loginModal) { return <LoginModal /> }

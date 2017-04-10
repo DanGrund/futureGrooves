@@ -19,13 +19,21 @@ export class CreateNewUser extends Component {
     }
   }
 
-
   render() {
     const { username, email, password } = this.state
 
+    const errorMessage = () => {
+      const { error } = this.props
+      if(error) {
+        return (
+          <div className='error-msg'>{error}</div>
+        )
+      }
+    }
 
     return (
       <div className='new-user-form-container'>
+        {errorMessage()}
         <h1>New User!</h1>
         <div className='new-user-form'>
           <input placeholder='username'
