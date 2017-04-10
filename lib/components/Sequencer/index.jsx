@@ -17,6 +17,7 @@ export class Sequencer extends Component {
           steps:[true,false,false,false,true,false,false,false,true,false,false,false,true,false,false,false],
           sound:{
            source : 'noise',
+           volume: 0,
             env : {
                 attack : .001,
                 decay : .12,
@@ -69,6 +70,13 @@ export class Sequencer extends Component {
     newRack[key].steps[index] = !newRack[key].steps[index]
     this.setState({ trackRacks: newRack })
   }
+  changeVolume(key, newVolume) {
+    let newRack = this.state.trackRacks
+    // console.log(this.state.trackRacks[key].sound.volume)
+    newRack[key].sound.volume = parseFloat(newVolume)
+    // console.log(newRack[key].sound.volume)
+    this.setState({ trackRacks: newRack })
+  }
 
   render() {
     return(
@@ -84,9 +92,11 @@ export class Sequencer extends Component {
           {Object.keys(this.state.trackRacks).map((trackRack, i) =>
             <TrackRack key={i}
                        name={trackRack}
+                       volume={this.state.trackRacks[trackRack].sound.volume}
                        steps={this.state.trackRacks[trackRack].steps}
                        currentStep={this.state.currentStep}
                        toggleStep={this.toggleStep.bind(this)}
+                       changeVolume={this.changeVolume.bind(this)}
             />
           )}
         </div>

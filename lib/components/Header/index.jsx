@@ -52,6 +52,7 @@ class Header extends Component {
           <Link to='/newsound'>New Sound</Link>
           <Link to='/sequencer'>Sequencer</Link>
           <Link to='/profile'>Profile</Link>
+          <Link to='/sign-up'>Sign Up</Link>
 
           { this.props.user ? activeUserOptions() : noUserOptions() }
 

@@ -35,6 +35,15 @@ export class CreateNewUser extends Component {
     return (
       <div className='new-user-form-container'>
         {errorMessage()}
+
+    }
+  }
+
+
+  render() {
+    return (
+      <div className='new-user-form-container'>
+
         <h1>New User!</h1>
         <div className='new-user-form'>
           <input placeholder='username'
