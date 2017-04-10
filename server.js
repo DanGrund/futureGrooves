@@ -61,62 +61,31 @@ app.get('/api/v1/users', (request, response) => {
 })
 
 //get one user by ID
-// app.get('/api/v1/users/:id', (request, response) => {
-//   const { id } = request.params;
-//   const userFiles = [];
-//
-//   database('users').where('id', id).select()
-//   .then((user) => {
-//     userFiles.push({user})
-//   })
-//   .then(()=>{
-//     database('compositions').where('user_id', id).select()
-//     .then((compositions) => {
-//       userFiles.push({compositions})
-//     })
-//   })
-//   .then(()=>{
-//     database('sounds').where('user_id', id).select()
-//     .then((sounds) => {
-//       userFiles.push({sounds})
-//       if(userFiles[0].user.length<1){
-//         response.status(404).send({
-//           error: 'ID did not match any existing users'
-//         })
-//       } else {
-//         response.status(202).json(userFiles)
-//       }
-//     })
-//   })
-//   .catch((error)=>{
-//     response.status(404).send({
-//       error
-//     })
-//   })
-// })
+app.get('/api/v1/users/:id', (request, response) => {
+  const { id } = request.params;
+  const userFiles = [];
 
-app.get('/api/v1/users/:email', (request, response) => {
-  const { email } = request.params;
-
-  database('users').where('email', email).select()
+  database('users').where('id', id).select()
   .then((user) => {
-    return user[0]
+    userFiles.push({user})
   })
-  .then(user => {
-    database('compositions').where('user_id', user.id).select()
-    .then(compositions => {
-      user.compositions = compositions
-      return user
+  .then(()=>{
+    database('compositions').where('user_id', id).select()
+    .then((compositions) => {
+      userFiles.push({compositions})
     })
-    .then(user => {
-      database('sounds').where('user_id', user.id).select()
-      .then(sounds => {
-        user.sounds = sounds
-        return user
-      })
-      .then(user => {
-        response.status(200).send(user)
-      })
+  })
+  .then(()=>{
+    database('sounds').where('user_id', id).select()
+    .then((sounds) => {
+      userFiles.push({sounds})
+      if(userFiles[0].user.length<1){
+        response.status(404).send({
+          error: 'ID did not match any existing users'
+        })
+      } else {
+        response.status(202).json(userFiles)
+      }
     })
   })
   .catch((error)=>{
@@ -147,6 +116,41 @@ app.post('/api/v1/users', (request, response) => {
     })
     .catch(err => response.send({ error: err.constraint }))
   }
+})
+
+//login a user
+app.post('/api/v1/user/login', (request, response) => {
+  const { email, password } = request.body
+
+  database('users').where({
+    email: email,
+    password: password
+  }).select()
+  .then((user) => {
+    return user[0]
+  })
+  .then(user => {
+    database('compositions').where('user_id', user.id).select()
+    .then(compositions => {
+      user.compositions = compositions
+      return user
+    })
+    .then(user => {
+      database('sounds').where('user_id', user.id).select()
+      .then(sounds => {
+        user.sounds = sounds
+        return user
+      })
+      .then(user => {
+        response.status(200).send(user)
+      })
+    })
+  })
+  .catch((error)=>{
+    response.status(404).send({
+      error
+    })
+  })
 })
 
 //patch a user
@@ -474,3 +478,15 @@ app.get('*', function (request, response) {
 })
 
 module.exports = app;
+
+
+
+var something = 'Thank You'
+
+var say = (function(x) {
+    return function() { return x }
+})(something)
+
+something = 'Have a great day!';
+
+say();

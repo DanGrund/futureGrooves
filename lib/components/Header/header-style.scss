@@ -30,9 +30,19 @@ $header-background: #D8D8D8;
   box-shadow: 2px 2px 3px -1px rgba(120, 120, 120, .9);
   padding: 15px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.not-found-error {
+  color: red;
+  margin-top: 5px;
 }
 
 .login-modal .input {

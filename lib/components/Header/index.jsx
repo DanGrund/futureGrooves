@@ -19,14 +19,16 @@ class Header extends Component {
   }
 
   loginUser(creds) {
-    this.props.attemptLogin(creds)
+    this.props.loginUser(creds)
   }
 
   render() {
     const { user } = this.state
 
     const displayLoginModal = () => {
-      if(this.state.loginModal) { return <LoginModal attemptLogin={this.loginUser.bind(this)}/> }
+      if(this.state.loginModal) {
+        return <LoginModal login={this.loginUser.bind(this)} error={userNotFound()}/>
+      }
     }
 
     const noUserOptions = () => {
@@ -46,6 +48,16 @@ class Header extends Component {
         </div>
       )
     }
+
+    const userNotFound = () => {
+      const { error } = this.props
+      if(error.type === 'NOT_FOUND') {
+        return (
+          <div className='not-found-error'>{error.error}</div>
+        )
+      }
+    }
+
 
     return (
       <div className="header">
