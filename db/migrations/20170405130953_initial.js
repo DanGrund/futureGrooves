@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
             //user Name
             table.string('username').notNullable().unique();
             //user Email
-            table.string('email');
+            table.string('email').unique();
             //deleted
             table.string('password').notNullable();
             table.boolean('deleted');
