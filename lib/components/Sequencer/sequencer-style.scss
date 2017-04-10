@@ -5,6 +5,7 @@ $main-color: #fff;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
+
   #play-controls {
     display: flex;
     flex-direction: row;
@@ -21,18 +22,30 @@ $main-color: #fff;
 
 .single-rack {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   border: 1px solid green;
   margin: 5px;
   .sample-name {
+    width: 40px;
     border: 1px solid teal;
     margin: 5px;
   }
 }
 
+.extended-controls {
+  display: flex;
+  flex-direction: row
+}
+
+.basic-controls {
+  display: flex;
+  flex-direction: row
+}
+
 .single-step {
   border: 1px solid yellowgreen;
   margin: 5px;
+  width: 40px;
   .step-on {
     background: magenta;
     margin: 5px;
@@ -45,4 +58,8 @@ $main-color: #fff;
 
 .current {
   background-color: red;
+}
+
+.pitch-input {
+  width: 30px;
 }

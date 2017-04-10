@@ -14,10 +14,11 @@ export class Sequencer extends Component {
       tempo: 200,
       trackRacks: {
         snare:{
-          steps:[true,false,false,false,true,false,false,false,true,false,false,false,true,false,false,false],
+          steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
           sound:{
            source : 'noise',
            volume: .5,
+           pitch: 'A4',
             env : {
                 attack : .001,
                 decay : .12,
@@ -26,17 +27,18 @@ export class Sequencer extends Component {
                 release : .02
             },
             filter : {
-                type : 'bandpass',
+                type : 'highpass',
                 frequency : 300,
                 q : .180
             }
           }
         },
         snap:{
-          steps:[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],
+          steps:[{play:true, pitch:"A5"},{play:true, pitch:'B5'},{play:true, pitch:'C5'},{play:true, pitch:'D5'},{play:true, pitch:'E5'},{play:true, pitch:'D5'},{play:true, pitch:'C5'},{play:true, pitch:'B5'},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''}],
           sound:{
            source : 'sine',
            volume: .5,
+           pitch: 'A4',
             env : {
                 attack : .001,
                 decay : .12,
@@ -45,7 +47,7 @@ export class Sequencer extends Component {
                 release : .02
             },
             filter : {
-                type : 'bandpass',
+                type : 'highpass',
                 frequency : 300,
                 q : .180
             }
@@ -71,9 +73,10 @@ export class Sequencer extends Component {
   playStep() {
     if (this.state.playPause) {
       Object.keys(this.state.trackRacks).forEach((key)=>{
-        if(this.state.trackRacks[key].steps[this.state.currentStep]){
+        if(this.state.trackRacks[key].steps[this.state.currentStep].play){
           let wad = new Wad (this.state.trackRacks[key].sound)
-          wad.play()
+          let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
+          wad.play({pitch: pitch})
         }
       })
       if (this.state.currentStep < 15) {
@@ -86,12 +89,25 @@ export class Sequencer extends Component {
 
   toggleStep(key, index) {
     let newRack = this.state.trackRacks
-    newRack[key].steps[index] = !newRack[key].steps[index]
+    newRack[key].steps[index].play = !newRack[key].steps[index].play
     this.setState({ trackRacks: newRack })
   }
+
   changeVolume(key, newVolume) {
     let newRack = this.state.trackRacks
     newRack[key].sound.volume = parseFloat(newVolume)
+    this.setState({ trackRacks: newRack })
+  }
+
+  changeFilter(key, newFreq) {
+    let newRack = this.state.trackRacks
+    newRack[key].sound.filter.frequency = parseFloat(newFreq)
+    this.setState({ trackRacks: newRack })
+  }
+
+  changePitch(key, index, newPitch) {
+    let newRack = this.state.trackRacks
+    newRack[key].steps[index].pitch = newPitch.toUpperCase()
     this.setState({ trackRacks: newRack })
   }
 
@@ -110,10 +126,13 @@ export class Sequencer extends Component {
             <TrackRack key={i}
                        name={trackRack}
                        volume={this.state.trackRacks[trackRack].sound.volume}
+                       filter={this.state.trackRacks[trackRack].sound.filter.frequency}
                        steps={this.state.trackRacks[trackRack].steps}
                        currentStep={this.state.currentStep}
                        toggleStep={this.toggleStep.bind(this)}
                        changeVolume={this.changeVolume.bind(this)}
+                       changeFilter={this.changeFilter.bind(this)}
+                       changePitch={this.changePitch.bind(this)}
             />
           )}
         </div>
