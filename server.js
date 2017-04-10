@@ -45,7 +45,6 @@ app.listen(app.get('port'), () => {
   console.log(`We running on ${app.get('port')}.`)
 })
 
-//display something at the root
 
 
 //get all users
@@ -440,8 +439,17 @@ app.delete('/api/v1/sounds/:id', (request, response) => {
   })
 })
 
+app.get('/api/v1/impulses', (request, response) => {
+  const { id } = request.query
+  const filepath = path.join(__dirname, 'assets', 'audio', 'reverb', id)
+  response.set({'Content-Type': 'audio/mpeg'})
+  var readStream = fs.createReadStream(filepath)
+  readStream.pipe(response)
+})
+
+// display app at the root and all other routes
 app.get('*', function (request, response) {
-  response.sendFile(path.join(__dirname, "build", "index.html"))
+  response.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
 module.exports = app;

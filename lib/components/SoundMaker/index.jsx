@@ -2,12 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import Select from './Select'
 import Slider from './Slider'
-import Button from '../Button'
-// import Wad from 'web-audio-daw'
-// import Tuna from 'tunajs'
-// window.Tuna = Tuna
-
 import update from 'immutability-helper'
+import Button from '../Button'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -35,9 +31,10 @@ export class SoundMaker extends Component {
             attack: '',
           },
         },
-        // reverb: {
-        //   wet: 0,
-        // },
+        reverb: {
+          wet: 1,
+          impulse: 'http://localhost:3000/api/v1/impulses?id=Rays.wav',
+        },
         delay: {
           delayTime: 0.5,
           wet: 0.25,

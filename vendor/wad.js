@@ -171,7 +171,6 @@ var Wad = (function () {
       that.playable--;
       request.onload = function () {
         context.decodeAudioData(request.response, function (decodedBuffer) {
-
           that.reverb.buffer = decodedBuffer;
           that.playable++;
           if (that.playOnLoad) { that.play(that.playOnLoadArg); }
@@ -599,8 +598,6 @@ var Wad = (function () {
     console.log('tunaconfig: ', tunaConfig)
     for (var key in tunaConfig) {
       console.log(key)
-      console.log('Wad.tuna: ', Wad.tuna)
-      console.log('Wad.tuna[key] ', Wad.tuna[key])
       var tunaEffect = new Wad.tuna[key](tunaConfig[key])
       that.nodes.push(tunaEffect)
     }
