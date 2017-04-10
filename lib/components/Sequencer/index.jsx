@@ -15,6 +15,7 @@ export class Sequencer extends Component {
       trackRacks: {
         snare:{
           steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+          mute: false,
           sound:{
            source : 'noise',
            volume: .5,
@@ -35,6 +36,7 @@ export class Sequencer extends Component {
         },
         snap:{
           steps:[{play:true, pitch:"A5"},{play:true, pitch:'B5'},{play:true, pitch:'C5'},{play:true, pitch:'D5'},{play:true, pitch:'E5'},{play:true, pitch:'D5'},{play:true, pitch:'C5'},{play:true, pitch:'B5'},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''}],
+          mute: false,
           sound:{
            source : 'sine',
            volume: .5,
@@ -73,7 +75,7 @@ export class Sequencer extends Component {
   playStep() {
     if (this.state.playPause) {
       Object.keys(this.state.trackRacks).forEach((key)=>{
-        if(this.state.trackRacks[key].steps[this.state.currentStep].play){
+        if(this.state.trackRacks[key].steps[this.state.currentStep].play && (!this.state.trackRacks[key].mute)){
           let wad = new Wad (this.state.trackRacks[key].sound)
           let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
           wad.play({pitch: pitch})
@@ -111,6 +113,12 @@ export class Sequencer extends Component {
     this.setState({ trackRacks: newRack })
   }
 
+  muteTrack(key) {
+    let newRack = this.state.trackRacks;
+    newRack[key].mute = !newRack[key].mute;
+    this.setState({ trackRacks: newRack})
+  }
+
   render() {
     return(
       <div id='composition-maker'>
@@ -133,6 +141,7 @@ export class Sequencer extends Component {
                        changeVolume={this.changeVolume.bind(this)}
                        changeFilter={this.changeFilter.bind(this)}
                        changePitch={this.changePitch.bind(this)}
+                       muteTrack={this.muteTrack.bind(this)}
             />
           )}
         </div>
