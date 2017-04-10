@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
 import './sequencer-style'
+import Slider from '../SoundMaker/Slider'
 
 
 export class Sequencer extends Component {
@@ -11,7 +12,7 @@ export class Sequencer extends Component {
     this.state = {
       playPause: false,
       currentStep: 0,
-      tempo: 200,
+      tempo: 160,
       trackRacks: {
         snare:{
           steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
@@ -128,6 +129,10 @@ export class Sequencer extends Component {
     })
   }
 
+  updateTempo(newTempo) {
+    this.setState({tempo: newTempo})
+  }
+
   render() {
     return(
       <div id='composition-maker'>
@@ -136,6 +141,17 @@ export class Sequencer extends Component {
           <button id='play-button' onClick={()=>this.playPause()} >
             play/pause
           </button>
+          tempo
+          <input
+            value={this.state.tempo}
+            id={'tempo-slider'}
+            type='range'
+            onChange={(e)=>this.updateTempo(e.target.value)}
+            min={100}
+            max={400}
+            step={1}
+          />
+          <span>≈{Math.round((60/this.state.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
         </div>
 
         <div id='drum-racks'>
@@ -155,7 +171,6 @@ export class Sequencer extends Component {
             />
           )}
         </div>
-
       </div>
     )
   }

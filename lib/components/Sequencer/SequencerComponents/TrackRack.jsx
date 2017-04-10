@@ -8,8 +8,8 @@ const TrackRack = (props) => {
       <div className='extended-controls'>
         <button onClick={()=>props.muteTrack(props.name)}>mute</button>
         <button onClick={()=>props.soloTrack(props.name)}>solo</button>
-        <span>volume</span>
         <Slider
+          label="volume"
           value={props.volume}
           id={'track-volume'}
           type='range'
@@ -18,8 +18,8 @@ const TrackRack = (props) => {
           max={1}
           step={.01}
         />
-        <span>filter</span>
         <Slider
+          label="filter"
           value={props.filter}
           id={'track-filter'}
           type='range'

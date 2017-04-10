@@ -12,6 +12,10 @@ $main-color: #fff;
     border: 1px solid pink;
     margin: 5px;
   }
+  #tempo-slider {
+    transform: rotate(180deg);
+  }
+
   #drum-racks {
     display: flex;
     flex-direction: column;
