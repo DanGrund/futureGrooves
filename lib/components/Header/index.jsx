@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './header-style';
 import { Link } from 'react-router-dom';
-import Login from './Login';
 import Logout from './Logout';
 import LoginModal from './LoginModal';
 import UserContainer from '../../containers/UserContainer';
