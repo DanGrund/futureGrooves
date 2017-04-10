@@ -33,7 +33,7 @@ export class SoundMaker extends Component {
         },
         reverb: {
           wet: 1,
-          impulse: 'http://localhost:3000/api/v1/impulses?id=Rays.wav',
+          impulse: 'http://localhost:3000/api/v1/impulses?id=BlockInside.wav',
         },
         delay: {
           delayTime: 0.5,
@@ -151,6 +151,11 @@ export class SoundMaker extends Component {
   updateReverbWet(e) {
     const newReverbWet = Math.fround(e.target.value)
     this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
+  }
+
+  updateReverbImpulse(e) {
+    const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${e.target.value}.wav`
+    this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }))
   }
 
   updateDelayTime(e) {
@@ -362,7 +367,61 @@ export class SoundMaker extends Component {
         />
       </div>
        <div className='reverb'>
-        <h4> Reverb </h4>
+          <h4> Reverb </h4>
+          <Select
+            name='select-reverb-impulse'
+            className='select reverb-impulse'
+            options={[
+              'BlockInside',
+              'BottleHall',
+              'CementBlocks1',
+              'CementBlocks2',
+              'ChateaudeLogneOutside',
+              'ConcLongEchoHall',
+              'DeepSpace',
+              'DerlonSanctuary',
+              'DirectCabinetN1',
+              'DirectCabinetN2',
+              'DirectCabinetN3',
+              'DirectCabinetN4',
+              'FiveColumns',
+              'FiveColunsLong',
+              'French18thCenturySalon',
+              'GoingHome',
+              'Greek7EchoHall',
+              'HighlyDampedLargeRoom',
+              'InTheSilo',
+              'InTheSiloRevised',
+              'LargeBottleHall',
+              'LargeLongEchoHall',
+              'LargeWideEchoHall',
+              'MasonicLodge',
+              'Musikvereinsaal',
+              'NarrowBumpySpace',
+              'NiceDrumRoom',
+              'OneStar',
+              'ParkingGarage',
+              'Rays',
+              'RightGlassTable',
+              'RubyRoom',
+              'ScalaMilanOperaHall',
+              'SmallPrehistoricCave',
+              'StNicolaesChurch',
+              'TrigRoom',
+              'VocalDuo',
+            ]}
+            updateSelection={e => this.updateReverbImpulse(e)}
+          />
+          <Slider
+            label='Reverb Wet'
+            className='slider reverb-wet'
+            id='slider-reverb-wet'
+            min={0}
+            max={1}
+            step={0.01}
+            handleChange={(e) => this.updateReverbWet(e)}
+            value={this.state.spec.reverb.wet}
+          />
       </div>
 
        <div className='lfo-container'>
