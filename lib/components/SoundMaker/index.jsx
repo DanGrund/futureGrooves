@@ -127,10 +127,10 @@ export class SoundMaker extends Component {
             bypass: 1,
           },
           Bitcrusher: {
-            bits: 1,           // 1 to 16
+            bits: 4,           // 1 to 16
             normfreq: 0.1,     // 0 to 1
             bufferSize: 256,  // 256 to 16384
-            bypass: 0,
+            bypass: 1,
           },
           MoogFilter: {
             cutoff: 0.065,     // 0 to 1
@@ -208,6 +208,10 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { [key]: { shape: { $set: e.target.value } } } }))
   }
 
+  updateTemoloShape(e) {
+    this.setState(update(this.state, { spec: { tremolo: { shape: { $set: e.target.value } } } }))
+  }
+
   updateTremolo(e, key) {
     this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: Math.fround(e.target.value) } } } }))
   }
@@ -220,17 +224,22 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: Math.fround(e.target.value) } } } } }))
   }
 
-  updateTunaChorusBypass(e) {
-    this.setState(update(this.state, { spec: { tuna: { Chorus: { bypass: { $set: e.target.value } } } } }))
-  }
-
   updateTunaOverdrive(e, key) {
     this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: Math.fround(e.target.value) } } } } }))
   }
 
-  updateTunaOverdriveBypass(e) {
-    this.setState(update(this.state, { spec: { tuna: { Overdrive: { bypass: { $set: e.target.value } } } } }))
+  updateTunaBypass(e, key) {
+    this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: e.target.value } } } } }))
   }
+
+  updateTunaDelay(e, key) {
+    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+  }
+
+  updateTunaPhaser(e, key) {
+    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+  }
+
 
   render() {
     return (
@@ -275,7 +284,7 @@ export class SoundMaker extends Component {
             min={-1}
             max={1}
             step={0.01}
-            handleChange={(e) => this.update(e, 'panning')}
+            handleChange={(e) => this.update(e)}
             value={this.state.spec.panning}
           />
           <span> Pitch (A0-C8) </span>
@@ -453,7 +462,7 @@ export class SoundMaker extends Component {
               min={0}
               max={2}
               step={0.01}
-              handleChange={(e) => this.updateDelayTime(e, 'delayTime')}
+              handleChange={(e) => this.updateDelay(e, 'delayTime')}
               value={this.state.spec.delay.delayTime}
             />
             <Slider
@@ -483,7 +492,7 @@ export class SoundMaker extends Component {
               name='vibrato-shape'
               className='select vibrato-shape'
               options={['sine', 'sawtooth', 'square', 'triangle']}
-              updateSelection={e => this.updateShape(e, 'vibrato')}
+              updateSelection={e => this.updateVibratoShape(e)}
             />
             <Slider
               label='Vibrato Magnitude'
@@ -522,7 +531,7 @@ export class SoundMaker extends Component {
               name='tremolo-shape'
               className='select tremolo-shape'
               options={['sine', 'sawtooth', 'square', 'triangle']}
-              updateSelection={e => this.updateShape(e, 'tremolo')}
+              updateSelection={e => this.updateTremoloShape(e)}
             />
             <Slider
               label='Tremolo Magnitude'
@@ -597,15 +606,135 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={1}
-                handleChange={(e) => this.updateTunaChorusBypass(e)}
+                handleChange={(e) => this.updateTunaBypass(e, 'Chorus')}
                 value={this.state.spec.tuna.Chorus.bypass}
               />
             </div>
             <div className='tuna-delay'>
               <h4> Delay </h4>
+              <Slider
+                label='Feedback'
+                className='slider tuna-delay-feedback'
+                id='slider-tuna-tuna-delay-feedback'
+                min={0}
+                max={1}
+                step={0.10}
+                handleChange={(e) => this.updateTunaDelay(e, 'feedback')}
+                value={this.state.spec.tuna.Delay.feedback}
+              />
+              <Slider
+                label='Delay Time'
+                className='slider tuna-delay-delay-time'
+                id='slider-tuna-tuna-delay-delay-time'
+                min={1}
+                max={10000}
+                step={1}
+                handleChange={(e) => this.updateTunaDelay(e, 'delayTime')}
+                value={this.state.spec.tuna.Delay.delayTime}
+              />
+              <Slider
+                label='Wet Level'
+                className='slider tuna-delay-wet-level'
+                id='slider-tuna-tuna-delay-wet-level'
+                min={0}
+                max={1}
+                step={0.10}
+                handleChange={(e) => this.updateTunaDelay(e, 'wetLevel')}
+                value={this.state.spec.tuna.Delay.wetLevel}
+              />
+              <Slider
+                label='Dry Level'
+                className='slider tuna-delay-dry-level'
+                id='slider-tuna-tuna-delay-dry-level'
+                min={0}
+                max={1}
+                step={0.10}
+                handleChange={(e) => this.updateTunaDelay(e, 'dryLevel')}
+                value={this.state.spec.tuna.Delay.dryLevel}
+              />
+              <Slider
+                label='Cutoff'
+                className='slider tuna-delay-cutoff'
+                id='slider-tuna-tuna-delay-cutoff'
+                min={20}
+                max={22050}
+                step={1}
+                handleChange={(e) => this.updateTunaDelay(e, 'dryLevel')}
+                value={this.state.spec.tuna.Delay.dryLevel}
+              />
+              <Slider
+                label='Bypass'
+                className='slider tuna-delay-bypass'
+                id='slider-tuna-delay-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Delay')}
+                value={this.state.spec.tuna.Delay.bypass}
+              />
             </div>
             <div className='tuna-phaser'>
               <h4> Phaser </h4>
+              <Slider
+                label='Rate'
+                className='slider tuna-phaser-rate'
+                id='slider-tuna-phaser-rate'
+                min={0.1}
+                max={8}
+                step={0.1}
+                handleChange={(e) => this.updateTunaPhaser(e, 'rate')}
+                value={this.state.spec.tuna.Phaser.rate}
+              />
+              <Slider
+                label='Depth'
+                className='slider tuna-phaser-depth'
+                id='slider-tuna-phaser-depth'
+                min={0}
+                max={1}
+                step={0.1}
+                handleChange={(e) => this.updateTunaPhaser(e, 'depth')}
+                value={this.state.spec.tuna.Phaser.depth}
+              />
+              <Slider
+                label='Feedback'
+                className='slider tuna-phaser-feedback'
+                id='slider-tuna-phaser-feedback'
+                min={0}
+                max={1}
+                step={0.01}
+                handleChange={(e) => this.updateTunaPhaser(e, 'feedback')}
+                value={this.state.spec.tuna.Phaser.feedback}
+              />
+              <Slider
+                label='stereoPhase'
+                className='slider tuna-phaser-stereo-phase'
+                id='slider-tuna-phaser-stereo-phase'
+                min={0}
+                max={180}
+                step={1}
+                handleChange={(e) => this.updateTunaPhaser(e, 'stereoPhase')}
+                value={this.state.spec.tuna.Phaser.stereoPhase}
+              />
+              <Slider
+                label='baseModulationFrequency'
+                className='slider tuna-phaser-base-modulation-frequency'
+                id='slider-tuna-phaser-base-modulation-frequency'
+                min={500}
+                max={1500}
+                step={1}
+                handleChange={(e) => this.updateTunaPhaser(e, 'baseModulationFrequency')}
+                value={this.state.spec.tuna.Phaser.baseModulationFrequency}
+              />
+              <Slider
+                label='Bypass'
+                className='slider tuna-phaser-bypass'
+                id='slider-tuna-phaser-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Phaser')}
+                value={this.state.spec.tuna.Phaser.bypass}
+              />
             </div>
             <div className='tuna-overdrive'>
               <h4> Overdrive </h4>
@@ -656,36 +785,126 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={1}
-                handleChange={(e) => this.updateTunaOverdriveBypass(e)}
+                handleChange={(e) => this.updateTunaBypass(e, 'Overdrive')}
                 value={this.state.spec.tuna.Overdrive.bypass}
               />
             </div>
             <div className='tuna-compressor'>
               <h4> Compressor </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-compressor-bypass'
+                id='slider-tuna-compressor-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Compressor')}
+                value={this.state.spec.tuna.Compressor.bypass}
+              />
             </div>
             <div className='tuna-convolver'>
               <h4> Convolver </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-convolver-bypass'
+                id='slider-tuna-convolver-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Convolver')}
+                value={this.state.spec.tuna.Convolver.bypass}
+              />
             </div>
             <div className='tuna-filter'>
               <h4> Filter </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-filter-bypass'
+                id='slider-tuna-filter-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Filter')}
+                value={this.state.spec.tuna.Filter.bypass}
+              />
             </div>
             <div className='tuna-cabinet'>
               <h4> Cabinet </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-cabinet-bypass'
+                id='slider-tuna-cabinet-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Cabinet')}
+                value={this.state.spec.tuna.Cabinet.bypass}
+              />
             </div>
             <div className='tuna-tremolo'>
               <h4> Tremolo </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-tremolo-bypass'
+                id='slider-tuna-tremolo-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Tremolo')}
+                value={this.state.spec.tuna.Tremolo.bypass}
+              />
             </div>
             <div className='tuna-wahah'>
               <h4> WahWah </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-wahwah-bypass'
+                id='slider-tuna-wahwah-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'WahWah')}
+                value={this.state.spec.tuna.WahWah.bypass}
+              />
             </div>
             <div className='tuna-bitcrusher'>
               <h4> Bitcrusher </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-bitcrusher-bypass'
+                id='slider-tuna-bitcrusher-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'Bitcrusher')}
+                value={this.state.spec.tuna.Bitcrusher.bypass}
+              />
             </div>
             <div className='tuna-moog-filter'>
               <h4> Moog Filter </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-moog-filter-bypass'
+                id='slider-tuna-moog-filter-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'MoogFilter')}
+                value={this.state.spec.tuna.MoogFilter.bypass}
+              />
             </div>
             <div className='tuna-ping-pong-delay'>
               <h4> PingPong Delay </h4>
+              <Slider
+                label='Bypass'
+                className='slider tuna-ping-pong-delay-bypass'
+                id='slider-tuna-ping-pong-delay-bypass'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaBypass(e, 'PingPongDelay')}
+                value={this.state.spec.tuna.PingPongDelay.bypass}
+              />
             </div>
           </div>
       </div>
