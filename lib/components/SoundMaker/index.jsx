@@ -174,7 +174,8 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
-    this.props.saveSound(JSON.stringify(this.state.spec), 1)
+    let soundName = prompt('What do you want to call your sound')
+    this.setState(update(this.state, { spec: { soundName: { $set:  soundName}}}), () => this.props.saveSound(JSON.stringify(this.state.spec), 1))
   }
 
   updateVolume = ({ target }) => {
