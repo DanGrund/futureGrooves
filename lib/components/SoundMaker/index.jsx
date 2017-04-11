@@ -174,7 +174,7 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
-    this.props.saveSounds(this.state.spec)
+    this.props.saveSound(this.state.spec, 1)
   }
 
   updateVolume = ({ target }) => {
@@ -282,7 +282,7 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
-            <Button text='Save Sound' handleClick={this.props.saveSound(this.state.spec)} />
+            <Button text='Save Sound' handleClick={this.saveSound} />
         </div>
 
         <div className='basics'>
@@ -326,8 +326,6 @@ export class SoundMaker extends Component {
           <input name='pitch' placeholder='pitch A0-C8' type='text' value={this.state.spec.pitch} onChange={e => this.updatePitch(e)} />
           <br />
         </div>
-
-<<<<<<< HEAD
          <div className='ADSR'>
         <h4> ADSR </h4>
         <Slider
