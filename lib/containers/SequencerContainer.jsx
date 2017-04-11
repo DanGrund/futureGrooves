@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { previewSound, stopSound, stopAllSounds, saveSound } from '../actions'
-import SoundMaker from '../components/SoundMaker'
+import Sequencer from '../components/Sequencer'
 
 const mapStateToProps = (state) => {
   return {
@@ -11,10 +11,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  previewSound,
-  stopSound,
-  stopAllSounds,
-  saveSound
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SoundMaker)
+export default connect(mapStateToProps, mapDispatchToProps)(Sequencer)

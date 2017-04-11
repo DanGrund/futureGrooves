@@ -4,6 +4,7 @@ import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
 import './sequencer-style'
 import Slider from '../SoundMaker/Slider'
+import SoundMakerContainer from '../../containers/SoundMakerContainer';
 
 
 export class Sequencer extends Component {
@@ -13,6 +14,7 @@ export class Sequencer extends Component {
       playPause: false,
       currentStep: 0,
       tempo: 160,
+      newSound: '',
       trackRacks: {
         snare:{
           steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
@@ -64,6 +66,17 @@ export class Sequencer extends Component {
     this.playLoop()
   }
 
+  addTrack(newSound) {
+    console.log(newSound)
+    // let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+    // mute: false}
+    // Object.assign(soundObject, {sound: newSound.attributes})
+    // let newRack = this.state.trackRacks
+    // Object.assign(newRack, {[newSound.attributes.soundName]:soundObjecct})
+    // this.setState({ trackRacks: newRack })
+
+  }
+
   playPause() {
     this.setState({ playPause: !this.state.playPause })
   }
@@ -79,7 +92,7 @@ export class Sequencer extends Component {
         if(this.state.trackRacks[key].steps[this.state.currentStep].play && (!this.state.trackRacks[key].mute)){
           let wad = new Wad (this.state.trackRacks[key].sound)
           let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
-          wad.play({pitch: pitch})
+            wad.play({pitch: pitch})
         }
       })
       if (this.state.currentStep < 15) {
@@ -175,14 +188,14 @@ export class Sequencer extends Component {
         <div id='new-sounds'>
           <form>
             add track
-            <select>
+            <select onChange={(e)=>this.setState({newSound: e.target.value})}>
               <option value='bass'>this</option>
               <option value='clap'>will</option>
               <option value='woof'>map</option>
               <option value='chirp'>user</option>
               <option value='owww'>sounds</option>
             </select>
-            <button onClick={(e)=>{e.preventDefault()}}>add</button>
+            <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
           </form>
         </div>
         <div>
