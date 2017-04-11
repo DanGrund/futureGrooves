@@ -136,6 +136,10 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
   }
 
+  saveSound() {
+    let savedSound = JSON.stringify(this.state.spec)
+    console.log(savedSound)
+  }
 
   render() {
     return (
@@ -287,6 +291,7 @@ export class SoundMaker extends Component {
           value={this.state.spec.filter.env.attack}
         />
       </div>
+      <button onClick={this.props.saveSound(this.state.spec)}>save</button>
       </div>
     )
   }
