@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchUser, postNewUser, logoutUser, loginUser, userError } from '../actions'
+import * as actions from '../actions'
+import { bindActionCreators } from 'redux'
 
 import UserProfile from '../components/UserProfile'
 
-const mapDispatchToProps = {
-  fetchUser,
-  postNewUser,
-  logoutUser,
-  loginUser,
-  userError
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(actions, dispatch)
 }
 
 const mapStateToProps = (state) => {
