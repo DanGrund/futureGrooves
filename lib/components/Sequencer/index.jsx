@@ -63,7 +63,12 @@ export class Sequencer extends Component {
   }
 
   componentDidMount() {
+    this.fetchSounds()
     this.playLoop()
+  }
+
+  fetchSounds() {
+    this.props.fetchSounds()
   }
 
   addTrack(newSound) {
