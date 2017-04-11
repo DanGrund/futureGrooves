@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import UserProfile from '../UserProfile'
 import UserContainer from '../../containers/UserContainer'
 import Sequencer from '../Sequencer'
-import SoundMaker from '../SoundMaker'
+import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import Header from '../Header'
 import Home from '../Home'
 import CreateNewUser from '../CreateNewUser'
@@ -15,7 +15,7 @@ export class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/newsound' component={SoundMaker} />
+          <Route path='/newsound' component={SoundMakerContainer} />
           <Route path='/sequencer' component={Sequencer} />
           <Route path='/profile/:username' component={UserProfile} />
           <Route path='/sign-up' component={CreateNewUser} />
