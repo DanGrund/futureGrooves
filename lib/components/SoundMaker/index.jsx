@@ -27,31 +27,31 @@ export class SoundMaker extends Component {
           frequency: 600,
           q: 1,
           env: {
-            frequency: '',
-            attack: '',
+            frequency: 800,
+            attack: 0.5,
           },
         },
         reverb: {
           wet: 1,
           impulse: 'http://localhost:3000/api/v1/impulses?id=BlockInside.wav',
         },
-        delay: {
-          delayTime: 0.5,
-          wet: 0.25,
-          feedback: 0.25,
-        },
+        // delay: {
+        //   delayTime: 0.5,
+        //   wet: 0.25,
+        //   feedback: 0.25,
+        // },
         vibrato: {
           shape: 'sine',
           magnitude: 3,
           speed: 4,
           attack: 0,
         },
-        tremolo: {
-          shape: 'sine',
-          magnitude: 3,
-          speed: 4,
-          attack: 0,
-        },
+        // tremolo: {
+        //   shape: 'sine',
+        //   magnitude: 3,
+        //   speed: 4,
+        //   attack: 0,
+        // },
         tuna: {
           Chorus: {
             rate: 1.5,          // 0.01 to 8+
@@ -86,31 +86,33 @@ export class SoundMaker extends Component {
             threshold: -1,     // -100 to 0
             makeupGain: 1,     // 0 and up (in decibels)
             attack: 1,         // 0 to 1000
-            release: 0,        // 0 to 3000 ratio: 4,          // 1 to 20 knee: 5,           // 0 to 40
-            automakeup: true,  // true/false
+            release: 0,        // 0 to 3000
+            ratio: 4,          // 1 to 20
+            knee: 5,           // 0 to 40
+            automakeup: 1,  // true/false
             bypass: 1,
           },
-          Convolver: {
-            highCut: 22050,    // 20 to 22050
-            lowCut: 20,        // 20 to 22050
-            dryLevel: 1,       // 0 to 1+
-            wetLevel: 1,       // 0 to 1+
-            level: 1,          // 0 to 1+, adjusts total output of both wet and dry
-            impulse: 'http://localhost:3000/api/v1/impulses?id=BlockInside.wav',
-            bypass: 1,
-          },
-          Filter: {
-            frequency: 440,        // :4 to 22050
-            Q: 1,                  // 0.001 to 100
-            gain: 0,               // -40 to 40 (in decibels)
-            filterType: 'lowpass', // lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass 
-            bypass: 1,
-          },
-          Cabinet: {
-            makeupGain: 1,                                 // 0 to 20
-            impulsePath: 'http://localhost:3000/api/v1/impulses?id=DirectCabinetN1.wav',    // path to your speaker impulse
-            bypass: 1,
-          },
+          // Convolver: {
+          //   highCut: 22050,    // 20 to 22050
+          //   lowCut: 20,        // 20 to 22050
+          //   dryLevel: 1,       // 0 to 1+
+          //   wetLevel: 1,       // 0 to 1+
+          //   level: 1,          // 0 to 1+, adjusts total output of both wet and dry
+          //   impulse: 'http://localhost:3000/api/v1/impulses?id=BlockInside.wav',
+          //   bypass: 1,
+          // },
+          // Filter: {
+          //   frequency: 440,        // :4 to 22050
+          //   Q: 1,                  // 0.001 to 100
+          //   gain: 0,               // -40 to 40 (in decibels)
+          //   filterType: 'lowpass', // lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass 
+          //   bypass: 1,
+          // // },
+          // Cabinet: {
+          //   makeupGain: 1,                                 // 0 to 20
+          //   impulsePath: 'http://localhost:3000/api/v1/impulses?id=DirectCabinetN1.wav',    // path to your speaker impulse
+          //   bypass: 1,
+          // },
           Tremolo: {
             intensity: 0.3,    // 0 to 1
             rate: 4,           // 0.001 to 8
@@ -129,7 +131,7 @@ export class SoundMaker extends Component {
           Bitcrusher: {
             bits: 4,           // 1 to 16
             normfreq: 0.1,     // 0 to 1
-            bufferSize: 256,  // 256 to 16384
+            bufferSize: 4096,  // 256 to 16384
             bypass: 1,
           },
           MoogFilter: {
@@ -150,6 +152,11 @@ export class SoundMaker extends Component {
       },
     }
   }
+
+  round(number, decimals) {
+    return +(Math.round(number + 'e+' + decimals) + 'e-' + decimals)
+  }
+
 
   previewSound() {
     this.props.previewSound(this.state.spec)
@@ -177,21 +184,21 @@ export class SoundMaker extends Component {
   }
 
   updateADSR(e, key) {
-    this.setState(update(this.state, { spec: { env: { [key]: { $set: Math.fround(e.target.value) } } } }))
+    this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(e.target.value, 4) } } } }))
   }
 
   updateFilter(e, key) {
-    const newValue = key === 'type' ? e.target.value : Math.fround(e.target.value)
+    const newValue = key === 'type' ? e.target.value : this.round(e.target.value, 4)
     this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } }))
   }
 
   updateFilterEnvelope(e, key) {
     console.log(key)
-    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
   }
 
   updateReverbWet(e) {
-    const newReverbWet = Math.fround(e.target.value)
+    const newReverbWet = this.round(e.target.value, 4)
     this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
   }
 
@@ -201,7 +208,7 @@ export class SoundMaker extends Component {
   }
 
   updateDelay(e, key) {
-    this.setState(update(this.state, { spec: { delay: { [key]: { $set: Math.fround(e.target.value) } } } }))
+    this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(e.target.value, 4) } } } }))
   }
 
   updateShape(e, key) {
@@ -213,32 +220,47 @@ export class SoundMaker extends Component {
   }
 
   updateTremolo(e, key) {
-    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: Math.fround(e.target.value) } } } }))
+    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(e.target.value, 4) } } } }))
   }
 
   updateVibrato(e, key) {
-    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: Math.fround(e.target.value) } } } }))
+    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(e.target.value, 4) } } } }))
   }
 
   updateTunaChorus(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
   }
 
   updateTunaOverdrive(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
   }
 
   updateTunaBypass(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: e.target.value } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: parseInt(e.target.value, 10) } } } } }))
   }
 
   updateTunaDelay(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
   }
 
   updateTunaPhaser(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: Math.fround(e.target.value) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
   }
+
+  updateTunaCompressor(e, key) {
+    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+  }
+
+  updateTunaConvolver(e, key) {
+    this.setState(update(this.state, { spec: { tuna: { Convolver: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+  }
+
+  updateTunaConvolverImpulse(e) {
+    const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${e.target.value}.wav`
+    this.setState(update(this.state, { spec: { tuna: { Convolver: { impulse: { $set: newReverbImpulseURL } } } } }))
+  }
+
+
 
 
   render() {
@@ -427,7 +449,7 @@ export class SoundMaker extends Component {
               'Musikvereinsaal',
               'NarrowBumpySpace',
               'NiceDrumRoom',
-              'OneStar',
+              'OnaStar',
               'ParkingGarage',
               'Rays',
               'RightGlassTable',
@@ -453,7 +475,7 @@ export class SoundMaker extends Component {
         </div>
         <div className='lfo-container'>
           <h2> LFOs </h2>
-          <div className='delay'>
+          {/* <div className='delay'>
             <h4> Delay </h4>
             <Slider
               label='Delay Time'
@@ -485,14 +507,14 @@ export class SoundMaker extends Component {
               handleChange={(e) => this.updateDelay(e, 'feedback')}
               value={this.state.spec.delay.feedback}
             />
-          </div>
+          </div> */}
           <div className='vibrato'>
             <h4> Vibrato </h4>
             <Select
               name='vibrato-shape'
               className='select vibrato-shape'
               options={['sine', 'sawtooth', 'square', 'triangle']}
-              updateSelection={e => this.updateVibratoShape(e)}
+              updateSelection={e => this.updateShape(e, 'vibrato')}
             />
             <Slider
               label='Vibrato Magnitude'
@@ -525,7 +547,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.vibrato.attack}
             />
           </div>
-          <div className='tremolo'>
+          {/* <div className='tremolo'>
             <h4> Tremolo </h4>
             <Select
               name='tremolo-shape'
@@ -563,7 +585,7 @@ export class SoundMaker extends Component {
               handleChange={(e) => this.updateTremolo(e, 'attack')}
               value={this.state.spec.tremolo.attack}
             />
-          </div>
+          </div>*/}
         </div>
           <div className='tuna'>
             <h2>Tuna</h2>
@@ -659,8 +681,8 @@ export class SoundMaker extends Component {
                 min={20}
                 max={22050}
                 step={1}
-                handleChange={(e) => this.updateTunaDelay(e, 'dryLevel')}
-                value={this.state.spec.tuna.Delay.dryLevel}
+                handleChange={(e) => this.updateTunaDelay(e, 'cutoff')}
+                value={this.state.spec.tuna.Delay.cutoff}
               />
               <Slider
                 label='Bypass'
@@ -792,6 +814,76 @@ export class SoundMaker extends Component {
             <div className='tuna-compressor'>
               <h4> Compressor </h4>
               <Slider
+                label='Threshold'
+                className='slider tuna-compressor-threshold'
+                id='slider-tuna-compressor-threshold'
+                min={-100}
+                max={0}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'threshold')}
+                value={this.state.spec.tuna.Compressor.threshold}
+              />
+              <Slider
+                label='Makeup Gain'
+                className='slider tuna-compressor-makeup-gain'
+                id='slider-tuna-compressor-makeup-gain'
+                min={0}
+                max={10}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'makeupGain')}
+                value={this.state.spec.tuna.Compressor.makeupGain}
+              />
+              <Slider
+                label='Attack'
+                className='slider tuna-compressor-attack'
+                id='slider-tuna-compressor-attack'
+                min={0}
+                max={1000}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'attack')}
+                value={this.state.spec.tuna.Compressor.attack}
+              />
+              <Slider
+                label='Release'
+                className='slider tuna-compressor-release'
+                id='slider-tuna-compressor-release'
+                min={0}
+                max={10}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'release')}
+                value={this.state.spec.tuna.Compressor.release}
+              />
+              <Slider
+                label='ratio'
+                className='slider tuna-compressor-ratio'
+                id='slider-tuna-compressor-ratio'
+                min={1}
+                max={20}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'ratio')}
+                value={this.state.spec.tuna.Compressor.ratio}
+              />
+              <Slider
+                label='knee'
+                className='slider tuna-compressor-knee'
+                id='slider-tuna-compressor-knee'
+                min={0}
+                max={40}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'knee')}
+                value={this.state.spec.tuna.Compressor.knee}
+              />
+              <Slider
+                label='automakeup'
+                className='slider tuna-compressor-automakeup'
+                id='slider-tuna-compressor-automakeup'
+                min={0}
+                max={1}
+                step={1}
+                handleChange={(e) => this.updateTunaCompressor(e, 'automakeup')}
+                value={this.state.spec.tuna.Compressor.automakeup}
+              />
+              <Slider
                 label='Bypass'
                 className='slider tuna-compressor-bypass'
                 id='slider-tuna-compressor-bypass'
@@ -802,8 +894,102 @@ export class SoundMaker extends Component {
                 value={this.state.spec.tuna.Compressor.bypass}
               />
             </div>
-            <div className='tuna-convolver'>
+            {/* <div className='tuna-convolver'>
               <h4> Convolver </h4>
+              <Select
+                name='select-reverb-impulse'
+                className='select reverb-impulse'
+                options={[
+                  'BlockInside',
+                  'BottleHall',
+                  'CementBlocks1',
+                  'CementBlocks2',
+                  'ChateaudeLogneOutside',
+                  'ConcLongEchoHall',
+                  'DeepSpace',
+                  'DerlonSanctuary',
+                  'DirectCabinetN1',
+                  'DirectCabinetN2',
+                  'DirectCabinetN3',
+                  'DirectCabinetN4',
+                  'FiveColumns',
+                  'FiveColunsLong',
+                  'French18thCenturySalon',
+                  'GoingHome',
+                  'Greek7EchoHall',
+                  'HighlyDampedLargeRoom',
+                  'InTheSilo',
+                  'InTheSiloRevised',
+                  'LargeBottleHall',
+                  'LargeLongEchoHall',
+                  'LargeWideEchoHall',
+                  'MasonicLodge',
+                  'Musikvereinsaal',
+                  'NarrowBumpySpace',
+                  'NiceDrumRoom',
+                  'OnaStar',
+                  'ParkingGarage',
+                  'Rays',
+                  'RightGlassTable',
+                  'RubyRoom',
+                  'ScalaMilanOperaHall',
+                  'SmallPrehistoricCave',
+                  'StNicolaesChurch',
+                  'TrigRoom',
+                  'VocalDuo',
+                ]}
+                updateSelection={e => this.updateTunaConvolverImpulse(e)}
+              />
+              <Slider
+                label='highCut'
+                className='slider tuna-convolver-highCut'
+                id='slider-tuna-convolver-highCut'
+                min={20}
+                max={22050}
+                step={1}
+                handleChange={(e) => this.updateTunaConvolver(e, 'highCut')}
+                value={this.state.spec.tuna.Convolver.highCut}
+              />
+              <Slider
+                label='lowCut'
+                className='slider tuna-convolver-low-cut'
+                id='slider-tuna-convolver-low-cut'
+                min={20}
+                max={22050}
+                step={1}
+                handleChange={(e) => this.updateTunaConvolver(e, 'lowCut')}
+                value={this.state.spec.tuna.Convolver.lowCut}
+              />
+              <Slider
+                label='dryLevel'
+                className='slider tuna-convolver-dry-level'
+                id='slider-tuna-convolver-dry-level'
+                min={0}
+                max={2}
+                step={0.01}
+                handleChange={(e) => this.updateTunaConvolver(e, 'dryLevel')}
+                value={this.state.spec.tuna.Convolver.dryLevel}
+              />
+              <Slider
+                label='wetLevel'
+                className='slider tuna-convolver-wet-level'
+                id='slider-tuna-convolver-wet-level'
+                min={0}
+                max={2}
+                step={0.01}
+                handleChange={(e) => this.updateTunaConvolver(e, 'wetLevel')}
+                value={this.state.spec.tuna.Convolver.wetLevel}
+              />
+              <Slider
+                label='level'
+                className='slider tuna-convolver-level'
+                id='slider-tuna-convolver-level'
+                min={0}
+                max={2}
+                step={0.01}
+                handleChange={(e) => this.updateTunaConvolver(e, 'level')}
+                value={this.state.spec.tuna.Convolver.level}
+              />
               <Slider
                 label='Bypass'
                 className='slider tuna-convolver-bypass'
@@ -828,7 +1014,7 @@ export class SoundMaker extends Component {
                 value={this.state.spec.tuna.Filter.bypass}
               />
             </div>
-            <div className='tuna-cabinet'>
+            <div classNme='tuna-cabinet'>
               <h4> Cabinet </h4>
               <Slider
                 label='Bypass'
@@ -841,6 +1027,7 @@ export class SoundMaker extends Component {
                 value={this.state.spec.tuna.Cabinet.bypass}
               />
             </div>
+            */}
             <div className='tuna-tremolo'>
               <h4> Tremolo </h4>
               <Slider
