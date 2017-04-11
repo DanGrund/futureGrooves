@@ -174,7 +174,6 @@ export class SoundMaker extends Component {
   }
 
   updateValue = (key) => ({ target }) => {
-    console.log(key)
     this.setState(update(this.state, { spec: { [key]: { $set: parseFloat(target.value) } } }))
   }
 
@@ -188,7 +187,6 @@ export class SoundMaker extends Component {
   }
 
   updateADSR = (key) => ({ target }) => {
-    console.log(key)
     this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(target.value, 4) } } } }))
   }
 
@@ -198,7 +196,6 @@ export class SoundMaker extends Component {
   }
 
   updateFilterEnvelope = (key) => ({ target }) => {
-    console.log(key)
     this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(target.value, 4) } } } } }))
   }
 
@@ -212,32 +209,12 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }))
   }
 
-  // updateDelay = (key) => ({ target }) => {
-  //   this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(target.value, 4) } } } }))
-  // }
-
   updateShape = (key) => ({ target }) => {
     this.setState(update(this.state, { spec: { [key]: { shape: { $set: target.value } } } }))
   }
 
-  // updateTemoloShape(e) {
-  //   this.setState(update(this.state, { spec: { tremolo: { shape: { $set: e.target.value } } } }))
-  // }
-
-  // updateTremolo = (key) => ({ target }) => {
-  //   this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(target.value, 4) } } } }))
-  // }
-
   updateVibrato = (key) => ({ target }) => {
     this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(target.value, 4) } } } }))
-  }
-
-  updateTunaChorus = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: this.round(target.value, 4) } } } } }))
-  }
-
-  updateTunaOverdrive = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: this.round(target.value, 4) } } } } }))
   }
 
   updateTunaBypass = (key) => ({ target }) => {
@@ -247,30 +224,6 @@ export class SoundMaker extends Component {
   updateTuna = (effect, property) => ({ target }) => {
     this.setState(update(this.state, { spec: { tuna: { [effect]: { [property]: { $set: this.round(target.value, 4) } } } } }))
   }
-
-  updateTunaPhaser = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: this.round(target.value, 4) } } } } }))
-  }
-
-  updateTunaCompressor = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(target.value, 4) } } } } }))
-  }
-
-  updateTunaCompressor = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(target.value, 4) } } } } }))
-  }
-
-  // updateTunaConvolver = (key) => ({ target }) => {
-  //   this.setState(update(this.state, { spec: { tuna: { Convolver: { [key]: { $set: this.round(target.value, 4) } } } } }))
-  // }
-
-  // updateTunaConvolverImpulse(e) {
-  //   const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${e.target.value}.wav`
-  //   this.setState(update(this.state, { spec: { tuna: { Convolver: { impulse: { $set: newReverbImpulseURL } } } } }))
-  // }
-
-
-
 
   render() {
     return (
