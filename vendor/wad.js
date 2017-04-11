@@ -601,7 +601,7 @@ var Wad = (function () {
       var tunaEffect = new Wad.tuna[key](tunaConfig[key])
       that.nodes.push(tunaEffect)
     }
-    // console.log(that.nodes)
+    console.log(that.nodes)
   }
   ///
 
@@ -727,6 +727,10 @@ var Wad = (function () {
       if (this.tremolo) { setUpTremoloOnPlay(this, arg); }
     }
     if (arg.callback) { arg.callback(this); }
+
+    console.log('Wad: ', this)
+    console.log(Wad.audioContext)
+    
     return this;
   };
 

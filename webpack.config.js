@@ -27,7 +27,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.json', '.jsx', '.css', '.scss']
+    extensions: ['', '.js', '.json', '.jsx', '.css', '.scss'],
   },
   externals: {
     'cheerio': 'window',
@@ -39,5 +39,5 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-]
+  ],
 }
