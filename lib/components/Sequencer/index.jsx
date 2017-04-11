@@ -171,6 +171,23 @@ export class Sequencer extends Component {
             />
           )}
         </div>
+
+        <div id='new-sounds'>
+          <form>
+            add track
+            <select>
+              <option value='bass'>this</option>
+              <option value='clap'>will</option>
+              <option value='woof'>map</option>
+              <option value='chirp'>user</option>
+              <option value='owww'>sounds</option>
+            </select>
+            <button onClick={(e)=>{e.preventDefault()}}>add</button>
+          </form>
+        </div>
+        <div>
+          <button>save</button>
+        </div>
       </div>
     )
   }
