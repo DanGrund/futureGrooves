@@ -16,20 +16,29 @@ class Header extends Component {
 
   logoutUser() {
     this.props.logoutUser()
+    this.setState({ loginModal: false })
+  }
+
+  loginUser(creds) {
+    this.props.loginUser(creds)
   }
 
   render() {
     const { user } = this.state
 
     const displayLoginModal = () => {
-      if(this.state.loginModal) { return <LoginModal /> }
+      if(this.state.loginModal) {
+        return <LoginModal login={this.loginUser.bind(this)}
+                           error={userNotFound()}
+                           hideModal={() => this.setState({ loginModal: false })}/>
+      }
     }
 
     const noUserOptions = () => {
       return (
         <div className='sign-in-container'>
           <Link to='/sign-up'>Sign Up</Link>
-          <button onClick={() => this.setState({ loginModal: !this.state.loginModal })}>Sign-in</button>
+          <button onClick={() => this.setState({ loginModal: true })}>Sign-in</button>
           {displayLoginModal()}
         </div>
       )
@@ -42,6 +51,14 @@ class Header extends Component {
         </div>
       )
     }
+
+    const userNotFound = () => {
+      const { error } = this.props
+      if(error.type === 'NOT_FOUND') {
+        return error.msg
+      }
+    }
+
 
     return (
       <div className="header">

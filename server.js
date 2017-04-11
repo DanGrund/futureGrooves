@@ -93,7 +93,6 @@ app.get('/api/v1/users/:id', (request, response) => {
       error
     })
   })
-
 })
 
 //post a user
@@ -117,6 +116,41 @@ app.post('/api/v1/users', (request, response) => {
     })
     .catch(err => response.send({ error: err.constraint }))
   }
+})
+
+//login a user
+app.post('/api/v1/user/login', (request, response) => {
+  const { email, password } = request.body
+
+  database('users').where({
+    email: email,
+    password: password
+  }).select()
+  .then((user) => {
+    return user[0]
+  })
+  .then(user => {
+    database('compositions').where('user_id', user.id).select()
+    .then(compositions => {
+      user.compositions = compositions
+      return user
+    })
+    .then(user => {
+      database('sounds').where('user_id', user.id).select()
+      .then(sounds => {
+        user.sounds = sounds
+        return user
+      })
+      .then(user => {
+        response.status(200).send(user)
+      })
+    })
+  })
+  .catch((error)=>{
+    response.status(404).send({
+      error
+    })
+  })
 })
 
 //patch a user
@@ -444,3 +478,15 @@ app.get('*', function (request, response) {
 })
 
 module.exports = app;
+
+
+
+var something = 'Thank You'
+
+var say = (function(x) {
+    return function() { return x }
+})(something)
+
+something = 'Have a great day!';
+
+say();

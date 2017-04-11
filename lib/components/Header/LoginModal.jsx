@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import onClickOutside from 'react-onclickoutside';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -9,39 +10,55 @@ export default class Login extends Component {
     }
   }
 
-  attemptLogin(event) {
-    const email = this.refs.email
-    const password = this.refs.password
-    const creds = { email, password };
+  loginUser(event) {
+    const { email, password } = this.state;
+    this.props.login({ email, password })
+  }
+
+  handleClickOutside() {
+    this.props.hideModal()
   }
 
   render() {
+    const { email, password } = this.state
+
     return (
       <div className='login-modal'>
-        <label>
-          Email
-          <input className='input email'
-                 placeholder='Email'
-                 type='text'
-                 ref='email'
-                 autoFocus
-                 onChange={(e) => this.setState({ email: e.target.value })}/>
-        </label>
+        <div className='close-modal-btn'
+             onClick={this.props.hideModal}>×</div>
 
-        <label>
-          Password
-          <input className='input password'
-                 placeholder='Password'
-                 type='password'
-                 ref='password'
-                 onChange={(e) => this.setState({ password: e.target.value })} />
-        </label>
+        <div className='login-form'>
+          <label>
+            Email
+            <input className='input email'
+              placeholder='Email'
+              type='text'
+              ref='email'
+              autoFocus
+              onChange={(e) => this.setState({ email: e.target.value })}/>
+            </label>
 
-        <button className='btn submit'
-                onClick={this.attemptLogin.bind(this)}>
-          Submit
-        </button>
+            <label>
+              Password
+              <input className='input password'
+                placeholder='Password'
+                type='password'
+                ref='password'
+                onChange={(e) => this.setState({ password: e.target.value })} />
+              </label>
+
+              <button className='btn submit'
+                      onClick={this.loginUser.bind(this)}
+                      disabled={!email || !password}>
+                Submit
+              </button>
+        </div>
+        <div className='not-found-error'>
+          {this.props.error}
+        </div>
       </div>
-        )
+    )
   }
 }
+
+export default onClickOutside(Login)
