@@ -174,7 +174,7 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
-    this.props.saveSound(this.state.spec, 1)
+    this.props.saveSound(JSON.stringify(this.state.spec), 1)
   }
 
   updateVolume = ({ target }) => {
@@ -282,7 +282,7 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
-            <Button text='Save Sound' handleClick={this.saveSound} />
+          {this.props.user.username && <Button text='Save Sound' handleClick={this.saveSound} /> }
         </div>
 
         <div className='basics'>

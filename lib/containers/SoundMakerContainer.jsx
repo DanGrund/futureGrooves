@@ -6,6 +6,7 @@ import SoundMaker from '../components/SoundMaker'
 const mapStateToProps = (state) => {
   return {
     sound: state.sounds,
+    user: state.ActiveUser
   }
 }
 
