@@ -56,6 +56,7 @@ class Header extends Component {
     const activeUserOptions = () => {
       return (
         <div className='logout-container'>
+          <Link to={`/profile/${this.props.user}`}>Profile</Link>
           <Logout handleLogout={this.logoutUser.bind(this)} username={this.props.user}/>
         </div>
       )
@@ -75,7 +76,7 @@ class Header extends Component {
           <Link to='/'>Home</Link>
           <Link to='/newsound'>New Sound</Link>
           <Link to='/sequencer'>Sequencer</Link>
-          <Link to='/profile'>Profile</Link>
+
 
           { this.props.user ? activeUserOptions() : noUserOptions() }
 
