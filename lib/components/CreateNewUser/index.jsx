@@ -27,7 +27,7 @@ export class CreateNewUser extends Component {
       const { error } = this.props
       if(error.type === 'DUPLICATE') {
         return (
-          <div className='error-msg'>{error.error}</div>
+          <div className='error-msg'>{error.msg}</div>
         )
       }
     }

@@ -27,7 +27,9 @@ class Header extends Component {
 
     const displayLoginModal = () => {
       if(this.state.loginModal) {
-        return <LoginModal login={this.loginUser.bind(this)} error={userNotFound()}/>
+        return <LoginModal login={this.loginUser.bind(this)}
+                           error={userNotFound()}
+                           hideModal={() => this.setState({ loginModal: false })}/>
       }
     }
 
@@ -52,9 +54,7 @@ class Header extends Component {
     const userNotFound = () => {
       const { error } = this.props
       if(error.type === 'NOT_FOUND') {
-        return (
-          <div className='not-found-error'>{error.error}</div>
-        )
+        return error.msg
       }
     }
 

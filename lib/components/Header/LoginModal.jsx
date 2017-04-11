@@ -19,6 +19,8 @@ export default class Login extends Component {
   render() {
     return (
       <div className='login-modal'>
+        <div className='close-modal-btn'
+             onClick={this.props.hideModal}>×</div>
         <div className='login-form'>
           <label>
             Email
@@ -44,7 +46,9 @@ export default class Login extends Component {
                 Submit
               </button>
         </div>
-        {this.props.error}
+        <div className='not-found-error'>
+          {this.props.error}
+        </div>
       </div>
         )
   }

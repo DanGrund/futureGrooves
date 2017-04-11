@@ -19,9 +19,8 @@ $header-background: #D8D8D8;
 }
 
 .login-modal {
-  width: 30vw;
-  height: 8vh;
-  min-height: 50px;
+  width: 33vw;
+  min-height: 8vh;
   z-index: 10;
   position: absolute;
   right: 0;
@@ -42,7 +41,8 @@ $header-background: #D8D8D8;
 
 .not-found-error {
   color: red;
-  margin-top: 5px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .login-modal .input {
@@ -53,4 +53,14 @@ $header-background: #D8D8D8;
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.close-modal-btn {
+  font-size: 24px;
+  display: flex;
+  align-self: flex-end;
+  margin: -10px -5px 15px 0px;
+  &:hover {
+    cursor: pointer;
+  }
 }
