@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
 import './sequencer-style'
+import Slider from '../SoundMaker/Slider'
 
 
 export class Sequencer extends Component {
@@ -11,10 +12,11 @@ export class Sequencer extends Component {
     this.state = {
       playPause: false,
       currentStep: 0,
-      tempo: 200,
+      tempo: 160,
       trackRacks: {
         snare:{
           steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+          mute: false,
           sound:{
            source : 'noise',
            volume: .5,
@@ -35,6 +37,7 @@ export class Sequencer extends Component {
         },
         snap:{
           steps:[{play:true, pitch:"A5"},{play:true, pitch:'B5'},{play:true, pitch:'C5'},{play:true, pitch:'D5'},{play:true, pitch:'E5'},{play:true, pitch:'D5'},{play:true, pitch:'C5'},{play:true, pitch:'B5'},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''}],
+          mute: false,
           sound:{
            source : 'sine',
            volume: .5,
@@ -73,7 +76,7 @@ export class Sequencer extends Component {
   playStep() {
     if (this.state.playPause) {
       Object.keys(this.state.trackRacks).forEach((key)=>{
-        if(this.state.trackRacks[key].steps[this.state.currentStep].play){
+        if(this.state.trackRacks[key].steps[this.state.currentStep].play && (!this.state.trackRacks[key].mute)){
           let wad = new Wad (this.state.trackRacks[key].sound)
           let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
           wad.play({pitch: pitch})
@@ -111,6 +114,25 @@ export class Sequencer extends Component {
     this.setState({ trackRacks: newRack })
   }
 
+  muteTrack(key) {
+    let newRack = this.state.trackRacks;
+    newRack[key].mute = !newRack[key].mute;
+    this.setState({ trackRacks: newRack})
+  }
+
+  soloTrack(key) {
+    let newRack = this.state.trackRacks;
+    Object.keys(newRack).forEach((rack)=> {
+      if (rack !== key) {
+        newRack[rack].mute = !newRack[rack].mute
+      }
+    })
+  }
+
+  updateTempo(newTempo) {
+    this.setState({tempo: newTempo})
+  }
+
   render() {
     return(
       <div id='composition-maker'>
@@ -119,6 +141,17 @@ export class Sequencer extends Component {
           <button id='play-button' onClick={()=>this.playPause()} >
             play/pause
           </button>
+          tempo
+          <input
+            value={this.state.tempo}
+            id={'tempo-slider'}
+            type='range'
+            onChange={(e)=>this.updateTempo(e.target.value)}
+            min={100}
+            max={400}
+            step={1}
+          />
+          <span>≈{Math.round((60/this.state.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
         </div>
 
         <div id='drum-racks'>
@@ -133,10 +166,28 @@ export class Sequencer extends Component {
                        changeVolume={this.changeVolume.bind(this)}
                        changeFilter={this.changeFilter.bind(this)}
                        changePitch={this.changePitch.bind(this)}
+                       muteTrack={this.muteTrack.bind(this)}
+                       soloTrack={this.soloTrack.bind(this)}
             />
           )}
         </div>
 
+        <div id='new-sounds'>
+          <form>
+            add track
+            <select>
+              <option value='bass'>this</option>
+              <option value='clap'>will</option>
+              <option value='woof'>map</option>
+              <option value='chirp'>user</option>
+              <option value='owww'>sounds</option>
+            </select>
+            <button onClick={(e)=>{e.preventDefault()}}>add</button>
+          </form>
+        </div>
+        <div>
+          <button>save</button>
+        </div>
       </div>
     )
   }
