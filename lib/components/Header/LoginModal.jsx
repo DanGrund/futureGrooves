@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import onClickOutside from 'react-onclickoutside';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,17 +11,22 @@ export default class Login extends Component {
   }
 
   loginUser(event) {
-    const email = this.refs.email.value
-    const password = this.refs.password.value
-    const creds = { email, password };
-    this.props.login(creds)
+    const { email, password } = this.state;
+    this.props.login({ email, password })
+  }
+
+  handleClickOutside() {
+    this.props.hideModal()
   }
 
   render() {
+    const { email, password } = this.state
+
     return (
       <div className='login-modal'>
         <div className='close-modal-btn'
              onClick={this.props.hideModal}>×</div>
+
         <div className='login-form'>
           <label>
             Email
@@ -42,7 +48,8 @@ export default class Login extends Component {
               </label>
 
               <button className='btn submit'
-                onClick={this.loginUser.bind(this)}>
+                      onClick={this.loginUser.bind(this)}
+                      disabled={!email || !password}>
                 Submit
               </button>
         </div>
@@ -50,6 +57,8 @@ export default class Login extends Component {
           {this.props.error}
         </div>
       </div>
-        )
+    )
   }
 }
+
+export default onClickOutside(Login)

@@ -20,7 +20,7 @@ $header-background: #D8D8D8;
 
 .login-modal {
   width: 33vw;
-  min-height: 8vh;
+  min-height: 20vh;
   z-index: 10;
   position: absolute;
   right: 0;
@@ -30,13 +30,14 @@ $header-background: #D8D8D8;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
 }
 
 .login-form {
   display: flex;
   flex-direction: row;
+  width: 95%;
+  align-items: flex-end;
 }
 
 .not-found-error {
@@ -47,6 +48,8 @@ $header-background: #D8D8D8;
 
 .login-modal .input {
   height: 25px;
+  outline: none;
+  font-size: 14px;
 }
 
 .sign-in-container {
@@ -62,5 +65,18 @@ $header-background: #D8D8D8;
   margin: -10px -5px 15px 0px;
   &:hover {
     cursor: pointer;
+    color: red;
   }
+}
+
+label {
+  width: 50%;
+}
+
+.login-form .btn {
+  width: 20%;
+  height: 30px;
+  outline: none;
+  border: none;
+  font-size: 14px
 }

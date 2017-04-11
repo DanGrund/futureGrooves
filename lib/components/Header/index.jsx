@@ -16,6 +16,7 @@ class Header extends Component {
 
   logoutUser() {
     this.props.logoutUser()
+    this.setState({ loginModal: false })
   }
 
   loginUser(creds) {
@@ -37,7 +38,7 @@ class Header extends Component {
       return (
         <div className='sign-in-container'>
           <Link to='/sign-up'>Sign Up</Link>
-          <button onClick={() => this.setState({ loginModal: !this.state.loginModal })}>Sign-in</button>
+          <button onClick={() => this.setState({ loginModal: true })}>Sign-in</button>
           {displayLoginModal()}
         </div>
       )
