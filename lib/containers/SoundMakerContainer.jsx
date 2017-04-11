@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as actions from '../actions'
+import { previewSound, stopSound, stopAllSounds } from '../actions'
 import SoundMaker from '../components/SoundMaker'
 
 const mapStateToProps = (state) => {
   return {
-    sound: state.sound
+    sound: state.sounds,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(actions, dispatch)
+const mapDispatchToProps = {
+  previewSound,
+  stopSound,
+  stopAllSounds,
 }
 
 

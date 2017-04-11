@@ -595,7 +595,7 @@ var Wad = (function () {
         tunaConfig[key] = arg.tuna[key]
       }
     }
-    console.log('tunaconfig: ', tunaConfig)
+    // console.log('tunaconfig: ', tunaConfig)
     for (var key in tunaConfig) {
       console.log(key)
       var tunaEffect = new Wad.tuna[key](tunaConfig[key])
@@ -728,8 +728,8 @@ var Wad = (function () {
     }
     if (arg.callback) { arg.callback(this); }
 
-    console.log('Wad: ', this)
-    console.log(Wad.audioContext)
+    // console.log('Wad: ', this)
+    // console.log(Wad.audioContext)
     
     return this;
   };
