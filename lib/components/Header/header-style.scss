@@ -19,26 +19,64 @@ $header-background: #D8D8D8;
 }
 
 .login-modal {
-  width: 30vw;
-  height: 8vh;
-  min-height: 50px;
+  width: 33vw;
+  min-height: 20vh;
   z-index: 10;
   position: absolute;
   right: 0;
+  top: 35px;
   background: #FFF;
-  box-shadow: 2px 2px 3px -1px rgba(120, 120, 120, .9);
+  box-shadow: 2px 1px 8px -1px rgba(100, 100, 100, 0.9);
   padding: 15px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  align-items: flex-end;
+}
+
+.not-found-error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .login-modal .input {
   height: 25px;
+  outline: none;
+  font-size: 14px;
 }
 
 .sign-in-container {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   position: relative;
+}
+
+.close-modal-btn {
+  font-size: 24px;
+  display: flex;
+  align-self: flex-end;
+  margin: -10px -5px 15px 0px;
+  &:hover {
+    cursor: pointer;
+    color: red;
+  }
+}
+
+label {
+  width: 50%;
+}
+
+.login-form .btn {
+  width: 20%;
+  height: 30px;
+  outline: none;
+  border: none;
+  font-size: 14px
 }

@@ -6,6 +6,7 @@ import Sequencer from '../Sequencer'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import Header from '../Header'
 import Home from '../Home'
+import CreateNewUser from '../CreateNewUser'
 
 export class App extends Component {
   render() {
@@ -17,6 +18,7 @@ export class App extends Component {
           <Route path='/newsound' component={SoundMakerContainer} />
           <Route path='/sequencer' component={Sequencer} />
           <Route path='/profile' component={UserProfile} />
+          <Route path='/sign-up' component={CreateNewUser} />
         </Switch>
       </div>
     )

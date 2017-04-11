@@ -4,10 +4,11 @@ exports.up = function(knex, Promise) {
             //user ID
             table.increments('id').primary();
             //user Name
-            table.string('name');
+            table.string('username').notNullable().unique();
             //user Email
-            table.string('email');
+            table.string('email').unique();
             //deleted
+            table.string('password').notNullable();
             table.boolean('deleted');
             table.timestamps(true,true);
         }),

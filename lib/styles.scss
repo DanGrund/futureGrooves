@@ -45,3 +45,12 @@ h4 {
   display: inline-block;
   margin: 10px;
 }
+
+.btn {
+  &:hover {
+    cursor: pointer;
+  }
+  &:disabled, &:disabled:hover {
+    cursor: default;
+  }
+}
