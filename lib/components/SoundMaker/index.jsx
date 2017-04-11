@@ -244,12 +244,16 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: parseInt(target.value, 10) } } } } }))
   }
 
-  updateTunaDelay = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: this.round(target.value, 4) } } } } }))
+  updateTuna = (effect, property) => ({ target }) => {
+    this.setState(update(this.state, { spec: { tuna: { [effect]: { [property]: { $set: this.round(target.value, 4) } } } } }))
   }
 
   updateTunaPhaser = (key) => ({ target }) => {
     this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: this.round(target.value, 4) } } } } }))
+  }
+
+  updateTunaCompressor = (key) => ({ target }) => {
+    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(target.value, 4) } } } } }))
   }
 
   updateTunaCompressor = (key) => ({ target }) => {
@@ -603,7 +607,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={8}
                 step={0.1}
-                handleChange={this.updateTunaChorus('rate')}
+                handleChange={this.updateTuna('Chorus', 'rate')}
                 value={this.state.spec.tuna.Chorus.rate}
               />
               <Slider
@@ -613,7 +617,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaChorus('feedback')}
+                handleChange={this.updateTuna('Chorus', 'feedback')}
                 value={this.state.spec.tuna.Chorus.feedback}
               />
               <Slider
@@ -623,7 +627,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaChorus('delay')}
+                handleChange={this.updateTuna('Chorus', 'delay')}
                 value={this.state.spec.tuna.Chorus.delay}
               />
               <Slider
@@ -646,7 +650,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.10}
-                handleChange={this.updateTunaDelay('feedback')}
+                handleChange={this.updateTuna('Delay', 'feedback')}
                 value={this.state.spec.tuna.Delay.feedback}
               />
               <Slider
@@ -656,7 +660,7 @@ export class SoundMaker extends Component {
                 min={1}
                 max={10000}
                 step={1}
-                handleChange={this.updateTunaDelay('delayTime')}
+                handleChange={this.updateTuna('Delay', 'delayTime')}
                 value={this.state.spec.tuna.Delay.delayTime}
               />
               <Slider
@@ -666,7 +670,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.10}
-                handleChange={this.updateTunaDelay('wetLevel')}
+                handleChange={this.updateTuna('Delay', 'wetLevel')}
                 value={this.state.spec.tuna.Delay.wetLevel}
               />
               <Slider
@@ -676,7 +680,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.10}
-                handleChange={this.updateTunaDelay('dryLevel')}
+                handleChange={this.updateTuna('Delay', 'dryLevel')}
                 value={this.state.spec.tuna.Delay.dryLevel}
               />
               <Slider
@@ -686,7 +690,7 @@ export class SoundMaker extends Component {
                 min={20}
                 max={22050}
                 step={1}
-                handleChange={this.updateTunaDelay('cutoff')}
+                handleChange={this.updateTuna('Delay', 'cutoff')}
                 value={this.state.spec.tuna.Delay.cutoff}
               />
               <Slider
@@ -709,7 +713,7 @@ export class SoundMaker extends Component {
                 min={0.1}
                 max={8}
                 step={0.1}
-                handleChange={this.updateTunaPhaser('rate')}
+                handleChange={this.updateTuna('Phaser', 'rate')}
                 value={this.state.spec.tuna.Phaser.rate}
               />
               <Slider
@@ -719,7 +723,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.1}
-                handleChange={this.updateTunaPhaser('depth')}
+                handleChange={this.updateTuna('Phaser', 'depth')}
                 value={this.state.spec.tuna.Phaser.depth}
               />
               <Slider
@@ -729,7 +733,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaPhaser('feedback')}
+                handleChange={this.updateTuna('Phaser', 'feedback')}
                 value={this.state.spec.tuna.Phaser.feedback}
               />
               <Slider
@@ -739,7 +743,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={180}
                 step={1}
-                handleChange={this.updateTunaPhaser('stereoPhase')}
+                handleChange={this.updateTuna('Phaser', 'stereoPhase')}
                 value={this.state.spec.tuna.Phaser.stereoPhase}
               />
               <Slider
@@ -749,7 +753,7 @@ export class SoundMaker extends Component {
                 min={500}
                 max={1500}
                 step={1}
-                handleChange={this.updateTunaPhaser('baseModulationFrequency')}
+                handleChange={this.updateTuna('Phaser', 'baseModulationFrequency')}
                 value={this.state.spec.tuna.Phaser.baseModulationFrequency}
               />
               <Slider
@@ -772,7 +776,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaOverdrive('outputGain')}
+                handleChange={this.updateTuna('Overdrive', 'outputGain')}
                 value={this.state.spec.tuna.Overdrive.outputGain}
               />
               <Slider
@@ -782,7 +786,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaOverdrive('drive')}
+                handleChange={this.updateTuna('Overdrive', 'drive')}
                 value={this.state.spec.tuna.Overdrive.drive}
               />
               <Slider
@@ -792,7 +796,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={0.01}
-                handleChange={this.updateTunaOverdrive('curveAmount')}
+                handleChange={this.updateTuna('Overdrive', 'curveAmount')}
                 value={this.state.spec.tuna.Overdrive.curveAmount}
               />
               <Slider
@@ -802,7 +806,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={5}
                 step={1}
-                handleChange={this.updateTunaOverdrive('algorithmIndex')}
+                handleChange={this.updateTuna('Overdrive', 'algorithmIndex')}
                 value={this.state.spec.tuna.Overdrive.algorithmIndex}
               />
               <Slider
@@ -825,7 +829,7 @@ export class SoundMaker extends Component {
                 min={-100}
                 max={0}
                 step={1}
-                handleChange={this.updateTunaCompressor('threshold')}
+                handleChange={this.updateTuna('Compressor', 'threshold')}
                 value={this.state.spec.tuna.Compressor.threshold}
               />
               <Slider
@@ -835,7 +839,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={10}
                 step={1}
-                handleChange={this.updateTunaCompressor('makeupGain')}
+                handleChange={this.updateTuna('Compressor', 'makeupGain')}
                 value={this.state.spec.tuna.Compressor.makeupGain}
               />
               <Slider
@@ -845,7 +849,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1000}
                 step={1}
-                handleChange={this.updateTunaCompressor('attack')}
+                handleChange={this.updateTuna('Compressor', 'attack')}
                 value={this.state.spec.tuna.Compressor.attack}
               />
               <Slider
@@ -855,7 +859,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={10}
                 step={1}
-                handleChange={this.updateTunaCompressor('release')}
+                handleChange={this.updateTuna('Compressor', 'release')}
                 value={this.state.spec.tuna.Compressor.release}
               />
               <Slider
@@ -865,7 +869,7 @@ export class SoundMaker extends Component {
                 min={1}
                 max={20}
                 step={1}
-                handleChange={this.updateTunaCompressor('ratio')}
+                handleChange={this.updateTuna('Compressor', 'ratio')}
                 value={this.state.spec.tuna.Compressor.ratio}
               />
               <Slider
@@ -875,7 +879,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={40}
                 step={1}
-                handleChange={this.updateTunaCompressor('knee')}
+                handleChange={this.updateTuna('Compressor', 'knee')}
                 value={this.state.spec.tuna.Compressor.knee}
               />
               <Slider
@@ -885,7 +889,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={1}
                 step={1}
-                handleChange={this.updateTunaCompressor('automakeup')}
+                handleChange={this.updateTuna('Compressor', 'automakeup')}
                 value={this.state.spec.tuna.Compressor.automakeup}
               />
               <Slider
@@ -952,7 +956,7 @@ export class SoundMaker extends Component {
                 min={20}
                 max={22050}
                 step={1}
-                handleChange={this.updateTunaConvolver('highCut')}
+                handleChange={this.updateTuna('Convolver', 'highCut')}
                 value={this.state.spec.tuna.Convolver.highCut}
               />
               <Slider
@@ -962,7 +966,7 @@ export class SoundMaker extends Component {
                 min={20}
                 max={22050}
                 step={1}
-                handleChange={this.updateTunaConvolver('lowCut')}
+                handleChange={this.updateTuna('Convolver', 'lowCut')}
                 value={this.state.spec.tuna.Convolver.lowCut}
               />
               <Slider
@@ -972,7 +976,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={2}
                 step={0.01}
-                handleChange={this.updateTunaConvolver('dryLevel')}
+                handleChange={this.updateTuna('Convolver', 'dryLevel')}
                 value={this.state.spec.tuna.Convolver.dryLevel}
               />
               <Slider
@@ -982,7 +986,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={2}
                 step={0.01}
-                handleChange={this.updateTunaConvolver('wetLevel')}
+                handleChange={this.updateTuna('Convolver', 'wetLevel')}
                 value={this.state.spec.tuna.Convolver.wetLevel}
               />
               <Slider
@@ -992,7 +996,7 @@ export class SoundMaker extends Component {
                 min={0}
                 max={2}
                 step={0.01}
-                handleChange={this.updateTunaConvolver('level')}
+                handleChange={this.updateTuna('Convolver', 'level')}
                 value={this.state.spec.tuna.Convolver.level}
               />
               <Slider
