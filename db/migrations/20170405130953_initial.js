@@ -31,7 +31,7 @@ exports.up = function(knex, Promise) {
             //composition ID
             table.increments('id').primary();
             //object of attributes
-            table.string('attributes');
+            table.string('attributes', 52000);
             //creator of composition
             table.integer('user_id')
                  .references('id')

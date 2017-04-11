@@ -109,7 +109,7 @@ export class SoundMaker extends Component {
           //   frequency: 440,        // :4 to 22050
           //   Q: 1,                  // 0.001 to 100
           //   gain: 0,               // -40 to 40 (in decibels)
-          //   filterType: 'lowpass', // lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass 
+          //   filterType: 'lowpass', // lowpass, highpass, bandpass, lowshelf, highshelf, peaking, notch, allpass
           //   bypass: 1,
           // // },
           // Cabinet: {
@@ -171,6 +171,10 @@ export class SoundMaker extends Component {
 
   stopAllSounds = () => {
     this.props.stopAllSounds()
+  }
+
+  saveSound = () => {
+    this.props.saveSound(this.state.spec, 1)
   }
 
   updateVolume = ({ target }) => {
@@ -271,9 +275,6 @@ export class SoundMaker extends Component {
     this.setState(update(this.state, { spec: { tuna: { Convolver: { impulse: { $set: newReverbImpulseURL } } } } }))
   }
 
-
-
-
   render() {
     return (
       <div>
@@ -281,6 +282,7 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
+            <Button text='Save Sound' handleClick={this.saveSound} />
         </div>
 
         <div className='basics'>
@@ -324,7 +326,108 @@ export class SoundMaker extends Component {
           <input name='pitch' placeholder='pitch A0-C8' type='text' value={this.state.spec.pitch} onChange={e => this.updatePitch(e)} />
           <br />
         </div>
+         <div className='ADSR'>
+        <h4> ADSR </h4>
+        <Slider
+          label='Attack'
+          className='adsr-env-attack'
+          id='slider-adsr-env-attack'
+          min={0}
+          max={1}
+          step={0.01}
+          handleChange={(e) => this.updateAttack(e)}
+          value={this.state.spec.env.attack}
+        />
+        <Slider
+          label='Decay'
+          className='adsr-env-decay'
+          id='slider-adsr-env-decay'
+          min={0}
+          max={5}
+          step={0.01}
+          handleChange={(e) => this.updateDecay(e)}
+          value={this.state.spec.env.decay}
+        />
+        <Slider
+          label='Sustain'
+          className='adsr-env-sustain'
+          id='slider-adsr-env-sustain'
+          min={0}
+          max={1}
+          step={0.01}
+          handleChange={(e) => this.updateSustain(e)}
+          value={this.state.spec.env.sustain}
+        />
+        <Slider
+          label='Hold'
+          className='adsr-env-hold'
+          id='slider-adsr-env-hold'
+          min={0}
+          max={10}
+          step={0.01}
+          handleChange={(e) => this.updateHold(e)}
+          value={this.state.spec.env.hold}
+        />
+         <Slider
+          label='Release'
+          className='adsr-env-release'
+          id='slider-adsr-env-release'
+          min={0}
+          max={10}
+          step={0.01}
+          handleChange={(e) => this.updateRelease(e)}
+          value={this.state.spec.env.release}
+        />
+      </div>
 
+      <div className='filter'>
+        <h4> Filter </h4>
+        <Select
+          name='filter-type'
+          options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']}
+          updateSelection={e => this.updateFilterType(e)}
+        />
+        <Slider
+          label='Frequency'
+          className='filter-freq'
+          id='slider-filter-freq'
+          min={0}
+          max={5000}
+          step={1}
+          handleChange={(e) => this.updateFilterFrequency(e)}
+          value={this.state.spec.filter.frequency}
+        />
+         <Slider
+          label='Q-factor'
+          className='filter-q-factor'
+          id='slider-filter-q-factor'
+          min={0}
+          max={10}
+          step={0.01}
+          handleChange={(e) => this.updateFilterQFactor(e)}
+          value={this.state.spec.filter.q}
+        />
+         <Slider
+          label='Filter Envelope Frequency'
+          className='filter-env-frequency'
+          id='slider-filter-env-frequency'
+          min={0}
+          max={5000}
+          step={1}
+          handleChange={(e) => this.updateFilterEnvelopeFrequency(e)}
+          value={this.state.spec.filter.env.frequency}
+        />
+         <Slider
+          label='Filter Envelope Attack'
+          className='filter-env-attack'
+          id='slider-filter-env-attack'
+          min={0}
+          max={10}
+          step={0.01}
+          handleChange={(e) => this.updateFilterEnvelopeAttack(e)}
+          value={this.state.spec.filter.env.attack}
+        />
+      </div>
         <div className='ADSR'>
           <h4> ADSR </h4>
           <Slider
