@@ -19,6 +19,12 @@ class Login extends Component {
     this.props.hideModal()
   }
 
+  submitWithEnter(e) {
+    if(e.keyCode === 13) {
+      this.loginUser()
+    }
+  }
+
   render() {
     const { email, password } = this.state
 
@@ -44,7 +50,8 @@ class Login extends Component {
                 placeholder='Password'
                 type='password'
                 ref='password'
-                onChange={(e) => this.setState({ password: e.target.value })} />
+                onChange={(e) => this.setState({ password: e.target.value })}
+                onKeyDown={(e) => this.submitWithEnter(e)}/>
               </label>
 
               <button className='btn submit'

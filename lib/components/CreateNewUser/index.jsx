@@ -9,6 +9,7 @@ export class CreateNewUser extends Component {
       username: '',
       email: '',
       password: '',
+      checkbox: false
     }
   }
 
@@ -21,7 +22,7 @@ export class CreateNewUser extends Component {
   }
 
   render() {
-    const { username, email, password } = this.state
+    const { username, email, password, checkbox } = this.state
 
     const errorMessage = () => {
       const { error } = this.props
@@ -35,27 +36,40 @@ export class CreateNewUser extends Component {
     return (
       <div className='new-user-form-container'>
         {errorMessage()}
-        <h1>New User!</h1>
-        <div className='new-user-form'>
-          <input placeholder='username'
-                 className='new-user-input'
-                 value={username}
-                 onChange={(e) => this.setState({ username: e.target.value })}/>
-          <input placeholder='email'
-                 className='new-user-input'
-                 value={email}
-                 onChange={(e) => this.setState({ email: e.target.value})}/>
-          <input placeholder='password'
-                 className='new-user-input'
-                 type='password'
-                 value={password}
-                 onChange={(e) => this.setState({ password: e.target.value})}/>
+        <form className='new-user-form'>
+          <label>
+            Username<sup>*</sup>
+            <input placeholder='username'
+              className='new-user-input'
+              value={username}
+              onChange={(e) => this.setState({ username: e.target.value })}/>
+          </label>
+          <label>
+            Email<sup>*</sup>
+            <input placeholder='email'
+              className='new-user-input'
+              value={email}
+              onChange={(e) => this.setState({ email: e.target.value})}/>
+          </label>
+          <label>
+            Password<sup>*</sup>
+            <input placeholder='password'
+              className='new-user-input'
+              type='password'
+              value={password}
+              onChange={(e) => this.setState({ password: e.target.value})}/>
+          </label>
+          <label>
+            I have read and agree to the Terms of Service<sup>*</sup>
+            <input type='checkbox' onChange={() => this.setState({ checkbox: !this.state.checkbox })}/>
+          </label>
           <button className='new-user-submit'
-                  disabled={!username || !email || !password}
+                  disabled={!username || !email || !password || !checkbox}
                   onClick={this.submitNewUser.bind(this)}>
             Submit
           </button>
-        </div>
+          <p><sup>*</sup> denotes a required field</p>
+        </form>
       </div>
     )
   }
