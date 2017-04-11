@@ -5,9 +5,13 @@ import Slider from './Slider'
 import update from 'immutability-helper'
 import Button from '../Button'
 
+import Toggle from 'react-toggle'
+
+
 export class SoundMaker extends Component {
   constructor() {
     super()
+    this.round = this.round.bind(this)
     this.state = {
       spec: {
         source: 'sine',
@@ -157,24 +161,31 @@ export class SoundMaker extends Component {
     return +(Math.round(number + 'e+' + decimals) + 'e-' + decimals)
   }
 
-
-  previewSound() {
+  previewSound = () => {
     this.props.previewSound(this.state.spec)
   }
 
-  stopSound() {
+  stopSound = () => {
     this.props.stopSound()
   }
 
-  stopAllSounds() {
+  stopAllSounds = () => {
     this.props.stopAllSounds()
   }
 
-  update(e, key) {
-    this.setState(update(this.state, { spec: { [key]: { $set: e.target.value } } }))
+  updateVolume = ({ target }) => {
+    this.setState(update(this.state, { spec: { volume: { $set: parseFloat(target.value) } } }))
   }
 
-  updatePitch(e) {
+  updatePanning = ({ target }) => {
+    this.setState(update(this.state, { spec: { panning: { $set: parseFloat(target.value) } } }))
+  }
+
+  updateDetune = ({ target }) => {
+    this.setState(update(this.state, { spec: { detune: { $set: parseFloat(target.value) } } }))
+  }
+
+  updatePitch = (e) => {
     const newPitch = e.target.value.toUpperCase()
     this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }))
   }
@@ -267,9 +278,9 @@ export class SoundMaker extends Component {
     return (
       <div>
         <div className='btn-group'>
-          <Button text='Play' handleClick={() => this.previewSound()} />
-          <Button text='Stop' handleClick={() => this.stopSound()} />
-          <Button text='Stop All' handleClick={() => this.stopAllSounds()} />
+          <Button text='Play' handleClick={this.previewSound} />
+          <Button text='Stop' handleClick={this.stopSound} />
+          <Button text='Stop All' handleClick={this.stopAllSounds} />
         </div>
 
         <div className='basics'>
@@ -286,7 +297,7 @@ export class SoundMaker extends Component {
             min={0}
             max={1}
             step={0.1}
-            handleChange={(e) => this.update(e, 'volume')}
+            handleChange={this.updateVolume}
             value={this.state.spec.volume}
           />
           <Slider
@@ -296,7 +307,7 @@ export class SoundMaker extends Component {
             min={0}
             max={1200}
             step={1}
-            handleChange={(e) => this.update(e, 'detune')}
+            handleChange={this.updateDetune}
             value={this.state.spec.detune}
           />
           <Slider
@@ -306,7 +317,7 @@ export class SoundMaker extends Component {
             min={-1}
             max={1}
             step={0.01}
-            handleChange={(e) => this.update(e)}
+            handleChange={this.updatePanning}
             value={this.state.spec.panning}
           />
           <span> Pitch (A0-C8) </span>
