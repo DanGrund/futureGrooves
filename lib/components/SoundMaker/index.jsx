@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Prompt } from 'react-router-dom'
 import Select from './Select'
 import Slider from './Slider'
 import update from 'immutability-helper'
 import Button from '../Button'
-// import Toggle from 'react-toggle'
-
 
 export class SoundMaker extends Component {
   constructor() {
@@ -60,12 +58,11 @@ export class SoundMaker extends Component {
     }
   }
 
-  componentWillUnmount() {
-    if(this.state.savedchanges === false){
-      prompt('you have unsaved changes')
-      browserHistory('/newsound')
-    }
-  }
+  // componentWillUnmount() {
+  //   if (this.state.savedchanges === false) {
+  //     prompt('')
+  //   }
+  // }
 
   round(number, decimals) {
     return +(Math.round(number + 'e+' + decimals) + 'e-' + decimals)
@@ -90,60 +87,64 @@ export class SoundMaker extends Component {
   }
 
   updateValue = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { [key]: { $set: parseFloat(target.value) } } }))
+    this.setState(update(this.state, { spec: { [key]: { $set: parseFloat(target.value) } } }), () => this.setState({ savedchanges: false }))
   }
 
   updatePitch = ({ target }) => {
     const newPitch = target.value.toUpperCase()
-    this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }))
+    this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateSource = ({ target }) => {
-    this.setState(update(this.state, { spec: { source: { $set: target.value } } }))
+    this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateADSR = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(target.value, 4) } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateFilter = (key) => ({ target }) => {
     const newValue = key === 'type' ? target.value : this.round(target.value, 4)
-    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } }))
+    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } })), () => this.setState({ savedchanges: false })
   }
 
   updateFilterEnvelope = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(target.value, 4) } } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateReverbWet = ({ target }) => {
     const newReverbWet = this.round(target.value, 4)
-    this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
+    this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateReverbImpulse = ({ target }) => {
     const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${target.value}.wav`
-    this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }))
+    this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateShape = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { [key]: { shape: { $set: target.value } } } }))
+    this.setState(update(this.state, { spec: { [key]: { shape: { $set: target.value } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateVibrato = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(target.value, 4) } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateDelay = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(target.value, 4) } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateTremolo = (key) => ({ target }) => {
-    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(target.value, 4) } } } }), () => this.setState({ savedchanges: false }))
   }
 
   render() {
     return (
       <div>
+        <Prompt
+          when={!this.state.savedchanges}
+          message='You have unsaved changes that will be lost. Are you sure want to leave?'
+        />
         <div className='btn-group'>
           {!this.state.savedchanges && <p>You have unsaved changes.</p>}
           <Button text='Play' handleClick={this.previewSound} />
