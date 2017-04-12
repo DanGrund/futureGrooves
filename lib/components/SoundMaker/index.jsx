@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import Select from './Select'
 import Slider from './Slider'
 import update from 'immutability-helper'
@@ -57,6 +57,13 @@ export class SoundMaker extends Component {
           attack: 0,
         },
       },
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.state.savedchanges === false){
+      prompt('you have unsaved changes')
+      browserHistory('/newsound')
     }
   }
 
