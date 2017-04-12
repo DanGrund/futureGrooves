@@ -36,6 +36,11 @@ $main-color: #fff;
   }
 }
 
+.title-bar {
+  display: flex;
+  flex-direction: row;
+}
+
 .extended-controls {
   display: flex;
   flex-direction: row
