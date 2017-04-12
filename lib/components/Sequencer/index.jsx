@@ -199,7 +199,7 @@ export class Sequencer extends Component {
         </div>
 
         <div id='new-sounds'>
-          <form>
+          {this.props.sound.library && <form>
             add track
             <select onChange={(e)=>this.setState({newSound: e.target.value})}>
               {this.props.sound.library.map((sound, i)=>{
@@ -213,7 +213,7 @@ export class Sequencer extends Component {
               }
             </select>
             <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
-          </form>
+          </form>}
         </div>
         <div>
           <button>save</button>
