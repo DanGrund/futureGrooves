@@ -54,7 +54,28 @@ app.listen(app.get('port'), () => {
   console.log(`We running on ${app.get('port')}.`)
 })
 
+const checkAuth = (request, response, next) => {
+  const { token } = request.body
 
+  if (token) {
+    jwt.verify(token, app.get('secretKey'), (error, decoded) => {
+      if (error) {
+        return response.status(403).send({
+          success: false,
+          message: 'Invalid authorization token.'
+        })
+      } else {
+        request.decoded = decoded;
+        next();
+      }
+    })
+  } else {
+    return response.status(403).send({
+      success: false,
+      message: 'You must be authorized to hit this endpoint'
+    });
+  }
+}
 
 //get all users
 app.get('/api/v1/users', (request, response) => {
@@ -104,7 +125,7 @@ app.get('/api/v1/users/:id', (request, response) => {
   })
 })
 
-//post a user
+//post a new user
 app.post('/api/v1/users', (request, response) => {
   const { username, email, password } = request.body
   const newUser = { username, email, password, deleted:false }
@@ -116,11 +137,16 @@ app.post('/api/v1/users', (request, response) => {
     .then(()=> {
       database('users').where('username', username).select()
         .then((user) => {
-          response.status(200).json(user);
+          let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
+          currentUser = {
+            id: user[0].id,
+            username: user[0].username,
+            token: token
+          }
+          response.status(200).json(currentUser);
         })
         .catch((error) => {
           response.status(422)
-          console.error(error)
         });
     })
     .catch(err => response.send({ error: err.constraint }))
@@ -142,7 +168,7 @@ app.post('/api/v1/user/login', (request, response) => {
         username: user[0].username,
         token: token
       }
-    response.send(currentUser)
+    response.status(200).send(currentUser)
   })
   .catch((error)=>{
     response.status(404).send({
