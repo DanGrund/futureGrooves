@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
+// import Wad from '../../../vendor/wad.js'
 import './sequencer-style'
 import Slider from '../SoundMaker/Slider'
+import SoundMakerContainer from '../../containers/SoundMakerContainer';
 
 
 export class Sequencer extends Component {
@@ -13,6 +15,7 @@ export class Sequencer extends Component {
       playPause: false,
       currentStep: 0,
       tempo: 160,
+      newSound: '',
       trackRacks: {
         snare:{
           steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
@@ -61,7 +64,30 @@ export class Sequencer extends Component {
   }
 
   componentDidMount() {
+    this.fetchSounds()
     this.playLoop()
+  }
+
+  fetchSounds() {
+    this.props.fetchSounds()
+  }
+
+  addTrack(newSound) {
+    const soundFromDB = this.props.sound.library.find((sound)=>{
+      const soundValue = JSON.parse(sound.attributes);
+      if(soundValue.soundName === newSound) {
+        return true
+      }
+    })
+
+    const rightSound = JSON.parse(soundFromDB.attributes)
+    let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+    mute: false}
+    Object.assign(soundObject, {sound: rightSound})
+    let newRack = this.state.trackRacks
+    Object.assign(newRack, {[rightSound.soundName]:soundObject})
+    console.log(newRack)
+    this.setState({ trackRacks: newRack })
   }
 
   playPause() {
@@ -79,7 +105,7 @@ export class Sequencer extends Component {
         if(this.state.trackRacks[key].steps[this.state.currentStep].play && (!this.state.trackRacks[key].mute)){
           let wad = new Wad (this.state.trackRacks[key].sound)
           let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
-          wad.play({pitch: pitch})
+            wad.play({pitch: pitch})
         }
       })
       if (this.state.currentStep < 15) {
@@ -175,14 +201,18 @@ export class Sequencer extends Component {
         <div id='new-sounds'>
           <form>
             add track
-            <select>
-              <option value='bass'>this</option>
-              <option value='clap'>will</option>
-              <option value='woof'>map</option>
-              <option value='chirp'>user</option>
-              <option value='owww'>sounds</option>
+            <select onChange={(e)=>this.setState({newSound: e.target.value})}>
+              {this.props.sound.library.map((sound, i)=>{
+                  const soundValue = JSON.parse(sound.attributes);
+                  return(
+                    <option value={soundValue.soundName} key={i}>
+                      {soundValue.soundName}
+                    </option>
+                  )
+                })
+              }
             </select>
-            <button onClick={(e)=>{e.preventDefault()}}>add</button>
+            <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
           </form>
         </div>
         <div>

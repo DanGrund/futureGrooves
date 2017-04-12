@@ -12,6 +12,7 @@ export class SoundMaker extends Component {
     super()
     this.round = this.round.bind(this)
     this.state = {
+      savedchanges: true,
       spec: {
         source: 'sine',
         volume: 0.5,
@@ -75,6 +76,12 @@ export class SoundMaker extends Component {
     this.props.stopAllSounds()
   }
 
+  saveSound = () => {
+    let soundName = prompt('What do you want to call your sound')
+    this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), 1))
+    this.setState({ savedchanges: true })
+  }
+
   updateValue = (key) => ({ target }) => {
     this.setState(update(this.state, { spec: { [key]: { $set: parseFloat(target.value) } } }))
   }
@@ -131,9 +138,11 @@ export class SoundMaker extends Component {
     return (
       <div>
         <div className='btn-group'>
+          {!this.state.savedchanges && <p>You have unsaved changes.</p>}
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
+          {this.props.user.username && <Button text='Save Sound' handleClick={this.saveSound} />}
         </div>
 
         <div className='basics'>
@@ -141,7 +150,7 @@ export class SoundMaker extends Component {
             name='source-shape'
             className='select source-shape'
             options={['sine', 'sawtooth', 'square', 'triangle']}
-            updateSelection={e => this.updateSource(e)}
+            updateSelection={this.updateSource}
           />
           <Slider
             label='Volume'
@@ -174,15 +183,14 @@ export class SoundMaker extends Component {
             value={this.state.spec.panning}
           />
           <span> Pitch (A0-C8) </span>
-          <input name='pitch' placeholder='pitch A0-C8' type='text' value={this.state.spec.pitch} onChange={e => this.updatePitch(e)} />
+          <input name='pitch' placeholder='pitch A0-C8' type='text' value={this.state.spec.pitch} onChange={this.updatePitch} />
           <br />
         </div>
-
         <div className='ADSR'>
           <h4> ADSR </h4>
           <Slider
             label='Attack'
-            className='slider adsr-env-attack'
+            className='adsr-env-attack'
             id='slider-adsr-env-attack'
             min={0}
             max={1}
@@ -192,7 +200,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Decay'
-            className='slider adsr-env-decay'
+            className='adsr-env-decay'
             id='slider-adsr-env-decay'
             min={0}
             max={5}
@@ -202,7 +210,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Sustain'
-            className='slider adsr-env-sustain'
+            className='adsr-env-sustain'
             id='slider-adsr-env-sustain'
             min={0}
             max={1}
@@ -212,7 +220,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Hold'
-            className='slider slider adsr-env-hold'
+            className='adsr-env-hold'
             id='slider-adsr-env-hold'
             min={0}
             max={10}
@@ -222,7 +230,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Release'
-            className='slider adsr-env-release'
+            className='adsr-env-release'
             id='slider-adsr-env-release'
             min={0}
             max={10}
@@ -231,17 +239,17 @@ export class SoundMaker extends Component {
             value={this.state.spec.env.release}
           />
         </div>
+
         <div className='filter'>
           <h4> Filter </h4>
           <Select
             name='filter-type'
-            className='select filter-type'
             options={['allpass', 'lowpass', 'highpass', 'bandpass', 'lowshelf', 'peaking', 'notch']}
             updateSelection={this.updateFilter('type')}
           />
           <Slider
             label='Frequency'
-            className='slider filter-freq'
+            className='filter-freq'
             id='slider-filter-freq'
             min={0}
             max={5000}
@@ -251,7 +259,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Q-factor'
-            className='slider filter-q-factor'
+            className='filter-q-factor'
             id='slider-filter-q-factor'
             min={0}
             max={10}
@@ -261,7 +269,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Filter Envelope Frequency'
-            className='slider filter-env-frequency'
+            className='filter-env-frequency'
             id='slider-filter-env-frequency'
             min={0}
             max={5000}
@@ -271,7 +279,7 @@ export class SoundMaker extends Component {
           />
           <Slider
             label='Filter Envelope Attack'
-            className='slider filter-env-attack'
+            className='filter-env-attack'
             id='slider-filter-env-attack'
             min={0}
             max={10}
