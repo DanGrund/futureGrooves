@@ -8,8 +8,18 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const historyFallback = require('connect-history-api-fallback');
+const jwt = require('jsonwebtoken');
+const jwtconfig = require('dotenv').config().parsed
+
 
 app.use(cors());
+
+// if (!config.CLIENT_SECRET) {
+//   console.log('Make sure you have a CLIENT_SECRET in your .env file')
+// }
+
+console.log(jwtconfig);
+app.set('secretKey', jwtconfig.CLIENT_SECRET)
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
@@ -126,24 +136,13 @@ app.post('/api/v1/user/login', (request, response) => {
     password: password
   }).select()
   .then((user) => {
-    return user[0]
-  })
-  .then(user => {
-    database('compositions').where('user_id', user.id).select()
-    .then(compositions => {
-      user.compositions = compositions
-      return user
-    })
-    .then(user => {
-      database('sounds').where('user_id', user.id).select()
-      .then(sounds => {
-        user.sounds = sounds
-        return user
-      })
-      .then(user => {
-        response.status(200).send(user)
-      })
-    })
+      let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
+      currentUser = {
+        id: user[0].id,
+        username: user[0].username,
+        token: token
+      }
+    response.send(currentUser)
   })
   .catch((error)=>{
     response.status(404).send({
