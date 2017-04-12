@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { previewSound, stopSound, stopAllSounds, saveSound } from '../actions'
 import SoundMaker from '../components/SoundMaker'

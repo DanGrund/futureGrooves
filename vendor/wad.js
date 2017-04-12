@@ -3,6 +3,7 @@ import Tuna from 'tunajs'
 /** Let's do the vendor-prefix dance. **/
 var audioContext = window.AudioContext || window.webkitAudioContext;
 var context = new audioContext();
+var tuna = new Tuna(context)
 
 // create a wrapper for old versions of `getUserMedia`
 var getUserMedia = (function (window) {
@@ -322,7 +323,8 @@ var Wad = (function () {
   };
   Wad.micConsent = false
   Wad.audioContext = context
-  Wad.tuna = new Tuna(Wad.audioContext)
+  Wad.tuna = tuna
+
 
   /** When a note is played, these two functions will schedule changes in volume and filter frequency,
   as specified by the volume envelope and filter envelope **/
