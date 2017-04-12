@@ -13,6 +13,7 @@ export class SoundMaker extends Component {
     super()
     this.round = this.round.bind(this)
     this.state = {
+      savedchanges: true,
       spec: {
         source: 'sine',
         volume: 0.5,
@@ -176,110 +177,112 @@ export class SoundMaker extends Component {
   saveSound = () => {
     let soundName = prompt('What do you want to call your sound')
     this.setState(update(this.state, { spec: { soundName: { $set:  soundName}}}), () => this.props.saveSound(JSON.stringify(this.state.spec), 1))
+    this.setState({savedchanges: true})
   }
 
   updateVolume = ({ target }) => {
-    this.setState(update(this.state, { spec: { volume: { $set: parseFloat(target.value) } } }))
+    this.setState(update(this.state, { spec: { volume: { $set: parseFloat(target.value) } } }), () => this.setState({savedchanges:false}))
   }
 
   updatePanning = ({ target }) => {
-    this.setState(update(this.state, { spec: { panning: { $set: parseFloat(target.value) } } }))
+    this.setState(update(this.state, { spec: { panning: { $set: parseFloat(target.value) } } }), () => this.setState({savedchanges:false}))
   }
 
   updateDetune = ({ target }) => {
-    this.setState(update(this.state, { spec: { detune: { $set: parseFloat(target.value) } } }))
+    this.setState(update(this.state, { spec: { detune: { $set: parseFloat(target.value) } } }), () => this.setState({savedchanges:false}))
   }
 
   updatePitch = (e) => {
     const newPitch = e.target.value.toUpperCase()
-    this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }))
+    this.setState(update(this.state, { spec: { pitch: { $set: newPitch } } }), () => this.setState({savedchanges:false}))
   }
 
   updateSource(e) {
-    this.setState(update(this.state, { spec: { source: { $set: e.target.value } } }))
+    this.setState(update(this.state, { spec: { source: { $set: e.target.value } } }), () => this.setState({savedchanges:false}))
   }
 
   updateADSR(e, key) {
-    this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(e.target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { env: { [key]: { $set: this.round(e.target.value, 4) } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateFilter(e, key) {
     const newValue = key === 'type' ? e.target.value : this.round(e.target.value, 4)
-    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } }))
+    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateFilterEnvelope(e, key) {
     console.log(key)
-    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { filter: { env: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateReverbWet(e) {
     const newReverbWet = this.round(e.target.value, 4)
-    this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }))
+    this.setState(update(this.state, { spec: { reverb: { wet: { $set: newReverbWet } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateReverbImpulse(e) {
     const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${e.target.value}.wav`
-    this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }))
+    this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateDelay(e, key) {
-    this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(e.target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { delay: { [key]: { $set: this.round(e.target.value, 4) } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateShape(e, key) {
-    this.setState(update(this.state, { spec: { [key]: { shape: { $set: e.target.value } } } }))
+    this.setState(update(this.state, { spec: { [key]: { shape: { $set: e.target.value } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTemoloShape(e) {
-    this.setState(update(this.state, { spec: { tremolo: { shape: { $set: e.target.value } } } }))
+    this.setState(update(this.state, { spec: { tremolo: { shape: { $set: e.target.value } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTremolo(e, key) {
-    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(e.target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { tremolo: { [key]: { $set: this.round(e.target.value, 4) } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateVibrato(e, key) {
-    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(e.target.value, 4) } } } }))
+    this.setState(update(this.state, { spec: { vibrato: { [key]: { $set: this.round(e.target.value, 4) } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaChorus(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Chorus: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaOverdrive(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Overdrive: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaBypass(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: parseInt(e.target.value, 10) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { [key]: { bypass: { $set: parseInt(e.target.value, 10) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaDelay(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Delay: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaPhaser(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Phaser: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaCompressor(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Compressor: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaConvolver(e, key) {
-    this.setState(update(this.state, { spec: { tuna: { Convolver: { [key]: { $set: this.round(e.target.value, 4) } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Convolver: { [key]: { $set: this.round(e.target.value, 4) } } } } }), () => this.setState({savedchanges:false}))
   }
 
   updateTunaConvolverImpulse(e) {
     const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${e.target.value}.wav`
-    this.setState(update(this.state, { spec: { tuna: { Convolver: { impulse: { $set: newReverbImpulseURL } } } } }))
+    this.setState(update(this.state, { spec: { tuna: { Convolver: { impulse: { $set: newReverbImpulseURL } } } } }), () => this.setState({savedchanges:false}))
   }
 
   render() {
     return (
       <div>
         <div className='btn-group'>
+          {!this.state.savedchanges && <p>You have unsaved changes.</p>}
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
