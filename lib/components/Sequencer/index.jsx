@@ -72,24 +72,6 @@ export class Sequencer extends Component {
     this.props.fetchSounds()
   }
 
-  addTrack(newSound) {
-    const soundFromDB = this.props.sound.library.find((sound)=>{
-      const soundValue = JSON.parse(sound.attributes);
-      if(soundValue.soundName === newSound) {
-        return true
-      }
-    })
-
-    const rightSound = JSON.parse(soundFromDB.attributes)
-    let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
-    mute: false}
-    Object.assign(soundObject, {sound: rightSound})
-    let newRack = this.state.trackRacks
-    Object.assign(newRack, {[rightSound.soundName]:soundObject})
-    console.log(newRack)
-    this.setState({ trackRacks: newRack })
-  }
-
   playPause() {
     this.setState({ playPause: !this.state.playPause })
   }
@@ -120,6 +102,29 @@ export class Sequencer extends Component {
     let newRack = this.state.trackRacks
     newRack[key].steps[index].play = !newRack[key].steps[index].play
     this.setState({ trackRacks: newRack })
+  }
+
+  addTrack(newSound) {
+    const soundFromDB = this.props.sound.library.find((sound)=>{
+      const soundValue = JSON.parse(sound.attributes);
+      if(soundValue.soundName === newSound) {
+        return true
+      }
+    })
+
+    const soundAttributes = JSON.parse(soundFromDB.attributes)
+    let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+    mute: false}
+    Object.assign(soundObject, {sound: soundAttributes})
+    let newRack = this.state.trackRacks
+    Object.assign(newRack, {[soundAttributes.soundName]:soundObject})
+    console.log(newRack)
+    this.setState({ trackRacks: newRack })
+  }
+
+  removeTrack(trackName) {
+    delete this.state.trackRacks[trackName]
+    this.forceUpdate()
   }
 
   changeVolume(key, newVolume) {
@@ -194,12 +199,13 @@ export class Sequencer extends Component {
                        changePitch={this.changePitch.bind(this)}
                        muteTrack={this.muteTrack.bind(this)}
                        soloTrack={this.soloTrack.bind(this)}
+                       removeTrack={this.removeTrack.bind(this)}
             />
           )}
         </div>
 
         <div id='new-sounds'>
-          <form>
+          {this.props.sound.library && <form>
             add track
             <select onChange={(e)=>this.setState({newSound: e.target.value})}>
               {this.props.sound.library.map((sound, i)=>{
@@ -213,7 +219,7 @@ export class Sequencer extends Component {
               }
             </select>
             <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
-          </form>
+          </form>}
         </div>
         <div>
           <button>save</button>

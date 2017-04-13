@@ -58,12 +58,6 @@ export class SoundMaker extends Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   if (this.state.savedchanges === false) {
-  //     prompt('')
-  //   }
-  // }
-
   round(number, decimals) {
     return +(Math.round(number + 'e+' + decimals) + 'e-' + decimals)
   }
@@ -84,6 +78,12 @@ export class SoundMaker extends Component {
     let soundName = prompt('What do you want to call your sound')
     this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), 1))
     this.setState({ savedchanges: true })
+  }
+
+  loadSound = () => {
+    let soundID = prompt('Enter the ID of the sound you want to edit')
+    this.props.loadSound(soundID)
+    this.setState({spec: this.props.sound.editsound})
   }
 
   updateValue = (key) => ({ target }) => {
@@ -147,17 +147,22 @@ export class SoundMaker extends Component {
         />
         <div className='btn-group'>
           {!this.state.savedchanges && <p>You have unsaved changes.</p>}
+      {this.state.spec.soundName && <h1>{this.state.spec.soundName}</h1>}
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
-          {this.props.user.username && <Button text='Save Sound' handleClick={this.saveSound} />}
+          {this.props.user.username &&
+            <div>
+           <Button text='Save Sound' handleClick={this.saveSound} />
+          <Button text='Load Sound' handleClick={this.loadSound} />
+        </div>}
         </div>
 
         <div className='basics'>
           <Select
             name='source-shape'
             className='select source-shape'
-            options={['sine', 'sawtooth', 'square', 'triangle']}
+            options={['sine', 'sawtooth', 'square', 'triangle', 'noise']}
             updateSelection={this.updateSource}
           />
           <Slider

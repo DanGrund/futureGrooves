@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { previewSound, stopSound, stopAllSounds, saveSound } from '../actions'
+import { previewSound, stopSound, stopAllSounds, saveSound, loadSound } from '../actions'
 import SoundMaker from '../components/SoundMaker'
 
 const mapStateToProps = (state) => {
@@ -14,7 +14,8 @@ const mapDispatchToProps = {
   previewSound,
   stopSound,
   stopAllSounds,
-  saveSound
+  saveSound,
+  loadSound
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SoundMaker)
