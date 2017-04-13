@@ -162,7 +162,7 @@ export class SoundMaker extends Component {
           <Select
             name='source-shape'
             className='select source-shape'
-            options={['sine', 'sawtooth', 'square', 'triangle']}
+            options={['sine', 'sawtooth', 'square', 'triangle', 'noise']}
             updateSelection={this.updateSource}
           />
           <Slider

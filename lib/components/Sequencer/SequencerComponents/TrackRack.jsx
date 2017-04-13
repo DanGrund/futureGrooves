@@ -44,7 +44,7 @@ const TrackRack = (props) => {
       </div>
       <div className='title-bar'>
         <div className="sample-name">{props.name}</div>
-        <button onClick={(e)=>{props.removeTrack(props.name)}}>delete</button>
+        <button onClick={(e)=>{props.removeTrack(props.name)}}>Remove</button>
       </div>
 
     </div>

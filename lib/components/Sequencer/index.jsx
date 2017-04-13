@@ -112,12 +112,12 @@ export class Sequencer extends Component {
       }
     })
 
-    const rightSound = JSON.parse(soundFromDB.attributes)
+    const soundAttributes = JSON.parse(soundFromDB.attributes)
     let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
     mute: false}
-    Object.assign(soundObject, {sound: rightSound})
+    Object.assign(soundObject, {sound: soundAttributes})
     let newRack = this.state.trackRacks
-    Object.assign(newRack, {[rightSound.soundName]:soundObject})
+    Object.assign(newRack, {[soundAttributes.soundName]:soundObject})
     console.log(newRack)
     this.setState({ trackRacks: newRack })
   }
