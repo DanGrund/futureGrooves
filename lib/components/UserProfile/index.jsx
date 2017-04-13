@@ -13,7 +13,8 @@ export class UserProfile extends Component {
   }
 
   componentWillMount(){
-    this.props.fetchUserData()
+    const {id, token } = this.props.userData
+    this.props.fetchUserData(id, token)
   }
 
   render() {

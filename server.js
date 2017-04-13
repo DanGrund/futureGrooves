@@ -18,7 +18,6 @@ app.use(cors());
 //   console.log('Make sure you have a CLIENT_SECRET in your .env file')
 // }
 
-console.log(jwtconfig);
 app.set('secretKey', jwtconfig.CLIENT_SECRET)
 
 if (process.env.NODE_ENV !== 'production') {
@@ -55,7 +54,9 @@ app.listen(app.get('port'), () => {
 })
 
 const checkAuth = (request, response, next) => {
-  const { token } = request.body
+  const token = request.body.token ||
+              request.param('token') ||
+              request.headers['authorization'];
 
   if (token) {
     jwt.verify(token, app.get('secretKey'), (error, decoded) => {
@@ -322,9 +323,8 @@ app.get('/api/v1/compositions/:id', (request, response) => {
 })
 
 //get compositions by User ID
-app.get('/api/v1/compositions/:userID', checkAuth, (request, response) => {
+app.get('/api/v1/userCompositions/:userID', checkAuth, (request, response) => {
   const { userID } = request.params;
-
   database('compositions').where('user_id', userID).select()
     .then(compositions => {
       response.status(200).send(compositions)
@@ -337,7 +337,7 @@ app.get('/api/v1/compositions/:userID', checkAuth, (request, response) => {
 })
 
 //get sounds by User ID
-app.get('/api/v1/sounds/:userID', checkAuth, (request, response) => {
+app.get('/api/v1/userSounds/:userID', checkAuth, (request, response) => {
   const { userID } = request.params;
 
   database('sounds').where('user_id', userID).select()
