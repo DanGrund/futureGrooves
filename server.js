@@ -321,6 +321,36 @@ app.get('/api/v1/compositions/:id', (request, response) => {
     })
 })
 
+//get compositions by User ID
+app.get('/api/v1/compositions/:userID', checkAuth, (request, response) => {
+  const { userID } = request.params;
+
+  database('compositions').where('user_id', userID).select()
+    .then(compositions => {
+      response.status(200).send(compositions)
+    })
+    .catch((error)=>{
+      response.status(404).send({
+        error: 'ID did not match any existing users'
+      })
+    })
+})
+
+//get sounds by User ID
+app.get('/api/v1/sounds/:userID', checkAuth, (request, response) => {
+  const { userID } = request.params;
+
+  database('sounds').where('user_id', userID).select()
+    .then(sounds => {
+      response.status(200).send(sounds)
+    })
+    .catch((error)=>{
+      response.status(404).send({
+        error: 'ID did not match any existing users'
+      })
+    })
+})
+
 //post a composition
 app.post('/api/v1/compositions', (request, response) => {
   const { attributes, user_id } = request.body
@@ -511,15 +541,3 @@ app.get('*', function (request, response) {
 })
 
 module.exports = app;
-
-
-
-var something = 'Thank You'
-
-var say = (function(x) {
-    return function() { return x }
-})(something)
-
-something = 'Have a great day!';
-
-say();

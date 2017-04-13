@@ -12,8 +12,8 @@ export class UserProfile extends Component {
     // }
   }
 
-  componentDidMount(){
-    // this.props.fetchUser()
+  componentWillMount(){
+    this.props.fetchUserData()
   }
 
   render() {
