@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     user: state.ActiveUser.username,
-    error: state.ActiveUser
+    userData: state.ActiveUser
   }
 }
 

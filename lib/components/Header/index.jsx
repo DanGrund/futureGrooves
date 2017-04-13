@@ -63,9 +63,9 @@ class Header extends Component {
     }
 
     const userNotFound = () => {
-      const { error } = this.props
-      if(error.type === 'NOT_FOUND') {
-        return error.msg
+      const { userData } = this.props
+      if(userData.type === 'NOT_FOUND') {
+        return userData.msg
       }
     }
 

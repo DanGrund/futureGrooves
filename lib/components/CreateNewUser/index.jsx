@@ -25,10 +25,10 @@ export class CreateNewUser extends Component {
     const { username, email, password, checkbox } = this.state
 
     const errorMessage = () => {
-      const { error } = this.props
-      if(error.type === 'DUPLICATE') {
+      const { userData } = this.props
+      if(userData.type === 'DUPLICATE') {
         return (
-          <div className='error-msg'>{error.msg}</div>
+          <div className='error-msg'>{userData.msg}</div>
         )
       }
     }

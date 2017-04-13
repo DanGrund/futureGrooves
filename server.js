@@ -8,8 +8,18 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const historyFallback = require('connect-history-api-fallback');
+const jwt = require('jsonwebtoken');
+const jwtconfig = require('dotenv').config().parsed
+
 
 app.use(cors());
+
+// if (!config.CLIENT_SECRET) {
+//   console.log('Make sure you have a CLIENT_SECRET in your .env file')
+// }
+
+console.log(jwtconfig);
+app.set('secretKey', jwtconfig.CLIENT_SECRET)
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
@@ -44,7 +54,28 @@ app.listen(app.get('port'), () => {
   console.log(`We running on ${app.get('port')}.`)
 })
 
+const checkAuth = (request, response, next) => {
+  const { token } = request.body
 
+  if (token) {
+    jwt.verify(token, app.get('secretKey'), (error, decoded) => {
+      if (error) {
+        return response.status(403).send({
+          success: false,
+          message: 'Invalid authorization token.'
+        })
+      } else {
+        request.decoded = decoded;
+        next();
+      }
+    })
+  } else {
+    return response.status(403).send({
+      success: false,
+      message: 'You must be authorized to hit this endpoint'
+    });
+  }
+}
 
 //get all users
 app.get('/api/v1/users', (request, response) => {
@@ -94,7 +125,7 @@ app.get('/api/v1/users/:id', (request, response) => {
   })
 })
 
-//post a user
+//post a new user
 app.post('/api/v1/users', (request, response) => {
   const { username, email, password } = request.body
   const newUser = { username, email, password, deleted:false }
@@ -106,11 +137,16 @@ app.post('/api/v1/users', (request, response) => {
     .then(()=> {
       database('users').where('username', username).select()
         .then((user) => {
-          response.status(200).json(user);
+          let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
+          currentUser = {
+            id: user[0].id,
+            username: user[0].username,
+            token: token
+          }
+          response.status(200).json(currentUser);
         })
         .catch((error) => {
           response.status(422)
-          console.error(error)
         });
     })
     .catch(err => response.send({ error: err.constraint }))
@@ -126,24 +162,13 @@ app.post('/api/v1/user/login', (request, response) => {
     password: password
   }).select()
   .then((user) => {
-    return user[0]
-  })
-  .then(user => {
-    database('compositions').where('user_id', user.id).select()
-    .then(compositions => {
-      user.compositions = compositions
-      return user
-    })
-    .then(user => {
-      database('sounds').where('user_id', user.id).select()
-      .then(sounds => {
-        user.sounds = sounds
-        return user
-      })
-      .then(user => {
-        response.status(200).send(user)
-      })
-    })
+      let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
+      currentUser = {
+        id: user[0].id,
+        username: user[0].username,
+        token: token
+      }
+    response.status(200).send(currentUser)
   })
   .catch((error)=>{
     response.status(404).send({
@@ -292,6 +317,36 @@ app.get('/api/v1/compositions/:id', (request, response) => {
     .catch((error)=>{
       response.status(404).send({
         error: 'ID did not match any existing compositions'
+      })
+    })
+})
+
+//get compositions by User ID
+app.get('/api/v1/compositions/:userID', checkAuth, (request, response) => {
+  const { userID } = request.params;
+
+  database('compositions').where('user_id', userID).select()
+    .then(compositions => {
+      response.status(200).send(compositions)
+    })
+    .catch((error)=>{
+      response.status(404).send({
+        error: 'ID did not match any existing users'
+      })
+    })
+})
+
+//get sounds by User ID
+app.get('/api/v1/sounds/:userID', checkAuth, (request, response) => {
+  const { userID } = request.params;
+
+  database('sounds').where('user_id', userID).select()
+    .then(sounds => {
+      response.status(200).send(sounds)
+    })
+    .catch((error)=>{
+      response.status(404).send({
+        error: 'ID did not match any existing users'
       })
     })
 })
@@ -486,15 +541,3 @@ app.get('*', function (request, response) {
 })
 
 module.exports = app;
-
-
-
-var something = 'Thank You'
-
-var say = (function(x) {
-    return function() { return x }
-})(something)
-
-something = 'Have a great day!';
-
-say();
