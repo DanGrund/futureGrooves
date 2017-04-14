@@ -64,12 +64,12 @@ export class Sequencer extends Component {
   }
 
   componentDidMount() {
-    this.fetchSounds()
+    this.fetchUserData()
     this.playLoop()
   }
 
-  fetchSounds() {
-    this.props.fetchSounds()
+  fetchUserData() {
+    this.props.fetchUserData(this.props.user.id, this.props.user.token)
   }
 
   playPause() {
