@@ -190,7 +190,6 @@ hr {
 .slider {
   display: flex;
   align-items: center;
-  justify-content: space-around;
 }
 
 .slider-range {
@@ -205,4 +204,42 @@ hr {
 .slider-label {
   margin: 0 10px;
   font-weight: lighter;
+}
+
+.select {
+  max-width: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.select select {
+    padding: 5px 10px;
+    color: $select-text-color;
+    @include button-input-style;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    border: 1px solid $select-border-color;
+    border-radius: 5px;
+    outline: 0;
+    font-size: 16px;
+}
+
+.select select:focus {
+    outline: none;
+}
+
+label.select:after {
+  content: "\f0dc";
+  font-family: FontAwesome;
+  color: $select-display-color;
+  position: absolute; 
+  right: 10px; 
+  top: 4px;
+  z-index: 1;
+  width: 10%;
+  height: 100%;  
+  pointer-events: none;    
 }
