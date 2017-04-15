@@ -14,6 +14,13 @@ class Header extends Component {
     }
   }
 
+  componentWillMount() {
+    const savedUser = JSON.parse(localStorage.getItem('activeUser'))
+    if(savedUser) {
+      this.props.setUserFromStorage(savedUser)
+    }
+  }
+
   componentWillUpdate(nextProps, nextState) {
     return nextProps.user !== this.props.user
   }

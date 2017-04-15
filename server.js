@@ -55,8 +55,9 @@ app.listen(app.get('port'), () => {
 
 const checkAuth = (request, response, next) => {
   const token = request.body.token ||
-              request.param('token') ||
-              request.headers['authorization'];
+                request.params.token ||
+                request.headers['authorization'] ||
+                request.query.token
 
   if (token) {
     jwt.verify(token, app.get('secretKey'), (error, decoded) => {
