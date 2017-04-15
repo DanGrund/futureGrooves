@@ -11,7 +11,7 @@ export class UserProfile extends Component {
     // }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const {id, token } = this.props.userData
     this.props.fetchUserData(id, token)
   }
