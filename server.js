@@ -157,7 +157,6 @@ app.post('/api/v1/users', (request, response) => {
 //login a user
 app.post('/api/v1/user/login', (request, response) => {
   const { email, password } = request.body
-
   database('users').where({
     email: email,
     password: password
