@@ -24,10 +24,10 @@ export class UserProfile extends Component {
    return this.props.userData.sounds.map((sound, i) => {
      let spec = JSON.parse(sound.attributes)
      let title = spec.soundName ? spec.soundName : 'untitled'
-     return <div>
-              <h3 key={i} id={sound.id}>Sound: {title}</h3>
+     return <div key={i}>
+              <h3 id={sound.id}>Sound: {title}</h3>
                 <button onClick={(e) => this.props.previewSound(spec)}>Play</button>
-                <button onClick={this.stopSound}>Stop</button>
+                <button onClick={this.stopSound.bind(this)}>Stop</button>
             </div>
    })
 }
