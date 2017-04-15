@@ -1,0 +1,77 @@
+@import 'reset.scss';
+@import 'variables';
+@import 'mixins';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Concert+One|Faster+One');
+
+body {
+  background-color: $app-background-color;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 1.25em;
+
+}
+
+#user-sounds {
+  color: #C80404;
+  background: #d8d8d8;
+  display: inline-block;
+  width: 45%;
+  padding: 20px;
+}
+
+#user-stream-audio {
+  display: inline-block;
+  width: 45%;
+}
+
+#user-stream {
+  color: #C80404;
+  background: white;
+}
+
+#user-stream h2, h3 {
+  display: inline-block;
+  margin: 10px;
+}
+
+.btn {
+  @include button-input-style;
+  color: $default-btn-text-color;
+  background-color: $default-btn-bg-color;
+  
+  font-size: 16px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $default-btn-hover-color;
+  }
+
+  &:disabled, &:disabled:hover {
+    cursor: not-allowed;
+    background-color: $btn-disabled-bg-color;
+    color: $btn-disabled-text-color;
+  } 
+}
+
+.btn-login,
+.btn-submit {
+  background-color: $submit-btn-bg-color;
+  color: $submit-btn-text-color;
+
+  &:hover {
+    background-color: $submit-btn-hover-color;
+  }
+}
