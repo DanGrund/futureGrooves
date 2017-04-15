@@ -1,24 +1,38 @@
 @import '../../styles/variables';
 
 .header {
-  display: grid;
-  grid-template-columns: 25% 75%;
-  align-content: center;	
+  display: flex;
+  // grid-template-columns: 25% 75%;
+  // align-content: center;	
   width: 100vw;
   height: 10vh;
   min-height: 80px;
   background-color: $header-background-color;
-  // align-items: end;
-  // justify-content: start;		
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: nowrap;
 }
 
 .nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  justify-content: end;
-  width: 75%;
+  display: flex;
+  // grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
-  // justify-content: space-around;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  
+  font-size: 24px;
+  a {
+    text-decoration: none;
+    color: $link-text-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+
+    &:active {
+      color: $link-active-color;
+    }
+  }
 }
 
 .login-modal {
@@ -87,8 +101,9 @@ label {
 }
 
 .logo {
-  grid-column: 1 / 2;
-  justify-self: end;
+  // flex-grow: 2;
+  // grid-column: 1 / 2;
+  // justify-self: end;
   font-family: 'Faster One', sans-serif;
   font-size: 36px;
   text-decoration: none;
@@ -104,34 +119,10 @@ label {
     }
 }
 
-.nav {
-  grid-column: 2 / 3;
-  justify-self: end;
-  font-size: 24px;
-  a {
-    text-decoration: none;
-    color: $link-text-color;
 
-    &:hover {
-      color: $link-hover-color;
-    }
-
-    &:active {
-      color: $link-active-color;
-    }
-  }
-}
-
-.nav-link--home {
-  grid-column: 1 / 2;
-}
-
-.nav-link--new-sound {
-  grid-column: 2 / 3;
-}
-
+.nav-link--new-sound,
 .nav-link--sequencer {
-  grid-column: 3 / 4;
+  margin: 0 20px;
 }
 
 .auth-container {
@@ -145,5 +136,22 @@ label {
 }
 
 .nav-btn-login {
-  grid-column: 5 / 6;
+  // grid-column: 5 / 6;
+}
+
+@media all and (max-width: 1200px) { 
+
+  .nav {
+    font-size: 18px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .nav-link--new-sound,
+  .nav-link--sequencer {
+    margin: 0 10px;
+  }
+
 }
