@@ -21,18 +21,7 @@
   flex-wrap: nowrap;
   
   font-size: 24px;
-  a {
-    text-decoration: none;
-    color: $link-text-color;
-
-    &:hover {
-      color: $link-hover-color;
-    }
-
-    &:active {
-      color: $link-active-color;
-    }
-  }
+ 
 }
 
 .login-modal {
@@ -69,13 +58,6 @@
   font-size: 14px;
 }
 
-.sign-in-container {
-  grid-column: 4 / 5;
-  // display: flex;
-  // flex-direction: column;
-  // position: relative;
-}
-
 .close-modal-btn {
   font-size: 24px;
   display: flex;
@@ -101,9 +83,6 @@ label {
 }
 
 .logo {
-  // flex-grow: 2;
-  // grid-column: 1 / 2;
-  // justify-self: end;
   font-family: 'Faster One', sans-serif;
   font-size: 36px;
   text-decoration: none;
@@ -133,10 +112,6 @@ label {
 .nav-btn-login {
   height: 40px;
   width: 100px;
-}
-
-.nav-btn-login {
-  // grid-column: 5 / 6;
 }
 
 @media all and (max-width: 1200px) { 
