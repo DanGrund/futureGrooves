@@ -165,12 +165,16 @@ export class Sequencer extends Component {
   }
 
   render() {
+    const togglePlayPause = () => {
+      return this.state.playPause ? 'Pause' : 'Play'
+    }
+
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
           <h1>futureGrooves</h1>
           <button id='play-button' onClick={()=>this.playPause()} >
-            play/pause
+            {togglePlayPause()}
           </button>
           tempo
           <input
