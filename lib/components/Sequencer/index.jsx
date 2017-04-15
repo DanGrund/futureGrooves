@@ -168,8 +168,7 @@ export class Sequencer extends Component {
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          <h1>futureGrooves</h1>
-          <button id='play-button' onClick={()=>this.playPause()} >
+          <button className='btn btn-play' id='play-button' onClick={()=>this.playPause()} >
             play/pause
           </button>
           tempo
@@ -218,11 +217,11 @@ export class Sequencer extends Component {
                 })
               }
             </select>
-            <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
+            <button className='btn btn-add' onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
           </form>}
         </div>
         <div>
-          <button>save</button>
+          <button className='btn btn-save'>save</button>
         </div>
       </div>
     )

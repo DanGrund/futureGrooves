@@ -6,8 +6,8 @@ const TrackRack = (props) => {
   return(
     <div className="single-rack">
       <div className='extended-controls'>
-        <button onClick={()=>props.muteTrack(props.name)}>mute</button>
-        <button onClick={()=>props.soloTrack(props.name)}>solo</button>
+        <button className='btn btn-sm btn-mute' onClick={()=>props.muteTrack(props.name)}>mute</button>
+        <button className='btn btn-sm btn-solo' onClick={()=>props.soloTrack(props.name)}>solo</button>
         <Slider
           label="volume"
           value={props.volume}
@@ -44,7 +44,7 @@ const TrackRack = (props) => {
       </div>
       <div className='title-bar'>
         <div className="sample-name">{props.name}</div>
-        <button onClick={(e)=>{props.removeTrack(props.name)}}>Remove</button>
+        <button className='btn btn-sm btn-delete' onClick={(e)=>{props.removeTrack(props.name)}}>Remove</button>
       </div>
 
     </div>

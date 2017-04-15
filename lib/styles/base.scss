@@ -21,7 +21,6 @@ h4 {
   margin-bottom: 5px;
   font-weight: bold;
   font-size: 1.25em;
-
 }
 
 #user-sounds {
@@ -48,6 +47,7 @@ h4 {
 }
 
 .btn {
+  transition: all 0.3s ease;
   @include button-input-style;
   color: $default-btn-text-color;
   background-color: $default-btn-bg-color;
@@ -61,7 +61,6 @@ h4 {
   
   &:focus { 
     outline:none;
-    border: 1px solid $input-placeholder-color;
     border-color: $input-active-border-color;
     box-shadow:0 0 10px lighten($input-active-border-color, 20%);
   }
@@ -73,13 +72,57 @@ h4 {
   } 
 }
 
+.btn-sm {
+  font-size: 12px;
+  padding: 5px 10px;
+  height: 100%;
+}
+
+.btn-mute {
+  background-color: $mute-btn-bg-color;
+  color: $mute-btn-text-color;
+
+  &:hover {
+    background-color: $mute-btn-hover-color;
+  }
+}
+
+.btn-solo {
+  background-color: $solo-btn-bg-color;
+  color: $solo-btn-text-color;
+
+  &:hover {
+    background-color: $solo-btn-hover-color;
+  }
+}
+
+.step-btn {
+  background-color: none;
+  color: $submit-btn-text-color;
+
+  &:hover {
+    background-color: $step-btn-hover-color;
+  }
+}
+
 .btn-login,
-.btn-submit {
+.btn-submit,
+.btn-save,
+.btn-play {
   background-color: $submit-btn-bg-color;
   color: $submit-btn-text-color;
 
   &:hover {
     background-color: $submit-btn-hover-color;
+  }
+}
+
+.btn-delete {
+  background-color: $delete-btn-bg-color;
+  color: $delete-btn-text-color;
+
+  &:hover {
+    background-color: $delete-btn-hover-color;
   }
 }
 
@@ -123,15 +166,43 @@ textarea {
 }
 
  a {
-    text-decoration: none;
-    color: $link-text-color;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: $link-text-color;
 
-    &:hover, &:focus {
-      color: $link-hover-color;
-      outline: none;
-    }
-
-    &:active {
-      color: $link-active-color;
-    }
+  &:hover, &:focus {
+    color: $link-hover-color;
+    outline: none;
   }
+
+  &:active {
+    color: $link-active-color;
+  }
+}
+
+hr {
+  width: 90%;
+  height: 0;
+  border: 0;
+  border-top: 1px solid $border-hr-color;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.slider-range {
+  margin: 0 10px;
+}
+
+.slider-number {
+  margin: 0 10px;
+  padding: 5px 5px;
+}
+
+.slider-label {
+  margin: 0 10px;
+  font-weight: lighter;
+}

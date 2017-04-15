@@ -5,9 +5,10 @@ export default class Slider extends React.Component {
 
   render() {
     return (
-      <div>
-        <span> {this.props.label} </span>
+      <div className='slider'>
+        <span className='slider-label'> {this.props.label} </span>
         <input
+          className='input slider-range'
           value={this.props.value}
           id={this.props.id}
           type='range'
@@ -17,6 +18,7 @@ export default class Slider extends React.Component {
           step={this.props.step}
           />
         <input
+          className='input slider-number'
           type='number'
           value={this.props.value}
           min={this.props.min}
