@@ -185,11 +185,11 @@ export class SoundMaker extends Component {
 
   render() {
     const { selectedSound, sounds } = this.props.userData
-    const { editSound } = this.props.sound
+    const { editsound } = this.props.sound
 
     const showUpdateSound = () => {
-      if(selectedSound || editSound) {
-        return <Button text='Update Sound' handleClick={this.updateSound} />
+      if (editsound || selectedSound) {
+        return <Button className='btn btn-save' text='Save' handleClick={this.updateSound} />
       }
     }
 
@@ -216,11 +216,11 @@ export class SoundMaker extends Component {
           <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
           <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
           {showUpdateSound()}
-          <Button className='btn btn-save' text='Save As New Sound' handleClick={this.saveNewSound} />
+          <Button className='btn btn-new' text='Save As' handleClick={this.saveNewSound} />
           { this.props.user.username &&
-            <label>
-              Load Sound
+            <label className='select select-load-sound'>
               <select onChange={(e) => this.loadSound(e.target.value)}>
+                <option selected disabled>load sound</option>
                 {sounds && soundList()}
               </select>
             </label>
