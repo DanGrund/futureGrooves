@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import './new-user-styles.scss'
+import Wad from 'web-audio-daw'
 import SongContainer from '../../containers/SongContainer'
 
 export class IndividualSong extends Component {
@@ -90,7 +90,7 @@ export class IndividualSong extends Component {
   render() {
       return (
       <div>
-        {this.loadComp()}
+        <h3>{this.props.name}</h3>
         <button onClick={this.playPause.bind(this)}>play</button>
       </div>
     )
