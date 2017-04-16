@@ -118,7 +118,6 @@ export class Sequencer extends Component {
     Object.assign(soundObject, {sound: soundAttributes})
     let newRack = this.state.trackRacks
     Object.assign(newRack, {[soundAttributes.soundName]:soundObject})
-    console.log(newRack)
     this.setState({ trackRacks: newRack })
   }
 
@@ -165,11 +164,15 @@ export class Sequencer extends Component {
   }
 
   render() {
-    return(
+    const togglePlayPause = () => {
+      return this.state.playPause ? 'Pause' : 'Play'
+    }
+
+    return (
       <div id='composition-maker'>
         <div id='play-controls'>
-          <button className='btn btn-play' id='play-button' onClick={()=>this.playPause()} >
-            play/pause
+          <button className='btn btn-play' id='play-button' onClick={() => this.playPause()} >
+            {togglePlayPause()}
           </button>
           tempo
           <input
@@ -217,7 +220,7 @@ export class Sequencer extends Component {
                 })
               }
             </select>
-            <button className='btn btn-add' onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
+            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
           </form>}
         </div>
         <div>

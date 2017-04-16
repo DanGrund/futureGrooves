@@ -5,6 +5,8 @@ import Slider from './Slider'
 import update from 'immutability-helper'
 import Button from '../Button'
 import './sound-maker.scss'
+import SoundMakerContainer from '../../containers/SoundMakerContainer'
+import UserContainer from '../../containers/UserContainer'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -59,6 +61,14 @@ export class SoundMaker extends Component {
     }
   }
 
+  componentDidMount() {
+    const { selectedSound } = this.props.userData
+    console.log(selectedSound)
+    if (selectedSound) {
+      this.setState({ spec: selectedSound })
+    }
+  }
+
   round(number, decimals) {
     return +(Math.round(number + 'e+' + decimals) + 'e-' + decimals)
   }
@@ -102,7 +112,7 @@ export class SoundMaker extends Component {
 
   updateFilter = (key) => ({ target }) => {
     const newValue = key === 'type' ? target.value : this.round(target.value, 4)
-    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } })), () => this.setState({ savedchanges: false })
+    this.setState(update(this.state, { spec: { filter: { [key]: { $set: newValue } } } }), () => this.setState({ savedchanges: false }))
   }
 
   updateFilterEnvelope = (key) => ({ target }) => {
@@ -469,4 +479,4 @@ export class SoundMaker extends Component {
   }
 }
 
-export default SoundMaker
+export default UserContainer(SoundMakerContainer(SoundMaker))

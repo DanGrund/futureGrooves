@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import UserContainer from '../../containers/UserContainer'
 
-var sampleAudio = "https://www.random.org/audio-noise/?channels=2&volume=100&rate=16000&size=8&date=2017-04-06&format=wav&deliver=browser"
 
 export class UserProfile extends Component {
   constructor() {
@@ -12,10 +11,27 @@ export class UserProfile extends Component {
     // }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     const {id, token } = this.props.userData
     this.props.fetchUserData(id, token)
   }
+
+  stopSound = () => {
+    this.props.stopSound()
+  }
+
+  loadSounds(){
+   return this.props.userData.sounds.map((sound, i) => {
+     let spec = JSON.parse(sound.attributes)
+     let title = spec.soundName ? spec.soundName : 'untitled'
+     return <div key={i}>
+              <h3 id={sound.id}>Sound: {title}</h3>
+                <button onClick={() => this.props.previewSound(spec)}>Play</button>
+                <button onClick={this.stopSound.bind(this)}>Stop</button>
+                <button onClick={() => this.props.openUserSound(spec)}>Edit</button>
+            </div>
+   })
+}
 
   render() {
     return(
@@ -28,23 +44,10 @@ export class UserProfile extends Component {
               <h3>member since 2017</h3>
             </header>
         <section id="user-stream-audio">
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
-          <audio src={sampleAudio} preload="none" controls></audio>
         </section>
         <section id="user-sounds">
           <h2>Sounds</h2>
-          <ul>
-            <li>808 slap<audio src={sampleAudio} preload="none" controls></audio><button>fork</button></li>
-            <li>808 snare<audio src={sampleAudio} preload="none" controls></audio><button>fork</button></li>
-            <li>808 hat<audio src={sampleAudio} preload="none" controls></audio><button>fork</button></li>
-            <li>E40<audio src={sampleAudio} preload="none" controls></audio><button>fork</button></li>
-          </ul>
+            {this.props.userData.sounds && <div>{this.loadSounds()}</div>}
         </section>
         </section>
       </div>
