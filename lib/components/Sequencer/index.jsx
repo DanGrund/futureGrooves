@@ -105,7 +105,7 @@ export class Sequencer extends Component {
   }
 
   addTrack(newSound) {
-    const soundFromDB = this.props.sound.library.find((sound)=>{
+    const soundFromDB = this.props.user.sounds.find((sound)=>{
       const soundValue = JSON.parse(sound.attributes);
       if(soundValue.soundName === newSound) {
         return true
@@ -167,7 +167,7 @@ export class Sequencer extends Component {
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
     }
-
+    console.log(this.props.user)
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
@@ -208,10 +208,10 @@ export class Sequencer extends Component {
         </div>
 
         <div id='new-sounds'>
-          {this.props.sound.library && <form>
+          {this.props.user.sounds && <form>
             add track
             <select onChange={(e)=>this.setState({newSound: e.target.value})}>
-              {this.props.sound.library.map((sound, i)=>{
+              {this.props.user.sounds.map((sound, i)=>{
                   const soundValue = JSON.parse(sound.attributes);
                   return(
                     <option value={soundValue.soundName} key={i}>
