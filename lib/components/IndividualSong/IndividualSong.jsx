@@ -58,6 +58,7 @@ export class IndividualSong extends Component {
 
   componentDidMount() {
     // this.fetchUserData()
+    this.setState({trackRacks: this.props.trackRacks, tempo: this.props.tempo})
     this.playLoop()
   }
 
@@ -89,9 +90,9 @@ export class IndividualSong extends Component {
 
   render() {
       return (
-      <div>
+      <div className="individual-song">
         <h3>{this.props.name}</h3>
-        <button onClick={this.playPause.bind(this)}>play</button>
+        <button className='btn btn-play btn-sm' onClick={this.playPause.bind(this)}>play</button>
       </div>
     )
   }

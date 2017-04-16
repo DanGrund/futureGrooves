@@ -32,7 +32,7 @@ loadComps(){
   return this.props.userData.compositions.map((comp, i) => {
     let attributes = (JSON.parse(comp.attributes))
     console.log(attributes)
-    return <IndividualSong key={i} name={attributes.soundName} />
+    return <IndividualSong className="btn-play" key={i} name={attributes.soundName} trackRacks={attributes.trackRacks} tempo={attributes.tempo}/>
   })
 }
 
