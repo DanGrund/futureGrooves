@@ -62,7 +62,6 @@ export class SoundMaker extends Component {
 
   componentDidMount() {
     const { selectedSound } = this.props.userData
-    console.log(selectedSound);
     if(selectedSound) {
       this.setState({ spec: selectedSound })
     }
@@ -84,10 +83,10 @@ export class SoundMaker extends Component {
     this.props.stopAllSounds()
   }
 
-  saveSound = () => {
-    const {username, selectedSound} = this.props.user
+  updateSound = () => {
+    const {username, selectedSound} = this.props.userData
     const { editsound } = this.props.sound
-    if(username) {
+    if(username && selectedSound) {
     if(selectedSound){
       this.fetchType('PATCH', this.props.user.sound_id)
       return
@@ -99,10 +98,15 @@ export class SoundMaker extends Component {
       this.fetchType('POST')
       return
     }
-  } else {
-    alert('Please Sign In')
+    } else {
+      alert('Please Sign In')
+    }
   }
-}
+
+  saveNewSound = () => {
+    const {username, selectedSound} = this.props.userData
+      return username ? this.fetchType('POST') : alert('Please Sign In')
+  }
 
   fetchType(method, sound_id = null) {
     let soundName = prompt('What do you want to call your sound')
@@ -113,7 +117,6 @@ export class SoundMaker extends Component {
   loadSound = () => {
     let soundID = prompt('Enter the ID of the sound you want to edit')
     this.props.loadSound(soundID)
-    console.log(this.props.sound)
     this.setState({spec: this.props.sound.editsound, id: this.props.sound.id})
   }
 
@@ -175,6 +178,15 @@ export class SoundMaker extends Component {
   }
 
   render() {
+    const { selectedSound } = this.props.userData
+    const { editSound } = this.props.sound
+
+    const showUpdateSound = () => {
+      if(selectedSound || editSound) {
+        return <Button text='Update Sound' handleClick={this.updateSound} />
+      }
+    }
+
     return (
       <div>
         <Prompt
@@ -187,7 +199,8 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
-          <Button text='Save Sound' handleClick={this.saveSound} />
+          {showUpdateSound()}
+          <Button text='Save As New Sound' handleClick={this.saveNewSound} />
           {this.props.user.username &&
             <div>
           <Button text='Load Sound' handleClick={this.loadSound} />
