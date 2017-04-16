@@ -85,7 +85,8 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
-    let soundName = prompt('What do you want to call your sound')
+    if(this.props.user.username) {
+      let soundName = prompt('What do you want to call your sound')
     if(this.props.user.selectedSound){
         this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id,'PATCH', this.props.user.sound_id))
         return
@@ -96,7 +97,10 @@ export class SoundMaker extends Component {
       this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, "POST"))
     }
     this.setState({ savedchanges: true })
+  } else {
+    alert('Please Sign In')
   }
+}
 
   loadSound = () => {
     let soundID = prompt('Enter the ID of the sound you want to edit')
@@ -170,9 +174,9 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
+          <Button text='Save Sound' handleClick={this.saveSound} />
           {this.props.user.username &&
             <div>
-           <Button text='Save Sound' handleClick={this.saveSound} />
           <Button text='Load Sound' handleClick={this.loadSound} />
         </div>}
         </div>
