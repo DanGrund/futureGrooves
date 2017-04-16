@@ -66,12 +66,12 @@ export class Sequencer extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.fetchUserData()
     this.playLoop()
   }
 
-  fetchUserData() {
+  fetchUserData = () => {
     this.props.fetchUserData(this.props.user.id, this.props.user.token)
   }
 
@@ -236,10 +236,10 @@ export class Sequencer extends Component {
         </div>
 
         <div id='new-sounds'>
-          {this.props.user.sounds && <form>
-            add track
-            <select onChange={(e)=>this.setState({newSound: e.target.value})}>
-              {this.props.user.sounds.map((sound, i)=>{
+          {this.props.user.sounds && !this.props.user.sounds.success && <form>
+            <select onChange={(e)=>this.setState({newSound: e.target.value})}  >
+              <option selected disabled>add track</option>
+              {!this.props.user.sounds.success && this.props.user.sounds.map((sound, i)=>{
                   const soundValue = JSON.parse(sound.attributes);
                   return(
                     <option value={soundValue.soundName} key={i}>
