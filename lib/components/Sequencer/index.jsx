@@ -71,6 +71,11 @@ export class Sequencer extends Component {
     this.playLoop()
   }
 
+  // componentWillUnmount() {
+  //   this.clearLoop()
+  //   this.setState({loopTimeout: null})
+  // }
+
   fetchUserData = () => {
     this.props.fetchUserData(this.props.user.id, this.props.user.token)
   }
@@ -82,7 +87,12 @@ export class Sequencer extends Component {
   playLoop() {
     this.playStep()
     setTimeout(this.playLoop.bind(this), this.state.spec.tempo)
+    // this.setState({ loopTimeout })
   }
+
+  // clearLoop() {
+  //   clearTimeout(this.loopId)
+  // }
 
   playStep() {
     if (this.state.playPause) {
