@@ -81,7 +81,7 @@ export class Sequencer extends Component {
 
   playLoop() {
     this.playStep()
-    setTimeout(this.playLoop.bind(this),this.state.tempo)
+    setTimeout(this.playLoop.bind(this), this.state.spec.tempo)
   }
 
   playStep() {
@@ -163,7 +163,7 @@ export class Sequencer extends Component {
   }
 
   updateTempo(newTempo) {
-    this.setState({tempo: newTempo})
+    this.setState(update(this.state, { spec: { tempo: { $set: newTempo } } }))
   }
 
   saveComp = () => {
@@ -196,16 +196,16 @@ export class Sequencer extends Component {
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
     }
+
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          <h1>futureGrooves</h1>
-          <button id='play-button' onClick={()=>this.playPause()} >
+          <button className='btn btn-play' id='play-button' onClick={() => this.playPause()} >
             {togglePlayPause()}
           </button>
           tempo
           <input
-            value={this.state.tempo}
+            value={this.state.spec.tempo}
             id={'tempo-slider'}
             type='range'
             onChange={(e)=>this.updateTempo(e.target.value)}
@@ -213,7 +213,7 @@ export class Sequencer extends Component {
             max={400}
             step={1}
           />
-          <span>≈{Math.round((60/this.state.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
+          <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
         </div>
 
         <div id='drum-racks'>
@@ -249,11 +249,11 @@ export class Sequencer extends Component {
                 })
               }
             </select>
-            <button onClick={(e)=>{e.preventDefault();this.addTrack(this.state.newSound)}}>add</button>
+            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
           </form>}
         </div>
         <div>
-          <button onClick={this.saveComp.bind(this)}>save</button>
+          <button className='btn btn-save' onClick={this.saveComp.bind(this)}>save</button>
         </div>
       </div>
     )

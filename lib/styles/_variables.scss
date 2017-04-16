@@ -1,0 +1,64 @@
+@import 'flat-ui-colors';
+
+$app-background-color: #fff;
+$default-text-color: #424242;
+$link-active-color: #ff5722;
+$link-text-color: $default-text-color;
+
+$header-background-color: $clouds;
+$logo-color: $wet-asphalt;
+
+$link-hover-color: #0fa3b1;
+
+$default-border-color: $silver;
+
+$border-hr-color: rgba(0, 0, 0, .1);
+
+$default-btn-text-color: $clouds;
+$default-btn-bg-color: $belize-hole;
+$default-btn-hover-color: $peter-river;
+
+$submit-btn-text-color: $clouds;
+$submit-btn-bg-color: $nephritis;
+$submit-btn-hover-color: $emerald;
+
+$delete-btn-text-color: $clouds;
+$delete-btn-bg-color: #e91e63;
+$delete-btn-hover-color: fade-out(#e91e63, .20);
+
+$mute-btn-text-color: $clouds;
+$mute-btn-bg-color: #f44336;
+$mute-btn-hover-color:fade-out(#ef5350, .20);
+
+$solo-btn-bg-color: #009688;
+$solo-btn-text-color: $clouds;
+$solo-btn-hover-color: fade-out(#009688, .20);
+
+$select-text-color: $default-text-color;
+$select-border-color: $default-border-color;
+
+$input-border-color: $silver;
+$input-placeholder-color: $silver;
+
+$btn-disabled-bg-color: $clouds;
+$btn-disabled-text-color: $silver; 
+
+$input-active-border-color: $link-active-color;
+
+$info-msg-text-color: $link-active-color;
+$error-msg-text-color: $link-active-color;
+
+// sequencer theme
+
+$step-on-bg-color: #00e676;
+$step-off-bg-color: $clouds;
+
+$step-btn-hover-color: #00e676;
+$step-btn-bg-color: none;
+
+$single-step-border-color: $concrete;
+
+$current-step-border-color: $link-active-color;
+
+$rack-bg-color: #FAFAFA;
+$rack-border-color: $concrete;

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import './header-style';
-import { Link } from 'react-router-dom';
-import Logout from './Logout';
-import LoginModal from './LoginModal';
-import UserContainer from '../../containers/UserContainer';
+import React, { Component } from 'react'
+import './header-style'
+import { NavLink } from 'react-router-dom'
+import Logout from './Logout'
+import LoginModal from './LoginModal'
+import UserContainer from '../../containers/UserContainer'
+import { push } from 'react-router-redux'
 
-class Header extends Component {
+export class Header extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isAuthenticated: false,
       loginModal: false,
@@ -22,7 +23,8 @@ class Header extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    return nextProps.user !== this.props.user
+    // return nextProps.user !== this.props.user
+    return nextProps.activeUser !== this.props.activeUser
   }
 
   logoutUser() {
@@ -40,21 +42,21 @@ class Header extends Component {
   }
 
   render() {
-    const { user } = this.state
+    const { activeUser } = this.props
 
     const displayLoginModal = () => {
       if(this.state.loginModal) {
         return <LoginModal login={this.loginUser.bind(this)}
                            error={userNotFound()}
-                           hideModal={() => this.hideModal()}/>
+                           hideModal={() => this.hideModal()} />
       }
     }
 
     const noUserOptions = () => {
       return (
-        <div className='sign-in-container'>
-          <Link to='/sign-up'>Sign Up</Link>
-          <button onClick={() => this.setState({ loginModal: true })}>Sign-in</button>
+        <div className='auth-container'>
+          <button className='btn btn-sign-up nav-btn-sign-up' onClick={() => this.props.goToSignUpPage()}>Sign Up</button>
+          <button className='btn btn-login nav-btn-login' onClick={() => this.setState({ loginModal: true })}>Login</button>
           {displayLoginModal()}
         </div>
       )
@@ -63,34 +65,29 @@ class Header extends Component {
     const activeUserOptions = () => {
       return (
         <div className='logout-container'>
-          <Link to={`/profile/${this.props.user}`}>Profile</Link>
-          <Logout handleLogout={this.logoutUser.bind(this)} username={this.props.user}/>
+          <Logout handleLogout={this.logoutUser.bind(this)} activeUser={activeUser} />
         </div>
       )
     }
 
     const userNotFound = () => {
-      const { userData } = this.props
-      if(userData.type === 'NOT_FOUND') {
-        return userData.msg
+      const { activeUser } = this.props
+      if (activeUser.type === 'NOT_FOUND') {
+        return activeUser.msg
       }
     }
 
     return (
-      <div className="header">
-        <Link to='/'><h1>FutureGrooves</h1></Link>
-        <nav>
-          <Link to='/'>Home</Link>
-          <Link to='/newsound'>New Sound</Link>
-          <Link to='/sequencer'>Sequencer</Link>
-
-
-          { this.props.user ? activeUserOptions() : noUserOptions() }
-
+      <div className='header'>
+        <NavLink to='/' className='logo' activeClassName='active-nav-link'><h1 className='logo--title'>FutureGrooves</h1></NavLink>
+        <nav className='nav'>
+          <NavLink to='/newsound' exact className='nav-link--new-sound' activeClassName='active-nav-link'>New Sound</NavLink>
+          <NavLink to='/sequencer' exact className='nav-link--sequencer' activeClassName='active-nav-link'>Sequencer</NavLink>
+          { activeUser.username ? activeUserOptions() : noUserOptions() }
         </nav>
       </div>
     )
   }
 }
 
-export default UserContainer(Header);
+export default UserContainer(Header)

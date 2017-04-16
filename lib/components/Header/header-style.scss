@@ -1,30 +1,33 @@
-$main-color: #fff;
-$header-background: #D8D8D8;
+@import '../../styles/variables';
 
 .header {
   display: flex;
-  flex-direction: row;
+  // grid-template-columns: 25% 75%;
+  // align-content: center;	
   width: 100vw;
   height: 10vh;
   min-height: 80px;
-  background-color: $header-background;
+  background-color: $header-background-color;
   align-items: center;
+  justify-content: space-around;
+  flex-wrap: nowrap;
 }
 
-.header nav {
-  margin-left: 50%;
-  width: 50%;
+.nav {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  font-size: 24px;
 }
 
 .login-modal {
-  width: 33vw;
-  min-height: 20vh;
+  width: 500px;
+  min-height: 100px;
   z-index: 10;
   position: absolute;
-  right: 0;
-  top: 35px;
+  right: 50px;
+  top: 100px;
   background: #FFF;
   box-shadow: 2px 1px 8px -1px rgba(100, 100, 100, 0.9);
   padding: 15px;
@@ -52,12 +55,6 @@ $header-background: #D8D8D8;
   font-size: 14px;
 }
 
-.sign-in-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
 .close-modal-btn {
   font-size: 24px;
   display: flex;
@@ -73,15 +70,74 @@ label {
   width: 50%;
 }
 
-.login-form .btn {
-  width: 20%;
-  height: 30px;
-  outline: none;
-  border: none;
-  font-size: 14px
+.login-form .btn-submit {
+  height: 40px;
 }
 
 .logout-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  vertical-align: center;
+  font-size: 24px;
+}
+
+.logo {
+  font-family: 'Faster One', sans-serif;
+  font-size: 36px;
+  text-decoration: none;
+  
+    color: $link-text-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+}
+
+
+.nav-link--new-sound,
+.nav-link--sequencer,
+.nav-link--profile {
+  margin: 0 20px;
+}
+
+.auth-container {
+  display: flex;
+}
+
+.nav-btn-sign-up,
+.nav-btn-login {
+  height: 40px;
+  width: 100px;
+}
+
+.active-nav-link {
+  color: $link-active-color;
+}
+
+
+
+@media all and (max-width: 1200px) { 
+
+  .nav {
+    font-size: 18px;
+  }
+
+  .logout {
+    font-size: 20px;
+  }
+
+  .nav-link--new-sound,
+  .nav-link--sequencer,
+  .nav-link--profile {
+    margin: 0 10px;
+  }
+
+}
+
+@media all and (max-width: 800px) {
+  .logo {
+    font-size: 24px;
+  }
+
 }

@@ -1,0 +1,49 @@
+@import '../../styles/variables';
+
+.user-profile-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.user-sounds {
+  padding: 20px;
+  max-width: 600px;
+}
+
+.user-stream-audio {
+  display: inline-block;
+  width: 45%;
+}
+
+.user-stream {
+  background: white;
+}
+
+.user-stream h2, h3 {
+  display: inline-block;
+  margin: 10px;
+}
+
+.sound-container {
+  display: grid;
+  grid-template-columns: 200px 50px 50px 50px;
+  grid-gap: 10px 15px;
+  align-items: center;
+  justify-content: center;
+
+  .btn {
+    width: 50px;
+  }
+}
+
+.sound-hr {
+  margin-bottom: 0;
+  grid-column: 1 / -1;
+  margin-left: 10px;
+}
+
+.sound-title {
+  font-family: 'Concert One', sans-serif;
+  font-size: 20px;
+}

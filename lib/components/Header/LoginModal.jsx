@@ -46,7 +46,7 @@ class Login extends Component {
 
             <label>
               Password
-              <input className='input password'
+              <input className='input intput-password'
                 placeholder='Password'
                 type='password'
                 ref='password'
@@ -54,7 +54,7 @@ class Login extends Component {
                 onKeyDown={(e) => this.submitWithEnter(e)}/>
               </label>
 
-              <button className='btn submit'
+              <button className='btn btn-submit'
                       onClick={this.loginUser.bind(this)}
                       disabled={!email || !password}>
                 Submit

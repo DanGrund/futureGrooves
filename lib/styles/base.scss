@@ -1,0 +1,224 @@
+@import 'reset.scss';
+@import 'variables';
+@import 'mixins';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Concert+One|Faster+One');
+
+body {
+  background-color: $app-background-color;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+h2 {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.btn {
+  @include button-input-style;
+  transition: all .2s ease;
+  background-color: $default-btn-bg-color;
+  color: $default-btn-text-color;
+  
+  font-size: 16px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $default-btn-hover-color;
+  }
+  
+  &:focus { 
+    outline:none;
+    border-color: $input-active-border-color;
+    box-shadow:0 0 10px lighten($input-active-border-color, 20%);
+  }
+
+  &:disabled, &:disabled:hover {
+    cursor: not-allowed;
+    background-color: $btn-disabled-bg-color;
+    color: $btn-disabled-text-color;
+  } 
+}
+
+.btn-sm {
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+.btn-mute {
+  background-color: $mute-btn-bg-color;
+  color: $mute-btn-text-color;
+
+  &:hover {
+    background-color: $mute-btn-hover-color;
+  }
+}
+
+.btn-solo {
+  background-color: $solo-btn-bg-color;
+  color: $solo-btn-text-color;
+
+  &:hover {
+    background-color: $solo-btn-hover-color;
+  }
+}
+
+.step-btn {
+  background-color: none;
+  color: $submit-btn-text-color;
+
+  &:hover {
+    background-color: $step-btn-hover-color;
+  }
+}
+
+.btn-login,
+.btn-submit,
+.btn-save,
+.btn-play {
+  background-color: $submit-btn-bg-color;
+  color: $submit-btn-text-color;
+
+  &:hover {
+    background-color: $submit-btn-hover-color;
+  }
+}
+
+.btn-delete,
+.btn-stop {
+  background-color: $delete-btn-bg-color;
+  color: $delete-btn-text-color;
+
+  &:hover {
+    background-color: $delete-btn-hover-color;
+  }
+}
+
+input,
+textarea {
+  margin: 10px 0px;
+  padding: 5px 20px;
+  border: 1px solid $default-border-color;
+  border-radius: 5px;
+  outline: 0;
+  font-size: 16px;
+
+  &:focus {
+    border: 1px solid $default-border-color;
+    border-color: $input-active-border-color;
+    outline: none;
+    box-shadow: 0 0 10px lighten($input-active-border-color, 20%);
+  }
+
+}
+
+::-webkit-input-placeholder {
+  color: $input-placeholder-color;
+  font-weight: 200;
+}
+
+::-moz-placeholder {
+  color: $input-placeholder-color;
+  font-weight: 200;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: $input-placeholder-color;
+  font-weight: 200;
+}
+
+:-moz-placeholder {
+  color: $input-placeholder-color;
+  font-weight: 200;
+}
+
+a {
+  transition: all .2s ease;
+  color: $link-text-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    outline: none;
+    color: $link-hover-color;
+  }
+}
+
+hr {
+  width: 100%;
+  height: 0;
+  border: 0;
+  border-top: 1px solid $border-hr-color;
+}
+
+.slider {
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-range {
+  margin: 0px 10px;
+}
+
+.slider-number {
+  margin: 0 10px;
+  padding: 5px 10px;
+  max-width: 80px;
+}
+
+.slider-label {
+  margin: 0 10px;
+  font-weight: lighter;
+}
+
+.select {
+  max-width: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.select select {
+    padding: 5px 10px;
+    color: $select-text-color;
+    @include button-input-style;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    border: 1px solid $select-border-color;
+    border-radius: 5px;
+    outline: 0;
+    font-size: 16px;
+}
+
+.select select:focus {
+    outline: none;
+}
+
+label.select:after {
+  content: "\f0dc";
+  font-family: FontAwesome;
+  color: $select-text-color;
+  position: absolute; 
+  right: 12px; 
+  top: 4px;
+  z-index: 1;
+  width: 10%;
+  height: 100%;  
+  pointer-events: none;    
+}

@@ -1,10 +1,17 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'
 
-const Logout = ({ username, handleLogout }) => {
+const Logout = ({ location, activeUser, handleLogout }) => {
+  console.log(activeUser)
+  if (activeUser === undefined) { 
+    console.log(activeUser, 'lol')
+    return null 
+  }
+
   return (
     <div className='logout'>
-      <h1>Welcome, {username}</h1>
-      <button onClick={handleLogout}>Logout</button>
+      <NavLink to={`/profile/${activeUser.username}`} exact className='nav-link--profile' activeClassName='active-nav-link'>{activeUser.username}</NavLink>
+      <button className='btn btn-logout' onClick={handleLogout}>Logout</button>
     </div>
   )
 }

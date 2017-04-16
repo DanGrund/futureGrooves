@@ -36,25 +36,26 @@ export class CreateNewUser extends Component {
     return (
       <div className='new-user-form-container'>
         {errorMessage()}
-        <form className='new-user-form'>
+        <form className='form new-user-form'>
+          <p><sup>*</sup> denotes a required field</p>
           <label>
             Username<sup>*</sup>
             <input placeholder='username'
-              className='new-user-input'
+              className='input new-user-input input--username'
               value={username}
               onChange={(e) => this.setState({ username: e.target.value })}/>
           </label>
           <label>
             Email<sup>*</sup>
             <input placeholder='email'
-              className='new-user-input'
+              className='input new-user-input input--email'
               value={email}
               onChange={(e) => this.setState({ email: e.target.value})}/>
           </label>
           <label>
             Password<sup>*</sup>
             <input placeholder='password'
-              className='new-user-input'
+              className='input new-user-input input--password'
               type='password'
               value={password}
               onChange={(e) => this.setState({ password: e.target.value})}/>
@@ -63,12 +64,11 @@ export class CreateNewUser extends Component {
             I have read and agree to the Terms of Service<sup>*</sup>
             <input type='checkbox' onChange={() => this.setState({ checkbox: !this.state.checkbox })}/>
           </label>
-          <button className='new-user-submit'
+          <button className='btn btn-submit new-user-submit'
                   disabled={!username || !email || !password || !checkbox}
                   onClick={this.submitNewUser.bind(this)}>
             Submit
           </button>
-          <p><sup>*</sup> denotes a required field</p>
         </form>
       </div>
     )

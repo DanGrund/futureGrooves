@@ -13,14 +13,14 @@ import CreateNewUser from '../CreateNewUser'
 export class App extends Component {
   render() {
     return (
-      <div>
+      <div className='app'>
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/newsound' component={SoundMaker} />
-          <Route path='/sequencer' component={SequencerContainer} />
-          <Route path='/profile/:username' component={UserProfile} />
-          <Route path='/sign-up' component={CreateNewUser} />
+          <Route exact path='/newsound' component={SoundMaker} />
+          <Route exact path='/sequencer' component={SequencerContainer} />
+          <Route exact path='/profile/:username' component={UserProfile} />
+          <Route exact path='/sign-up' component={CreateNewUser} />
         </Switch>
       </div>
     )

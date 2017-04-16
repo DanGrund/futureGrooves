@@ -1,37 +1,46 @@
-$main-color: #fff;
+@import '../../styles/variables';
 
 
 #composition-maker {
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   #play-controls {
     display: flex;
     flex-direction: row;
-    border: 1px solid pink;
+    align-items: center;
+    width: 800px;
     margin: 5px;
   }
   #tempo-slider {
     transform: rotate(180deg);
+    margin: 0;
   }
 
   #drum-racks {
     display: flex;
     flex-direction: column;
-    border: 1px solid blue;
     margin: 5px;
+  }
+
+  #track-volume, #track-filter {
+    margin: 0;
+    vertical-align: center;
   }
 }
 
 .single-rack {
   display: flex;
   flex-direction: column-reverse;
-  border: 1px solid green;
   margin: 5px;
+  padding: 10px;
+  border: 1px solid $rack-border-color;
+  border-radius: 5px;
+  background: $rack-bg-color; 
   .sample-name {
-    width: 40px;
-    border: 1px solid teal;
+    font-family: 'Concert One', sans-serif;
+    font-size: 24px;
     margin: 5px;
   }
 }
@@ -39,36 +48,57 @@ $main-color: #fff;
 .title-bar {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
+
 
 .extended-controls {
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .basic-controls {
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .single-step {
-  border: 1px solid yellowgreen;
-  margin: 5px;
-  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $single-step-border-color;
+  margin: 10px 4px;
+  padding-top: 5px;
+  height: 100%;
+  width: 50px;
+
   .step-on {
-    background: magenta;
-    margin: 5px;
+    background: $step-on-bg-color;
   }
   .step-off {
-    border: 1px solid purple;
-    margin: 5px;
+    background: $step-off-bg-color;
   }
 }
 
+
+
+
 .current {
-  background-color: red;
+   transition: all 0.1s ease-in-out;
+   border: 1px solid $current-step-border-color;
+   box-shadow:0 0 10px lighten($current-step-border-color, 20%); 
 }
 
 .pitch-input {
+  text-align: center;
   width: 30px;
+  padding: 2px 5px;
 }
+
+
