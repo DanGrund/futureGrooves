@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import UserContainer from '../../containers/UserContainer'
+import IndividualSong from '../IndividualSong/IndividualSong'
 
 
 export class UserProfile extends Component {
@@ -33,6 +34,15 @@ export class UserProfile extends Component {
    })
 }
 
+loadComps(){
+  return this.props.userData.compositions.map((comp, i) => {
+    return <div key={i}>
+              <h3>Comp:</h3>
+              {/* <IndividualSong /> */}
+          </div>
+  })
+}
+
   render() {
     return(
       <div>
@@ -45,6 +55,8 @@ export class UserProfile extends Component {
             </header>
         <section id="user-stream-audio">
         </section>
+        <h2>Comps</h2>
+          {this.props.userData.compositions && <div>{this.loadComps()}</div>}
         <section id="user-sounds">
           <h2>Sounds</h2>
             {this.props.userData.sounds && <div>{this.loadSounds()}</div>}
