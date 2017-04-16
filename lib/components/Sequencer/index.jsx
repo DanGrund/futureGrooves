@@ -237,18 +237,20 @@ export class Sequencer extends Component {
 
         <div id='new-sounds'>
           {this.props.user.sounds && !this.props.user.sounds.success && <form>
-            <select onChange={(e)=>this.setState({newSound: e.target.value})}  >
-              <option selected disabled>add track</option>
-              {!this.props.user.sounds.success && this.props.user.sounds.map((sound, i)=>{
+            <label className='select'>
+              <select onChange={(e) => this.setState({ newSound: e.target.value })}  >
+                <option selected disabled>add track</option>
+                {!this.props.user.sounds.success && this.props.user.sounds.map((sound, i) => {
                   const soundValue = JSON.parse(sound.attributes);
-                  return(
+                  return (
                     <option value={soundValue.soundName} key={i}>
                       {soundValue.soundName}
                     </option>
                   )
                 })
-              }
-            </select>
+                }
+              </select>
+            </label>
             <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
           </form>}
         </div>
