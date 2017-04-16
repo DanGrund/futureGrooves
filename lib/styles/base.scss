@@ -30,15 +30,15 @@ h4 {
   transition: all .2s ease;
   background-color: $default-btn-bg-color;
   color: $default-btn-text-color;
-  
+
   font-size: 16px;
 
   &:hover {
     cursor: pointer;
     background-color: $default-btn-hover-color;
   }
-  
-  &:focus { 
+
+  &:focus {
     outline:none;
     border-color: $input-active-border-color;
     box-shadow:0 0 10px lighten($input-active-border-color, 20%);
@@ -48,7 +48,7 @@ h4 {
     cursor: not-allowed;
     background-color: $btn-disabled-bg-color;
     color: $btn-disabled-text-color;
-  } 
+  }
 }
 
 .btn-sm {
@@ -214,11 +214,23 @@ label.select:after {
   content: "\f0dc";
   font-family: FontAwesome;
   color: $select-text-color;
-  position: absolute; 
-  right: 12px; 
+  position: absolute;
+  right: 12px;
   top: 4px;
   z-index: 1;
   width: 10%;
-  height: 100%;  
-  pointer-events: none;    
+  height: 100%;
+  pointer-events: none;
+}
+
+.individual-song{
+  margin-bottom: 3px;
+  font-size: 24px;
+  font-family: monospace;
+  width: 300px;
+  border-bottom: 2px solid red;
+}
+
+.individual-song .btn {
+  margin-bottom: 3px;
 }

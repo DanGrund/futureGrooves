@@ -30,10 +30,9 @@ export class UserProfile extends Component {
 
 loadComps(){
   return this.props.userData.compositions.map((comp, i) => {
-    return <div key={i}>
-              <h3>Comp:</h3>
-              {/* <IndividualSong /> */}
-          </div>
+    let attributes = (JSON.parse(comp.attributes))
+    console.log(attributes)
+    return <IndividualSong className="btn-play" key={i} name={attributes.soundName} trackRacks={attributes.trackRacks} tempo={attributes.tempo}/>
   })
 }
 
