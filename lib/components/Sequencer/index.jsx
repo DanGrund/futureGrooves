@@ -188,7 +188,7 @@ export class Sequencer extends Component {
 
   fetchType(method, sound_id = null) {
     let soundName = prompt('What do you want to call your sound')
-    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.user.id, method , sound_id))
+    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.user.id, method, sound_id))
     this.setState({ savedchanges: true })
   }
 
@@ -253,7 +253,7 @@ export class Sequencer extends Component {
           </form>}
         </div>
         <div>
-          <button className='btn btn-save' onClick={this.saveComp.bind(this)}>save</button>
+          <button className='btn btn-save' onClick={this.saveComp}>save</button>
         </div>
       </div>
     )

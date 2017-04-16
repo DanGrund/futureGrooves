@@ -46,7 +46,10 @@ loadComps(){
             <h3>26 compositions</h3>
             <h3>member since 2017</h3>
           </header>
-          <section className='user-stream-audio'></section>
+          <section className='user-stream-audio'>
+            <h2> Compositions </h2>
+            {this.props.userData.compositions && <div>{this.loadComps()}</div>}
+          </section>
           <section className='user-sounds'>
             <h2>Sounds</h2>
             {this.props.userData.sounds && <div>{this.loadSounds()}</div>}
