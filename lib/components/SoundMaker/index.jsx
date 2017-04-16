@@ -4,6 +4,8 @@ import Select from './Select'
 import Slider from './Slider'
 import update from 'immutability-helper'
 import Button from '../Button'
+import SoundMakerContainer from '../../containers/SoundMakerContainer'
+import UserContainer from '../../containers/UserContainer'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -55,6 +57,14 @@ export class SoundMaker extends Component {
           attack: 0,
         },
       },
+    }
+  }
+
+  componentDidMount() {
+    const { selectedSound } = this.props.userData
+    console.log(selectedSound);
+    if(selectedSound) {
+      this.setState({ spec: selectedSound })
     }
   }
 
@@ -477,4 +487,4 @@ export class SoundMaker extends Component {
   }
 }
 
-export default SoundMaker
+export default UserContainer(SoundMakerContainer(SoundMaker))

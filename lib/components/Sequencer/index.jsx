@@ -118,7 +118,6 @@ export class Sequencer extends Component {
     Object.assign(soundObject, {sound: soundAttributes})
     let newRack = this.state.trackRacks
     Object.assign(newRack, {[soundAttributes.soundName]:soundObject})
-    console.log(newRack)
     this.setState({ trackRacks: newRack })
   }
 
