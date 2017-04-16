@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchUserData, saveComp } from '../actions'
-import Sequencer from '../components/Sequencer'
+import { fetchUserData } from '../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,7 +11,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchUserData,
-  saveComp
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sequencer)
+export default connect(mapStateToProps, mapDispatchToProps)

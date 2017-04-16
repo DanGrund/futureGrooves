@@ -82,15 +82,36 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
+    const {username, selectedSound} = this.props.user
+    const { editsound } = this.props.sound
+    if(username) {
+    if(selectedSound){
+      this.fetchType('PATCH', this.props.user.sound_id)
+      return
+    }
+    if(editsound) {
+      this.fetchType('PATCH', this.state.id)
+      return
+    } else {
+      this.fetchType('POST')
+      return
+    }
+  } else {
+    alert('Please Sign In')
+  }
+}
+
+  fetchType(method, sound_id = null) {
     let soundName = prompt('What do you want to call your sound')
-    this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id))
+    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method , sound_id))
     this.setState({ savedchanges: true })
   }
 
   loadSound = () => {
     let soundID = prompt('Enter the ID of the sound you want to edit')
     this.props.loadSound(soundID)
-    this.setState({spec: this.props.sound.editsound})
+    console.log(this.props.sound)
+    this.setState({spec: this.props.sound.editsound, id: this.props.sound.id})
   }
 
   updateValue = (key) => ({ target }) => {
@@ -103,7 +124,12 @@ export class SoundMaker extends Component {
   }
 
   updateSource = ({ target }) => {
-    this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
+    if (target.value === 'sine' || target.value === 'sawtooth' || target.value === 'square' || target.value === 'triangle' || target.value === 'noise') {
+      this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
+    } else {
+      const newNoise = `http://localhost:3000/api/v1/samples?id=${target.value}.wav`
+      this.setState(update(this.state, { spec: { source: { $set: newNoise } } }), () => this.setState({ savedchanges: false }))
+    }
   }
 
   updateADSR = (key) => ({ target }) => {
@@ -157,18 +183,17 @@ export class SoundMaker extends Component {
         <div className='btn-group'>
           <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
           <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
+          <Button className='btn btn-save' text='Save Sound' handleClick={this.saveSound} />
           {this.props.user.username &&
-            <div>
-           <Button className='btn btn-save' text='Save Sound' handleClick={this.saveSound} />
-          <Button className='btn btn-load' text='Load Sound' handleClick={this.loadSound} />
-        </div>}
+            <Button className='btn btn-load' text='Load Sound' handleClick={this.loadSound} />
+          }
         </div>
 
         <div className='basics'>
           <Select
             name='source-shape'
             className='select source-shape'
-            options={['sine', 'sawtooth', 'square', 'triangle', 'noise']}
+            options={['sine', 'sawtooth', 'square', 'triangle', 'noise', '808bass', '808clap', '808closedHat', '808openHat', '808kick1', '808kick2', '808ride', '808snare', '808tomHigh', '808tomMid', '808tomLow']}
             updateSelection={this.updateSource}
           />
           <Slider

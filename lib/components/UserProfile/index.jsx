@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import UserContainer from '../../containers/UserContainer'
 import './user-profile.scss'
+import IndividualSong from '../IndividualSong/IndividualSong'
 
 export class UserProfile extends Component {
   componentWillMount() {
@@ -13,21 +14,28 @@ export class UserProfile extends Component {
     this.props.stopSound()
   }
 
-  loadSounds() {
-    return this.props.userData.sounds.map((sound, i) => {
-      let spec = JSON.parse(sound.attributes)
-      let title = spec.soundName ? spec.soundName : 'untitled'
-      return (
-        <div className='sound-container' key={i}>
-          <hr className='sound-hr' />
-          <h3 className='sound-title' id={sound.id}>{title}</h3>
-          <button className='btn btn-sm btn-play' onClick={() => this.props.previewSound(spec)}>Play</button>
-          <button className='btn btn-sm btn-stop' onClick={this.stopSound.bind(this)}>Stop</button>
-          <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec)}>Edit</button>
-        </div>
-      )
-    })
-  }
+  loadSounds(){
+   return this.props.userData.sounds.map((sound, i) => {
+     let spec = JSON.parse(sound.attributes)
+     let title = spec.soundName ? spec.soundName : 'untitled'
+     return <div className='sound-container' key={i}>
+              <hr className='sound-hr' />
+              <h3 className='sound-title' id={sound.id}>{title}</h3>
+                <button className='btn btn-sm btn-play' onClick={() => this.props.previewSound(spec)}>Play</button>
+                <button className='btn btn-sm btn-stop' onClick={this.stopSound.bind(this)}>Stop</button>
+                <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
+            </div>
+   })
+}
+
+loadComps(){
+  return this.props.userData.compositions.map((comp, i) => {
+    return <div key={i}>
+              <h3>Comp:</h3>
+              {/* <IndividualSong /> */}
+          </div>
+  })
+}
 
   render() {
     return (

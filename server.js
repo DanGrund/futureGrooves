@@ -158,7 +158,6 @@ app.post('/api/v1/users', (request, response) => {
 //login a user
 app.post('/api/v1/user/login', (request, response) => {
   const { email, password } = request.body
-
   database('users').where({
     email: email,
     password: password
@@ -532,7 +531,15 @@ app.get('/api/v1/impulses', (request, response) => {
   const { id } = request.query
   const filepath = path.join(__dirname, 'assets', 'audio', 'reverb', id)
   response.set({'Content-Type': 'audio/mpeg'})
-  var readStream = fs.createReadStream(filepath)
+  const readStream = fs.createReadStream(filepath)
+  readStream.pipe(response)
+})
+
+app.get('/api/v1/samples', (request, response) => {
+  const { id } = request.query
+  const filepath = path.join(__dirname, 'assets', 'audio', 'samples', id)
+  response.set({'Content-Type': 'audio/mpeg'})
+  const readStream = fs.createReadStream(filepath)
   readStream.pipe(response)
 })
 
