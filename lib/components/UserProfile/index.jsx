@@ -19,12 +19,12 @@ export class UserProfile extends Component {
      let spec = JSON.parse(sound.attributes)
      let title = spec.soundName ? spec.soundName : 'untitled'
      return <div className='sound-container' key={i}>
-              <hr className='sound-hr' />
-              <h3 className='sound-title' id={sound.id}>{title}</h3>
-                <button className='btn btn-sm btn-play' onClick={() => this.props.previewSound(spec)}>Play</button>
-                <button className='btn btn-sm btn-stop' onClick={this.stopSound.bind(this)}>Stop</button>
-                <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
-            </div>
+       <hr className='sound-hr' />
+       <h3 className='sound-title' id={sound.id}>{title}</h3>
+       <button className='btn btn-sm btn-play' onClick={() => this.props.previewSound(spec)}>Play</button>
+       <button className='btn btn-sm btn-stop' onClick={this.stopSound.bind(this)}>Stop</button>
+       <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
+     </div>
    })
 }
 
