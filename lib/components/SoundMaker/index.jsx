@@ -152,15 +152,15 @@ export class SoundMaker extends Component {
           when={!this.state.savedchanges}
           message='You have unsaved changes that will be lost. Are you sure want to leave?'
         />
+        {!this.state.savedchanges && <div className='msg'>You have unsaved changes.</div>}
+        {this.state.spec.soundName && <div className='sound-name'>{this.state.spec.soundName}</div>}
         <div className='btn-group'>
-          {!this.state.savedchanges && <div className='msg'>You have unsaved changes.</div>}
-          {this.state.spec.soundName && <h1>{this.state.spec.soundName}</h1>}
           <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
           <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
           {this.props.user.username &&
             <div>
-           <Button text='Save Sound' handleClick={this.saveSound} />
-          <Button text='Load Sound' handleClick={this.loadSound} />
+           <Button className='btn btn-save' text='Save Sound' handleClick={this.saveSound} />
+          <Button className='btn btn-load' text='Load Sound' handleClick={this.loadSound} />
         </div>}
         </div>
 

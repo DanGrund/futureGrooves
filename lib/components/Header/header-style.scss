@@ -123,10 +123,6 @@ label {
     font-size: 18px;
   }
 
-  .logo {
-    font-size: 24px;
-  }
-
   .logout {
     font-size: 20px;
   }
@@ -135,6 +131,13 @@ label {
   .nav-link--sequencer,
   .nav-link--profile {
     margin: 0 10px;
+  }
+
+}
+
+@media all and (max-width: 800px) {
+  .logo {
+    font-size: 24px;
   }
 
 }
