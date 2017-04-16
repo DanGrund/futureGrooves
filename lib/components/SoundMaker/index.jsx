@@ -99,8 +99,7 @@ export class SoundMaker extends Component {
     if (target.value === 'sine' || target.value === 'sawtooth' || target.value === 'square' || target.value === 'triangle' || target.value === 'noise') {
       this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
     } else {
-      const newNoise = `http://localhost:3000/api/v1/impulses?id=${target.value}.wav`
-      console.log(newNoise)
+      const newNoise = `http://localhost:3000/api/v1/samples?id=${target.value}.wav`
       this.setState(update(this.state, { spec: { source: { $set: newNoise } } }), () => this.setState({ savedchanges: false }))
     }
   }
@@ -168,7 +167,7 @@ export class SoundMaker extends Component {
           <Select
             name='source-shape'
             className='select source-shape'
-            options={['sine', 'sawtooth', 'square', 'triangle', 'noise', '808bass']}
+            options={['sine', 'sawtooth', 'square', 'triangle', 'noise', '808bass', '808clap', '808closedHat', '808openHat', '808kick1', '808kick2', '808ride', '808snare', '808tomHigh', '808tomMid', '808tomLow']}
             updateSelection={this.updateSource}
           />
           <Slider
