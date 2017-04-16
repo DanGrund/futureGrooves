@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
+import update from 'immutability-helper'
 // import Wad from '../../../vendor/wad.js'
 import './sequencer-style'
 import Slider from '../SoundMaker/Slider'
@@ -14,52 +15,54 @@ export class Sequencer extends Component {
     this.state = {
       playPause: false,
       currentStep: 0,
-      tempo: 160,
       newSound: '',
-      trackRacks: {
-        snare:{
-          steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
-          mute: false,
-          sound:{
-           source : 'noise',
-           volume: .5,
-           pitch: 'A4',
-            env : {
-                attack : .001,
-                decay : .12,
-                sustain : .3,
-                hold : .07,
-                release : .02
-            },
-            filter : {
-                type : 'highpass',
-                frequency : 300,
-                q : .180
+      spec: {
+        tempo: 160,
+        trackRacks: {
+          snare:{
+            steps:[{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:true, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
+            mute: false,
+            sound:{
+             source : 'noise',
+             volume: .5,
+             pitch: 'A4',
+              env : {
+                  attack : .001,
+                  decay : .12,
+                  sustain : .3,
+                  hold : .07,
+                  release : .02
+              },
+              filter : {
+                  type : 'highpass',
+                  frequency : 300,
+                  q : .180
+              }
             }
-          }
-        },
-        snap:{
-          steps:[{play:true, pitch:"A5"},{play:true, pitch:'B5'},{play:true, pitch:'C5'},{play:true, pitch:'D5'},{play:true, pitch:'E5'},{play:true, pitch:'D5'},{play:true, pitch:'C5'},{play:true, pitch:'B5'},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''}],
-          mute: false,
-          sound:{
-           source : 'sine',
-           volume: .5,
-           pitch: 'A4',
-            env : {
-                attack : .001,
-                decay : .12,
-                sustain : .3,
-                hold : .07,
-                release : .02
-            },
-            filter : {
-                type : 'highpass',
-                frequency : 300,
-                q : .180
+          },
+          snap:{
+            steps:[{play:true, pitch:"A5"},{play:true, pitch:'B5'},{play:true, pitch:'C5'},{play:true, pitch:'D5'},{play:true, pitch:'E5'},{play:true, pitch:'D5'},{play:true, pitch:'C5'},{play:true, pitch:'B5'},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''},{play:true, pitch:''}],
+            mute: false,
+            sound:{
+             source : 'sine',
+             volume: .5,
+             pitch: 'A4',
+              env : {
+                  attack : .001,
+                  decay : .12,
+                  sustain : .3,
+                  hold : .07,
+                  release : .02
+              },
+              filter : {
+                  type : 'highpass',
+                  frequency : 300,
+                  q : .180
+              }
             }
-          }
+          },
         },
-      },
+      }
     }
   }
 
@@ -83,10 +86,10 @@ export class Sequencer extends Component {
 
   playStep() {
     if (this.state.playPause) {
-      Object.keys(this.state.trackRacks).forEach((key)=>{
-        if(this.state.trackRacks[key].steps[this.state.currentStep].play && (!this.state.trackRacks[key].mute)){
-          let wad = new Wad (this.state.trackRacks[key].sound)
-          let pitch = (this.state.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.trackRacks[key].steps[this.state.currentStep].pitch : this.state.trackRacks[key].sound.pitch
+      Object.keys(this.state.spec.trackRacks).forEach((key)=>{
+        if(this.state.spec.trackRacks[key].steps[this.state.currentStep].play && (!this.state.spec.trackRacks[key].mute)){
+          let wad = new Wad (this.state.spec.trackRacks[key].sound)
+          let pitch = (this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch : this.state.spec.trackRacks[key].sound.pitch
             wad.play({pitch: pitch})
         }
       })
@@ -99,7 +102,7 @@ export class Sequencer extends Component {
   }
 
   toggleStep(key, index) {
-    let newRack = this.state.trackRacks
+    let newRack = this.state.spec.trackRacks
     newRack[key].steps[index].play = !newRack[key].steps[index].play
     this.setState({ trackRacks: newRack })
   }
@@ -116,42 +119,42 @@ export class Sequencer extends Component {
     let soundObject = {steps:[{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''},{play:false, pitch:''}],
     mute: false}
     Object.assign(soundObject, {sound: soundAttributes})
-    let newRack = this.state.trackRacks
+    let newRack = this.state.spec.trackRacks
     Object.assign(newRack, {[soundAttributes.soundName]:soundObject})
     this.setState({ trackRacks: newRack })
   }
 
   removeTrack(trackName) {
-    delete this.state.trackRacks[trackName]
+    delete this.state.spec.trackRacks[trackName]
     this.forceUpdate()
   }
 
   changeVolume(key, newVolume) {
-    let newRack = this.state.trackRacks
+    let newRack = this.state.spec.trackRacks
     newRack[key].sound.volume = parseFloat(newVolume)
     this.setState({ trackRacks: newRack })
   }
 
   changeFilter(key, newFreq) {
-    let newRack = this.state.trackRacks
+    let newRack = this.state.spec.trackRacks
     newRack[key].sound.filter.frequency = parseFloat(newFreq)
     this.setState({ trackRacks: newRack })
   }
 
   changePitch(key, index, newPitch) {
-    let newRack = this.state.trackRacks
+    let newRack = this.state.spec.trackRacks
     newRack[key].steps[index].pitch = newPitch.toUpperCase()
     this.setState({ trackRacks: newRack })
   }
 
   muteTrack(key) {
-    let newRack = this.state.trackRacks;
+    let newRack = this.state.spec.trackRacks;
     newRack[key].mute = !newRack[key].mute;
     this.setState({ trackRacks: newRack})
   }
 
   soloTrack(key) {
-    let newRack = this.state.trackRacks;
+    let newRack = this.state.spec.trackRacks;
     Object.keys(newRack).forEach((rack)=> {
       if (rack !== key) {
         newRack[rack].mute = !newRack[rack].mute
@@ -161,6 +164,32 @@ export class Sequencer extends Component {
 
   updateTempo(newTempo) {
     this.setState({tempo: newTempo})
+  }
+
+  saveComp = () => {
+    const {username, selectedSound} = this.props.user
+    const { editsound } = this.props.sound
+    if(username) {
+    if(selectedSound){
+      this.fetchType('PATCH', this.props.user.sound_id)
+      return
+    }
+    if(editsound) {
+      this.fetchType('PATCH', this.state.id)
+      return
+    } else {
+      this.fetchType('POST')
+      return
+    }
+  } else {
+    alert('Please Sign In')
+  }
+}
+
+  fetchType(method, sound_id = null) {
+    let soundName = prompt('What do you want to call your sound')
+    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.user.id, method , sound_id))
+    this.setState({ savedchanges: true })
   }
 
   render() {
@@ -188,12 +217,12 @@ export class Sequencer extends Component {
         </div>
 
         <div id='drum-racks'>
-          {Object.keys(this.state.trackRacks).map((trackRack, i) =>
+          {Object.keys(this.state.spec.trackRacks).map((trackRack, i) =>
             <TrackRack key={i}
                        name={trackRack}
-                       volume={this.state.trackRacks[trackRack].sound.volume}
-                       filter={this.state.trackRacks[trackRack].sound.filter.frequency}
-                       steps={this.state.trackRacks[trackRack].steps}
+                       volume={this.state.spec.trackRacks[trackRack].sound.volume}
+                       filter={this.state.spec.trackRacks[trackRack].sound.filter.frequency}
+                       steps={this.state.spec.trackRacks[trackRack].steps}
                        currentStep={this.state.currentStep}
                        toggleStep={this.toggleStep.bind(this)}
                        changeVolume={this.changeVolume.bind(this)}
@@ -224,7 +253,7 @@ export class Sequencer extends Component {
           </form>}
         </div>
         <div>
-          <button>save</button>
+          <button onClick={this.saveComp.bind(this)}>save</button>
         </div>
       </div>
     )
