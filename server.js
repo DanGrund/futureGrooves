@@ -531,8 +531,17 @@ app.get('/api/v1/impulses', (request, response) => {
   const { id } = request.query
   const filepath = path.join(__dirname, 'assets', 'audio', 'reverb', id)
   response.set({'Content-Type': 'audio/mpeg'})
-  var readStream = fs.createReadStream(filepath)
+  const readStream = fs.createReadStream(filepath)
   readStream.pipe(response)
+})
+
+app.get('api/v1/samples', (request, response) => {
+  const { id } = request.query
+  // const { id } = request.query
+  // const filepath = path.join(__dirname, 'assets', 'audio', 'reverb', id)
+  // response.set({'Content-Type': 'audio/mpeg'})
+  // const readStream = fs.createReadStream(filepath)
+  // readStream.pipe(response)
 })
 
 // display app at the root and all other routes

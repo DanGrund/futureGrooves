@@ -96,7 +96,13 @@ export class SoundMaker extends Component {
   }
 
   updateSource = ({ target }) => {
-    this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
+    if (target.value === 'sine' || target.value === 'sawtooth' || target.value === 'square' || target.value === 'triangle' || target.value === 'noise') {
+      this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
+    } else {
+      const newNoise = `http://localhost:3000/api/v1/impulses?id=${target.value}.wav`
+      console.log(newNoise)
+      this.setState(update(this.state, { spec: { source: { $set: newNoise } } }), () => this.setState({ savedchanges: false }))
+    }
   }
 
   updateADSR = (key) => ({ target }) => {
@@ -162,7 +168,7 @@ export class SoundMaker extends Component {
           <Select
             name='source-shape'
             className='select source-shape'
-            options={['sine', 'sawtooth', 'square', 'triangle', 'noise']}
+            options={['sine', 'sawtooth', 'square', 'triangle', 'noise', '808bass']}
             updateSelection={this.updateSource}
           />
           <Slider
