@@ -167,7 +167,6 @@ export class Sequencer extends Component {
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
     }
-    console.log(this.props.user)
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
