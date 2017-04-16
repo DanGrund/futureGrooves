@@ -85,16 +85,28 @@ export class SoundMaker extends Component {
   }
 
   saveSound = () => {
-    let soundName = prompt('What do you want to call your sound')
-    if(this.props.user.selectedSound){
-        this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id,'PATCH', this.props.user.sound_id))
-        return
+    const {username, selectedSound} = this.props.user
+    const { editsound } = this.props.sound
+    if(username) {
+    if(selectedSound){
+      this.fetchType('PATCH', this.props.user.sound_id)
+      return
     }
-    if(this.props.sound.editsound) {
-      this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id,'PATCH', this.state.id))
+    if(editsound) {
+      this.fetchType('PATCH', this.state.id)
+      return
     } else {
-      this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, "POST"))
+      this.fetchType('POST')
+      return
     }
+  } else {
+    alert('Please Sign In')
+  }
+}
+
+  fetchType(method, sound_id = null) {
+    let soundName = prompt('What do you want to call your sound')
+    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method , sound_id))
     this.setState({ savedchanges: true })
   }
 
@@ -175,9 +187,9 @@ export class SoundMaker extends Component {
           <Button text='Play' handleClick={this.previewSound} />
           <Button text='Stop' handleClick={this.stopSound} />
           <Button text='Stop All' handleClick={this.stopAllSounds} />
+          <Button text='Save Sound' handleClick={this.saveSound} />
           {this.props.user.username &&
             <div>
-           <Button text='Save Sound' handleClick={this.saveSound} />
           <Button text='Load Sound' handleClick={this.loadSound} />
         </div>}
         </div>
