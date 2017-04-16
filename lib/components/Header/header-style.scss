@@ -77,6 +77,9 @@ label {
 .logout-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  vertical-align: center;
+  font-size: 24px;
 }
 
 .logo {
@@ -93,7 +96,8 @@ label {
 
 
 .nav-link--new-sound,
-.nav-link--sequencer {
+.nav-link--sequencer,
+.nav-link--profile {
   margin: 0 20px;
 }
 
@@ -112,6 +116,7 @@ label {
 }
 
 
+
 @media all and (max-width: 1200px) { 
 
   .nav {
@@ -122,8 +127,13 @@ label {
     font-size: 24px;
   }
 
+  .logout {
+    font-size: 20px;
+  }
+
   .nav-link--new-sound,
-  .nav-link--sequencer {
+  .nav-link--sequencer,
+  .nav-link--profile {
     margin: 0 10px;
   }
 
