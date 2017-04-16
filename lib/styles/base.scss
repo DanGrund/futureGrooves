@@ -47,10 +47,10 @@ h4 {
 }
 
 .btn {
-  transition: all 0.3s ease;
   @include button-input-style;
-  color: $default-btn-text-color;
+  transition: all .2s ease;
   background-color: $default-btn-bg-color;
+  color: $default-btn-text-color;
   
   font-size: 16px;
 
@@ -130,49 +130,50 @@ input,
 textarea {
   margin: 10px 0px;
   padding: 5px 20px;
-  border: 1px solid $input-placeholder-color;
+  border: 1px solid $default-border-color;
   border-radius: 5px;
   outline: 0;
   font-size: 16px;
- 
-  &:focus { 
-    outline:none;
-    border: 1px solid $input-placeholder-color;
+
+  &:focus {
+    border: 1px solid $default-border-color;
     border-color: $input-active-border-color;
-    box-shadow:0 0 10px lighten($input-active-border-color, 20%);
+    outline: none;
+    box-shadow: 0 0 10px lighten($input-active-border-color, 20%);
   }
 
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
   color: $input-placeholder-color;
   font-weight: 200;
 }
 
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {
   color: $input-placeholder-color;
   font-weight: 200;
   opacity: 1;
 }
 
-:-ms-input-placeholder { /* IE 10+ */
+:-ms-input-placeholder {
   color: $input-placeholder-color;
   font-weight: 200;
 }
 
-:-moz-placeholder { /* Firefox 18- */
+:-moz-placeholder {
   color: $input-placeholder-color;
   font-weight: 200;
 }
 
- a {
-  transition: all 0.3s ease;
-  text-decoration: none;
+a {
+  transition: all .2s ease;
   color: $link-text-color;
+  text-decoration: none;
 
-  &:hover, &:focus {
-    color: $link-hover-color;
+  &:hover,
+  &:focus {
     outline: none;
+    color: $link-hover-color;
   }
 
   &:active {
@@ -198,7 +199,8 @@ hr {
 
 .slider-number {
   margin: 0 10px;
-  padding: 5px 5px;
+  padding: 5px 10px;
+  max-width: 80px;
 }
 
 .slider-label {
@@ -234,9 +236,9 @@ hr {
 label.select:after {
   content: "\f0dc";
   font-family: FontAwesome;
-  color: $select-display-color;
+  color: $select-text-color;
   position: absolute; 
-  right: 10px; 
+  right: 12px; 
   top: 4px;
   z-index: 1;
   width: 10%;

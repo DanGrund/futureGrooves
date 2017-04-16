@@ -1,0 +1,83 @@
+@import '../../styles/variables';
+
+.sound-maker-container {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 25px 50px 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  justify-items: center;
+  justify-content: center;
+  align-items: start;
+}
+
+.msg {
+  align-items: center;
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+  text-align: center;
+  justify-content: center;
+}
+
+.btn-group {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+  grid-column: 2 / 4;
+  grid-row: 2 / 3;
+  text-align: center;
+
+}
+
+.basics {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
+.ADSR {
+  grid-column: 4 / 5;
+  grid-row: 3 / 4;
+}
+
+.filter {
+  grid-column: 5 / 6;
+  grid-row: 3 / 4;
+}
+
+.vibrato {
+  grid-column: 4 / 5;
+  grid-row: 4 / 5;
+}
+
+.tremolo {
+  grid-column: 5 / 6;
+  grid-row: 4 / 5;
+}
+
+.delay {
+  grid-column: 3 / 4;
+  grid-row: 4 / 5;
+}
+
+.reverb {
+  grid-column: 3 / 4;
+  grid-row: 5 / 6;
+}
+
+
+@media (max-width: 1200px) {
+  .sound-maker-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .msg {
+
+  }
+
+}

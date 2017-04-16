@@ -4,6 +4,7 @@ import Select from './Select'
 import Slider from './Slider'
 import update from 'immutability-helper'
 import Button from '../Button'
+import './sound-maker.scss'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -68,10 +69,6 @@ export class SoundMaker extends Component {
 
   stopSound = () => {
     this.props.stopSound()
-  }
-
-  stopAllSounds = () => {
-    this.props.stopAllSounds()
   }
 
   saveSound = () => {
@@ -140,17 +137,16 @@ export class SoundMaker extends Component {
 
   render() {
     return (
-      <div>
+      <div className='sound-maker-container'>
         <Prompt
           when={!this.state.savedchanges}
           message='You have unsaved changes that will be lost. Are you sure want to leave?'
         />
         <div className='btn-group'>
-          {!this.state.savedchanges && <p>You have unsaved changes.</p>}
+          {!this.state.savedchanges && <div className='msg'>You have unsaved changes.</div>}
           {this.state.spec.soundName && <h1>{this.state.spec.soundName}</h1>}
           <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
           <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
-          <Button className='btn btn-stop-all' text='Stop All' handleClick={this.stopAllSounds} />
           {this.props.user.username &&
             <div>
            <Button text='Save Sound' handleClick={this.saveSound} />
@@ -252,7 +248,6 @@ export class SoundMaker extends Component {
             value={this.state.spec.env.release}
           />
         </div>
-
         <div className='filter'>
           <h4> Filter </h4>
           <Select
@@ -281,7 +276,7 @@ export class SoundMaker extends Component {
             value={this.state.spec.filter.q}
           />
           <Slider
-            label='Filter Envelope Frequency'
+            label='Envelope Frequency'
             className='filter-env-frequency'
             id='slider-filter-env-frequency'
             min={0}
@@ -291,7 +286,7 @@ export class SoundMaker extends Component {
             value={this.state.spec.filter.env.frequency}
           />
           <Slider
-            label='Filter Envelope Attack'
+            label='Envelope Attack'
             className='filter-env-attack'
             id='slider-filter-env-attack'
             min={0}
@@ -348,7 +343,7 @@ export class SoundMaker extends Component {
             updateSelection={this.updateReverbImpulse}
           />
           <Slider
-            label='Reverb Wet'
+            label='Wet'
             className='slider reverb-wet'
             id='slider-reverb-wet'
             min={0}
@@ -358,12 +353,10 @@ export class SoundMaker extends Component {
             value={this.state.spec.reverb.wet}
           />
         </div>
-        <div className='lfo-container'>
-          <h2> LFOs </h2>
           <div className='delay'>
             <h4> Delay </h4>
             <Slider
-              label='Delay Time'
+              label='Time'
               className='slider delay-time'
               id='slider-delay-time'
               min={0}
@@ -373,7 +366,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.delay.delayTime}
             />
             <Slider
-              label='Delay Wet'
+              label='Wet'
               className='slider delay-wet'
               id='slider-delay-wet'
               min={0}
@@ -383,7 +376,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.delay.wet}
             />
             <Slider
-              label='Delay Feedback'
+              label='Feedback'
               className='slider delay-feedback'
               id='slider-delay-feedback'
               min={0}
@@ -402,7 +395,7 @@ export class SoundMaker extends Component {
               updateSelection={this.updateShape('vibrato')}
             />
             <Slider
-              label='Vibrato Magnitude'
+              label='Magnitude'
               className='slider vibrato-magnitude'
               id='slider-vibrato-magnitude'
               min={1}
@@ -412,7 +405,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.vibrato.magnitude}
             />
             <Slider
-              label='Vibrato Speed'
+              label='Speed'
               className='slider vibrato-speed'
               id='slider-vibrato-speed'
               min={0}
@@ -422,7 +415,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.vibrato.speed}
             />
             <Slider
-              label='Vibrato Attack'
+              label='Attack'
               className='slider vibrato-attack'
               id='slider-vibrato-attack'
               min={0}
@@ -441,7 +434,7 @@ export class SoundMaker extends Component {
               updateSelection={this.updateShape('tremolo')}
             />
             <Slider
-              label='Tremolo Magnitude'
+              label='Magnitude'
               className='slider tremolo-magnitude'
               id='slider-tremolo-magnitude'
               min={1}
@@ -451,7 +444,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.tremolo.magnitude}
             />
             <Slider
-              label='Tremolo Speed'
+              label='Speed'
               className='slider tremolo-speed'
               id='slider-tremolo-speed'
               min={0}
@@ -461,7 +454,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.tremolo.speed}
             />
             <Slider
-              label='Tremolo Attack'
+              label='Attack'
               className='slider tremolo-attack'
               id='slider-tremolo-attack'
               min={0}
@@ -470,7 +463,6 @@ export class SoundMaker extends Component {
               handleChange={this.updateTremolo('attack')}
               value={this.state.spec.tremolo.attack}
             />
-          </div>
         </div>
       </div>
     )
