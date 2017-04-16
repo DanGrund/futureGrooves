@@ -33,11 +33,11 @@
 .single-rack {
   display: flex;
   flex-direction: column-reverse;
-  border: 1px solid $concrete;
-  border-radius: 5px;
-  background: #FAFAFA;
   margin: 5px;
   padding: 10px;
+  border: 1px solid $rack-border-color;
+  border-radius: 5px;
+  background: $rack-bg-color; 
   .sample-name {
     font-family: 'Concert One', sans-serif;
     font-size: 24px;

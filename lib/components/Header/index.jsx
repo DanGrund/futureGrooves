@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './header-style'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Logout from './Logout'
 import LoginModal from './LoginModal'
 import UserContainer from '../../containers/UserContainer'
@@ -57,7 +57,7 @@ export class Header extends Component {
     const activeUserOptions = () => {
       return (
         <div className='logout-container'>
-          <Link className='nav-link--profile' to={`/profile/${this.props.user}`}>Profile</Link>
+          <NavLink to={`/profile/${this.props.user}`} exact className='nav-link--profile' activeClassName='active-nav-link'>Profile</NavLink>
           <Logout handleLogout={this.logoutUser.bind(this)} username={this.props.user} />
         </div>
       )
@@ -72,10 +72,10 @@ export class Header extends Component {
 
     return (
       <div className='header'>
-        <Link className='logo' to='/'><h1 className='logo--title'>FutureGrooves</h1></Link>
+        <NavLink to='/' className='logo' activeClassName='active-nav-link'><h1 className='logo--title'>FutureGrooves</h1></NavLink>
         <nav className='nav'>
-          <Link className='nav-link--new-sound' to='/newsound'>New Sound</Link>
-          <Link className='nav-link--sequencer' to='/sequencer'>Sequencer</Link>
+          <NavLink to='/newsound' exact className='nav-link--new-sound' activeClassName='active-nav-link'>New Sound</NavLink>
+          <NavLink to='/sequencer' exact className='nav-link--sequencer' activeClassName='active-nav-link'>Sequencer</NavLink>
           { this.props.user ? activeUserOptions() : noUserOptions() }
         </nav>
       </div>
