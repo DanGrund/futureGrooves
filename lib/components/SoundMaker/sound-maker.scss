@@ -2,9 +2,8 @@
 
 .sound-maker-container {
   display: grid;
-  margin: 20px auto;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50px 50px 1fr 1fr 1fr;
+  grid-template-rows: 10px 50px 25px 1fr 1fr 1fr 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 5px;
   justify-items: center;
@@ -15,71 +14,200 @@
 .msg {
   align-items: center;
   grid-column: 2 / 4;
-  grid-row: 1 / 2;
-  // text-align: center;
+  grid-row: 2 / 3;
+  text-align: center;
+  color: $info-msg-text-color;
+  font-size: 18px;
   justify-content: center;
 }
 
 .sound-name {
   grid-column: 4 / 5;
-  grid-row: 1 / 2;
+  grid-row: 2 / 3;
   text-align: center;
   justify-content: center;
 }
 
 .btn-group {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   flex-grow: 1;
   justify-content: center;
   grid-column: 4 / 9;
-  grid-row: 1 / 2;
-  text-align: center;
+  grid-row: 2 / 3;
 }
 
 .basics {
   grid-column: 3 / 4;
-  grid-row: 3 / 4;
+  grid-row: 4 / 5;
 }
 
 .ADSR {
   grid-column: 4 / 5;
-  grid-row: 3 / 4;
+  grid-row: 4 / 5;
 }
 
 .filter {
   grid-column: 5 / 6;
-  grid-row: 3 / 4;
+  grid-row: 4 / 5;
 }
 
 .vibrato {
   grid-column: 4 / 5;
-  grid-row: 4 / 5;
+  grid-row: 5 / 6;
 }
 
 .tremolo {
   grid-column: 5 / 6;
-  grid-row: 4 / 5;
+  grid-row: 5 / 6;
 }
 
 .delay {
   grid-column: 3 / 4;
-  grid-row: 4 / 5;
+  grid-row: 5 / 6;
 }
 
 .reverb {
   grid-column: 3 / 4;
-  grid-row: 5 / 6;
+  grid-row: 6 / 7;
+}
+
+@media (max-width: 1450px) {
+  .sound-maker-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .msg {
+    align-items: center;
+    grid-column: 2 / 4;
+    grid-row: 3 / 4; 
+    justify-content: center;
+   
+  }
+  
+  .sound-name {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .btn-group {
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+  }
+
+  .basics {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+  }
+
+  .ADSR {
+    grid-column: 3 / 4;
+    grid-row: 4 / 5;
+  }
+  
+  .filter {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+  }
+  
+  .vibrato {
+    grid-column: 3 / 4;
+    grid-row: 5 / 6;
+  }
+  
+  .tremolo {
+    grid-column: 2 / 3;
+    grid-row: 6 / 7;
+  }
+  
+  .delay {
+    grid-column: 3 / 4;
+    grid-row: 6 / 7;
+  }
+  
+  .reverb {
+    grid-column: 2 / 4;
+    grid-row: 7 / 8;
+    align-self: start;
+  }
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
   .sound-maker-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    grid-template-columns: 1fr 3fr 1fr;
+  } 
+
+   .msg {
+    align-items: center;
+    grid-column: 2 / 3;
+    grid-row: 3 / 4; 
+    justify-content: center;
+   
+  }
+  
+  .sound-name {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    text-align: center;
+    justify-content: center;
   }
 
+  .btn-group {
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    grid-column: 1 / 4;
+    grid-row: 2 / 3;
+  }
+
+  .basics {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+  }
+
+  .ADSR {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+  }
+  
+  .filter {
+    grid-column: 2 / 3;
+    grid-row: 6 / 7;
+  }
+  
+  .vibrato {
+    grid-column: 2 / 3;
+    grid-row: 7 / 8;
+  }
+  
+  .tremolo {
+    grid-column: 2 / 3;
+    grid-row: 8 / 9;
+  }
+  
+  .delay {
+    grid-column: 2 / 3;
+    grid-row: 9 / 10;
+  }
+  
+  .reverb {
+    grid-column: 2 / 3;
+    grid-row: 10 / 11;
+  }
+}
+
+
+
+@media (max-width: 500px) {
+  .sound-maker-container {
+    .btn {
+      font-size: 12px;
+      margin: 5px;
+      padding: 10px 10px;
+    }
+  } 
 }
