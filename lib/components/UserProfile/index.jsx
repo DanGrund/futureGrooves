@@ -29,7 +29,6 @@ export class UserProfile extends Component {
                 <button onClick={() => this.props.previewSound(spec)}>Play</button>
                 <button onClick={this.stopSound.bind(this)}>Stop</button>
                 <button onClick={() => this.props.openUserSound(spec)}>Edit</button>
-
             </div>
    })
 }
