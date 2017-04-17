@@ -88,7 +88,7 @@ export class Sequencer extends Component {
 
   loop = (() => {
     let timer
-    let isPlaying = false 
+    let isPlaying = false
 
     return {
       isPlaying: () => {
@@ -220,16 +220,11 @@ export class Sequencer extends Component {
   }
 
   render() {
-    const togglePlayPause = () => {
-      return this.state.playPause ? 'Pause' : 'Play'
-    }
-
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          <button className='btn btn-play' id='play-button' onClick={() => this.playPause()} >
-            {togglePlayPause()}
-          </button>
+          {!this.state.playPause && <button className='btn btn-play' onClick={this.playPause.bind(this)}></button>}
+          {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
           tempo
           <input
             value={this.state.spec.tempo}
