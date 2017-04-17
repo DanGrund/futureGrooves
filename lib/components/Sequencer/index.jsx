@@ -192,10 +192,6 @@ export class Sequencer extends Component {
     this.setState({ savedchanges: true })
   }
 
-  componentWillUnmount() {
-    this.state = { spec: { tempo: 0 }}
-  }
-
   render() {
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
