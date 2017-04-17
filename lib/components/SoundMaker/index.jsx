@@ -120,7 +120,6 @@ export class SoundMaker extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(nextProps)
     if(nextProps.sound.id !== this.props.sound.id) {
       this.setState({spec: nextProps.sound.editsound, id: nextProps.sound.id})
     }
@@ -219,8 +218,8 @@ export class SoundMaker extends Component {
           <Button className='btn btn-new' text='Save As' handleClick={this.saveNewSound} />
           { this.props.user.username &&
             <label className='select select-load-sound'>
-              <select onChange={(e) => this.loadSound(e.target.value)}>
-                <option selected disabled>load sound</option>
+              <select defaultValue='load sound' onChange={(e) => this.loadSound(e.target.value)}>
+                <option value='load sound' disabled>load sound</option>
                 {sounds && soundList()}
               </select>
             </label>
