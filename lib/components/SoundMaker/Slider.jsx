@@ -2,6 +2,39 @@ import React from 'react'
 
 export default class Slider extends React.Component {
 
+  handleTextInputChange = (e) => {
+    this.setState({ inputDraft: e.target.value })
+  }
+
+  handleKeyUp = (e) => {
+
+     if (e.keyCode === 13 || e.type === 'blur') {
+       this.setState({ inputDraft: e.target.value })
+       if (e.target.value > this.props.max) {
+         e.target.value = this.props.max
+       } else if (e.target.value < this.props.min || e.target.value === '') {
+         e.target.value = this.props.min
+       }
+       if (e.target.value !== '') {
+         this.props.handleChange(e)
+       }
+      this.handleTextInputChange(e)
+    }
+  }
+
+  handleSliderChange = (e) => {
+    this.setState({inputDraft: e.target.value})
+    this.props.handleChange(e)
+  }
+
+  handleClick = (e) => {
+    console.log(e.relatedTarget)
+    console.log(e.target)
+  }
+
+  state = {
+    inputDraft: this.props.value
+  }
 
   render() {
     return (
@@ -12,7 +45,7 @@ export default class Slider extends React.Component {
           value={this.props.value}
           id={this.props.id}
           type='range'
-          onChange={e => this.props.handleChange(e)}
+          onChange={this.handleSliderChange}
           min={this.props.min}
           max={this.props.max}
           step={this.props.step}
@@ -20,11 +53,14 @@ export default class Slider extends React.Component {
         <input
           className='input slider-number'
           type='number'
-          value={this.props.value}
+          value={this.state.inputDraft}
           min={this.props.min}
           max={this.props.max}
           step={this.props.step}
-          onChange={e => this.props.handleChange(e)}
+          onChange={this.handleTextInputChange}
+          onKeyUp={this.handleKeyUp}
+          onBlur={this.handleKeyUp}
+          onClick={this.handleClick}
         />
       </div>
     )

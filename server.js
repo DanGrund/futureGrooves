@@ -7,7 +7,7 @@ const path = require('path');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
-const historyFallback = require('connect-history-api-fallback');
+// const historyFallback = require('connect-history-api-fallback');
 const jwt = require('jsonwebtoken');
 const jwtconfig = require('dotenv').config().parsed
 
@@ -18,9 +18,12 @@ app.use(cors());
 //   console.log('Make sure you have a CLIENT_SECRET in your .env file')
 // }
 
-app.set('secretKey', jwtconfig.CLIENT_SECRET)
+if(process.env.NODE_ENV === 'production'){
+  app.set('secretKey', process.env.CLIENT_SECRET)
+}
 
 if (process.env.NODE_ENV !== 'production') {
+  app.set( 'secretKey', jwtconfig.CLIENT_SECRET)
   const webpack = require('webpack');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
