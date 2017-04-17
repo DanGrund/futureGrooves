@@ -7,6 +7,7 @@ import Button from '../Button'
 import './sound-maker.scss'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import UserContainer from '../../containers/UserContainer'
+import InlineEdit from 'react-edit-inline'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -14,6 +15,7 @@ export class SoundMaker extends Component {
     this.round = this.round.bind(this)
     this.state = {
       savedchanges: true,
+      soundName: '',
       spec: {
         source: 'sine',
         volume: 0.5,
@@ -64,8 +66,14 @@ export class SoundMaker extends Component {
   componentDidMount() {
     const { selectedSound } = this.props.userData
     if (selectedSound) {
+      console.log('hit!!!');
       this.setState({ spec: selectedSound })
     }
+  }
+
+  componentWillUnmount() {
+    this.props.setSelectedSound(null, null)
+    this.props.editSound(null, null)
   }
 
   round(number, decimals) {
@@ -109,8 +117,13 @@ export class SoundMaker extends Component {
       return username ? this.fetchType('POST') : alert('Please Sign In')
   }
 
+  checkForName = () => {
+    const { soundName } = this.state
+    return soundName ? soundName : prompt('What do you want to call your sound')
+  }
+
   fetchType(method, sound_id = null) {
-    let soundName = prompt('What do you want to call your sound')
+    let soundName = this.checkForName()
     let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method , sound_id))
     this.setState({ savedchanges: true })
   }
@@ -203,6 +216,21 @@ export class SoundMaker extends Component {
       }
     }
 
+    const toggleSoundName = () => {
+      return this.state.spec.soundName
+      ?
+      <div className='sound-name'>
+        <InlineEdit text={this.state.spec.soundName}
+                    paramName='editedName'
+                    change={(e) => this.setState({ soundName: e.editedName })} />
+      </div>
+      :
+      <div className='sound-name'>
+        <input placeholder='Name This Sound'
+               onChange={(e) => {this.setState({ soundName: e.target.value })}}/>
+      </div>
+    }
+
     return (
       <div className='sound-maker-container'>
         <Prompt
@@ -210,7 +238,8 @@ export class SoundMaker extends Component {
           message='You have unsaved changes that will be lost. Are you sure want to leave?'
         />
         {!this.state.savedchanges && <div className='msg'>You have unsaved changes.</div>}
-        {this.state.spec.soundName && <div className='sound-name'>{this.state.spec.soundName}</div>}
+        <div>
+        </div>
         <div className='btn-group'>
           <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
           <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
@@ -225,8 +254,9 @@ export class SoundMaker extends Component {
             </label>
           }
         </div>
+        {toggleSoundName()}
 
-        <div className='basics'>
+        <div className='basics edit-section'>
           <Select
             name='source-shape'
             className='select source-shape'
@@ -267,7 +297,7 @@ export class SoundMaker extends Component {
           <input name='pitch' placeholder='pitch A0-C8' type='text' value={this.state.spec.pitch} onChange={this.updatePitch} />
           <br />
         </div>
-        <div className='ADSR'>
+        <div className='ADSR edit-section'>
           <h4> ADSR </h4>
           <Slider
             label='Attack'
@@ -320,7 +350,7 @@ export class SoundMaker extends Component {
             value={this.state.spec.env.release}
           />
         </div>
-        <div className='filter'>
+        <div className='filter edit-section'>
           <h4> Filter </h4>
           <Select
             name='filter-type'
@@ -368,7 +398,7 @@ export class SoundMaker extends Component {
             value={this.state.spec.filter.env.attack}
           />
         </div>
-        <div className='reverb'>
+        <div className='reverb edit-section'>
           <h4> Reverb </h4>
           <Select
             name='select-reverb-impulse'
@@ -425,7 +455,7 @@ export class SoundMaker extends Component {
             value={this.state.spec.reverb.wet}
           />
         </div>
-          <div className='delay'>
+          <div className='delay edit-section'>
             <h4> Delay </h4>
             <Slider
               label='Time'
@@ -458,7 +488,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.delay.feedback}
             />
           </div>
-          <div className='vibrato'>
+          <div className='vibrato edit-section'>
             <h4> Vibrato </h4>
             <Select
               name='vibrato-shape'
@@ -497,7 +527,7 @@ export class SoundMaker extends Component {
               value={this.state.spec.vibrato.attack}
             />
           </div>
-          <div className='tremolo'>
+          <div className='tremolo edit-section'>
             <h4> Tremolo </h4>
             <Select
               name='tremolo-shape'

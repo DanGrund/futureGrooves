@@ -3,7 +3,7 @@
 .sound-maker-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 10px 50px 25px 1fr 1fr 1fr 1fr;
+  grid-template-rows: 10px 50px 50px 1fr 1fr 1fr 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 5px;
   justify-items: center;
@@ -12,7 +12,7 @@
 
   .btn-new {
     width: 110px;
-  } 
+  }
 
   label.select-load-sound:after {
     position: absolute;
@@ -27,7 +27,7 @@
 
 .msg {
   align-items: center;
-  grid-column: 2 / 4;
+  grid-column: 3 / 5;
   grid-row: 2 / 3;
   text-align: center;
   color: $info-msg-text-color;
@@ -36,10 +36,12 @@
 }
 
 .sound-name {
-  grid-column: 4 / 5;
-  grid-row: 2 / 3;
+  display: flex;
+  grid-column: 2 / 4;
+  grid-row: 3 / 4;
   text-align: center;
   justify-content: center;
+  font-size: 2.7em;
 }
 
 .btn-group {
@@ -94,15 +96,14 @@
 
   .msg {
     align-items: center;
-    grid-column: 2 / 4;
-    grid-row: 3 / 4; 
-    justify-content: center;
-   
-  }
-  
-  .sound-name {
-    grid-column: 2 / 3;
+    grid-column: 3 / 5;
     grid-row: 2 / 3;
+    justify-content: center;
+  }
+
+  .sound-name {
+    grid-column: 2 / 4;
+    grid-row: 3;
     text-align: center;
     justify-content: center;
   }
@@ -121,27 +122,27 @@
     grid-column: 3 / 4;
     grid-row: 4 / 5;
   }
-  
+
   .filter {
     grid-column: 2 / 3;
     grid-row: 5 / 6;
   }
-  
+
   .vibrato {
     grid-column: 3 / 4;
     grid-row: 5 / 6;
   }
-  
+
   .tremolo {
     grid-column: 2 / 3;
     grid-row: 6 / 7;
   }
-  
+
   .delay {
     grid-column: 3 / 4;
     grid-row: 6 / 7;
   }
-  
+
   .reverb {
     grid-column: 2 / 4;
     grid-row: 7 / 8;
@@ -153,27 +154,27 @@
 @media (max-width: 900px) {
   .sound-maker-container {
     grid-template-columns: 1fr 3fr 1fr;
-    
-   
+
+
 
     .select {
       font-size: 12px;
     }
-  } 
+  }
 
- 
+
 
    .msg {
     align-items: center;
-    grid-column: 2 / 3;
-    grid-row: 3 / 4; 
+    grid-column: 3 / 5;
+    grid-row: 2 / 3;
     justify-content: center;
-   
+
   }
-  
+
   .sound-name {
     grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    grid-row: 3 / 3;
     text-align: center;
     justify-content: center;
   }
@@ -195,27 +196,27 @@
     grid-column: 2 / 3;
     grid-row: 5 / 6;
   }
-  
+
   .filter {
     grid-column: 2 / 3;
     grid-row: 6 / 7;
   }
-  
+
   .vibrato {
     grid-column: 2 / 3;
     grid-row: 7 / 8;
   }
-  
+
   .tremolo {
     grid-column: 2 / 3;
     grid-row: 8 / 9;
   }
-  
+
   .delay {
     grid-column: 2 / 3;
     grid-row: 9 / 10;
   }
-  
+
   .reverb {
     grid-column: 2 / 3;
     grid-row: 10 / 11;
@@ -239,5 +240,5 @@
     .btn-new {
       width: 80px;
     }
-  } 
+  }
 }
