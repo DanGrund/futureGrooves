@@ -212,6 +212,21 @@ export class SoundMaker extends Component {
       }
     }
 
+    const toggleSoundName = () => {
+      return this.state.spec.soundName
+      ?
+      <div className='sound-name'>
+        <InlineEdit text={this.state.spec.soundName}
+                    paramName='editedName'
+                    change={(e) => this.setState({ soundName: e.editedName })} />
+      </div>
+      :
+      <div className='sound-name'>
+        <input placeholder='Name This Sound'
+               onChange={(e) => {this.setState({ soundName: e.target.value })}}/>
+      </div>
+    }
+
     return (
       <div className='sound-maker-container'>
         <Prompt
@@ -235,21 +250,7 @@ export class SoundMaker extends Component {
             </label>
           }
         </div>
-        {this.state.spec.soundName ?
-          <div className='sound-name'>
-            <InlineEdit text={this.state.spec.soundName}
-                        paramName='editedName'
-                        change={(e) => this.setState({ soundName: e.editedName })} />
-
-          </div>
-
-
-          :
-          <div className='sound-name'>
-            <input placeholder='Name This Sound'
-                   onChange={(e) => {this.setState({ soundName: e.target.value })}}/>
-          </div>
-        }
+        {toggleSoundName()}
 
         <div className='basics edit-section'>
           <Select
