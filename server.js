@@ -19,7 +19,7 @@ app.use(cors());
 // }
 
 if(process.env.NODE_ENV === 'production'){
-  app.set('secretKey', ENV['CLIENT_SECRET'])
+  app.set('secretKey', process.env.CLIENT_SECRET)
 }
 
 if (process.env.NODE_ENV !== 'production') {
