@@ -7,7 +7,7 @@
     "build": "webpack --config ./webpack.config.js",
     "test": "mocha -w --compilers js:babel-core/register --require helpers/test-setup.js app/**/*.test.js",
     "start": "nodemon server.js --ignore /lib",
-    "heroku-postbuild": "npm build"
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
