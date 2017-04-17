@@ -7,7 +7,7 @@ const path = require('path');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
-const historyFallback = require('connect-history-api-fallback');
+// const historyFallback = require('connect-history-api-fallback');
 const jwt = require('jsonwebtoken');
 const jwtconfig = require('dotenv').config().parsed
 
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
     inline: true,
     noInfo: true,
   }));
-  // app.use(historyFallback());
+  app.use(historyFallback());
 }
 
 app.use(function(req, res, next) {
