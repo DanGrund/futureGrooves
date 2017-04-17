@@ -2,9 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 
 const Logout = ({ location, activeUser, handleLogout }) => {
-  console.log(activeUser)
-  if (activeUser === undefined) { 
-    console.log(activeUser, 'lol')
+  if (activeUser === undefined) {
     return null 
   }
 
