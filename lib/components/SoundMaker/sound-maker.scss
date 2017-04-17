@@ -8,7 +8,7 @@
   grid-row-gap: 15px;
   justify-items: center;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 
   .btn-new {
     width: 110px;
@@ -23,14 +23,14 @@
     width: 400px;
   }
 
+  .reverb {
+    max-height: 100px;
+    align-self: start;
+  }
+
   label.select-load-sound:after {
-    position: absolute;
     right: 15px;
-    top: 15px;
-    z-index: 1;
-    width: 10%;
-    height: 100%;
-    pointer-events: none;
+    top: 14px;
   }
 }
 
@@ -41,12 +41,14 @@
   text-align: center;
   color: $info-msg-text-color;
   font-size: 18px;
-  justify-content: center;
+  justify-self: center;
 }
 
 .sound-name {
-  grid-column: 3 / 5;
+  font-size: 36px;
+  grid-column: 3 / 4;
   grid-row: 2 / 3;
+  font-family: 'Concert One', sans-serif;
 }
 
 .btn-group {
@@ -95,11 +97,11 @@
 
 @media (max-width: 1450px) {
   .sound-maker-container {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns:  1fr 1fr 1fr 1fr;
   }
 
   .msg {
-    grid-column: 2 / 4;
+    grid-column: 3 / 4;
     grid-row: 3 / 4; 
   }
 
@@ -160,16 +162,17 @@
     }
   }
 
-
    .msg {
-    align-items: center;
+    justify-self: end;
     grid-column: 2 / 3;
     grid-row: 3 / 4; 
   }
 
   .sound-name {
+    margin: 0 50px;
     grid-column: 2 / 3;
     grid-row: 3 / 3;
+    justify-self: start;
   }
 
   .btn-group {
