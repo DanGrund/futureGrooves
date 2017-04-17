@@ -66,10 +66,14 @@ export class SoundMaker extends Component {
   componentDidMount() {
     const { selectedSound } = this.props.userData
     if (selectedSound) {
-      this.setState({ spec: selectedSound }, () => {
-        this.props.setSelectedSound({}, null)
-      })
+      console.log('hit!!!');
+      this.setState({ spec: selectedSound })
     }
+  }
+
+  componentWillUnmount() {
+    this.props.setSelectedSound(null, null)
+    this.props.editSound(null, null)
   }
 
   round(number, decimals) {
