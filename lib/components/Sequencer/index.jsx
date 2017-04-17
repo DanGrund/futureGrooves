@@ -68,7 +68,10 @@ export class Sequencer extends Component {
 
   componentWillMount() {
     this.fetchUserData()
-    this.playLoop()
+  }
+
+  componentWillUnmount() {
+    this.loop.stop()
   }
 
   // componentWillUnmount() {
@@ -81,33 +84,52 @@ export class Sequencer extends Component {
   }
 
   playPause() {
-    this.setState({ playPause: !this.state.playPause })
+    if (this.loop.isPlaying()) {
+      this.loop.stop()
+    } else {
+      this.loop.start()
+    }
   }
 
-  playLoop() {
-    this.playStep()
-    setTimeout(this.playLoop.bind(this), this.state.spec.tempo)
-    // this.setState({ loopTimeout })
-  }
+  loop = (() => {
+    let timer
+    let isPlaying = false
 
-  // clearLoop() {
-  //   clearTimeout(this.loopId)
-  // }
+    return {
+      isPlaying: () => {
+        return isPlaying
+      },
+      start: () => {
+        isPlaying = true
+        return this.loop.play()
+      },
+      play: () => {
+        if (isPlaying) {
+          this.playStep()
+          timer = setTimeout(this.loop.play, this.state.spec.tempo)
+          return timer
+        }
+      },
+      stop: () => {
+        isPlaying = false
+        return clearTimeout(timer)
+      },
+    }
+  })()
+
 
   playStep() {
-    if (this.state.playPause) {
-      Object.keys(this.state.spec.trackRacks).forEach((key)=>{
-        if(this.state.spec.trackRacks[key].steps[this.state.currentStep].play && (!this.state.spec.trackRacks[key].mute)){
-          let wad = new Wad (this.state.spec.trackRacks[key].sound)
-          let pitch = (this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch : this.state.spec.trackRacks[key].sound.pitch
-            wad.play({pitch: pitch})
-        }
-      })
-      if (this.state.currentStep < 15) {
-        this.setState({currentStep: this.state.currentStep + 1})
-      } else {
-        this.setState({currentStep: 0})
+    Object.keys(this.state.spec.trackRacks).forEach((key) => {
+      if (this.state.spec.trackRacks[key].steps[this.state.currentStep].play && (!this.state.spec.trackRacks[key].mute)) {
+        let wad = new Wad(this.state.spec.trackRacks[key].sound)
+        let pitch = (this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch !== '') ? this.state.spec.trackRacks[key].steps[this.state.currentStep].pitch : this.state.spec.trackRacks[key].sound.pitch
+        wad.play({ pitch: pitch })
       }
+    })
+    if (this.state.currentStep < 15) {
+      this.setState({ currentStep: this.state.currentStep + 1 })
+    } else {
+      this.setState({ currentStep: 0 })
     }
   }
 
