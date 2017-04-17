@@ -18,9 +18,12 @@ app.use(cors());
 //   console.log('Make sure you have a CLIENT_SECRET in your .env file')
 // }
 
-app.set('secretKey', jwtconfig.CLIENT_SECRET)
+if(process.env.NODE_ENV === 'production'){
+  app.set('secretKey', ENV['CLIENT_SECRET'])
+}
 
 if (process.env.NODE_ENV !== 'production') {
+  app.set( 'secretKey', jwtconfig.CLIENT_SECRET)
   const webpack = require('webpack');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -37,7 +40,7 @@ if (process.env.NODE_ENV !== 'production') {
     inline: true,
     noInfo: true,
   }));
-  app.use(historyFallback());
+  // app.use(historyFallback());
 }
 
 app.use(function(req, res, next) {
