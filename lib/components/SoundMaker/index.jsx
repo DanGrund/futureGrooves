@@ -7,6 +7,7 @@ import Button from '../Button'
 import './sound-maker.scss'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import UserContainer from '../../containers/UserContainer'
+import InlineEdit from 'react-edit-inline'
 
 export class SoundMaker extends Component {
   constructor() {
@@ -14,7 +15,7 @@ export class SoundMaker extends Component {
     this.round = this.round.bind(this)
     this.state = {
       savedchanges: true,
-      newSoundName: '',
+      soundName: '',
       spec: {
         source: 'sine',
         volume: 0.5,
@@ -65,7 +66,9 @@ export class SoundMaker extends Component {
   componentDidMount() {
     const { selectedSound } = this.props.userData
     if (selectedSound) {
-      this.setState({ spec: selectedSound })
+      this.setState({ spec: selectedSound }, () => {
+        this.props.setSelectedSound({}, null)
+      })
     }
   }
 
@@ -111,8 +114,8 @@ export class SoundMaker extends Component {
   }
 
   checkForName = () => {
-    const { newSoundName } = this.state
-    return newSoundName ? newSoundName : prompt('What do you want to call your sound')
+    const { soundName } = this.state
+    return soundName ? soundName : prompt('What do you want to call your sound')
   }
 
   fetchType(method, sound_id = null) {
@@ -233,13 +236,18 @@ export class SoundMaker extends Component {
           }
         </div>
         {this.state.spec.soundName ?
-          <div className='sound-name' contentEditable>
-            {this.state.spec.soundName}
+          <div className='sound-name'>
+            <InlineEdit text={this.state.spec.soundName}
+                        paramName='editedName'
+                        change={(e) => this.setState({ soundName: e.editedName })} />
+
           </div>
+
+
           :
           <div className='sound-name'>
             <input placeholder='Name This Sound'
-                   onChange={(e) => {this.setState({ newSoundName: e.target.value })}}/>
+                   onChange={(e) => {this.setState({ soundName: e.target.value })}}/>
           </div>
         }
 
