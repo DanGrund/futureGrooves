@@ -118,8 +118,13 @@ export class IndividualSong extends Component {
     return (
       <div className="individual-song">
         <h3>{this.props.name.substring(0,7)}</h3>
-        {!this.state.playPause && <button className='btn-play' onClick={this.playPause.bind(this)}></button>}
-        {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
+
+        <span className='composition-controls'>
+          {!this.state.playPause && <button className='btn-play' onClick={this.playPause.bind(this)}></button>}
+          {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
+          <button className='btn btn-sm btn-edit' onClick={() => console.log('edit comp')}>Edit</button>
+          <button className='btn btn-sm btn-delete' onClick={() => console.log('delete comp')}>Delete</button>
+        </span>
       </div>
     )
   }
