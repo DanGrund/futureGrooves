@@ -51,26 +51,26 @@ export class UserProfile extends Component {
   }
 
   render() {
-    const { user , userData } = this.props
+    const { user, userData } = this.props
     return (
       <div>
         <div className='user-profile-container'>
           <section className='user-stream'>
 
             <header>
-              <h2 className='user-headers' className='user-stream-name'>{this.props.user && this.props.user}</h2>
-              <h3 className='user-headers'> / Compositions : {this.props.userData.compositions.length > 0 && this.props.userData.compositions.length } / </h3>
+              <h2 className='user-headers' className='user-stream-name'>{user && user}</h2>
+              <h3 className='user-headers'> / Compositions : {userData.compositions && userData.compositions.length } / </h3>
               <h3 className='user-headers'> Member since 2017</h3>
             </header>
 
             <section className='user-stream-audio'>
               <h2 className='user-headers'> Compositions </h2>
-              {this.props.userData.compositions && <div>{this.loadComps()}</div>}
+              {userData.compositions && <div>{this.loadComps()}</div>}
             </section>
 
             <section className='user-sounds'>
               <h2 className='user-headers'> Sounds</h2>
-              {this.props.userData.sounds && <div>{this.loadSounds()}</div>}
+              {userData.sounds && <div>{this.loadSounds()}</div>}
             </section>
           </section>
         </div>
