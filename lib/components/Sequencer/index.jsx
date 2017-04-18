@@ -84,6 +84,7 @@ export class Sequencer extends Component {
   }
 
   playPause() {
+    this.setState({ playPause: !this.state.playPause })
     if (this.loop.isPlaying()) {
       this.loop.stop()
     } else {

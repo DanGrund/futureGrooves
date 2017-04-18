@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom'
 
 const Logout = ({ location, activeUser, handleLogout }) => {
   if (activeUser === undefined) {
-    return null 
+    return null
   }
 
   return (
     <div className='logout'>
-      <NavLink to={`/profile/${activeUser.username}`} exact className='nav-link--profile' activeClassName='active-nav-link'>{activeUser.username}</NavLink>
+      <NavLink to={`/profile/${activeUser.username}`} exact className='nav-link--profile' activeClassName='active-nav-link'>Profile</NavLink>
       <button className='btn btn-logout' onClick={handleLogout}>Logout</button>
     </div>
   )
