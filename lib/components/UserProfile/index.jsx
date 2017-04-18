@@ -11,7 +11,7 @@ export class UserProfile extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    return nextProps.userData.compositions !== this.props.userData.compositions
+    return nextProps.userData !== this.props.userData
   }
 
   stopSound = () => {
@@ -28,7 +28,7 @@ export class UserProfile extends Component {
        <div className='composition-controls'>
          <button className='btn-play' onClick={() => this.props.previewSound(spec)}></button>
          <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
-         <button className='btn btn-sm btn-delete' onClick={this.stopSound.bind(this)}>Delete</button>
+         <button className='btn btn-sm btn-delete' onClick={() => this.props.deleteSound(sound.id)}>Delete</button>
        </div>
      </div>
    })
