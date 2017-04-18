@@ -246,7 +246,7 @@ export class Sequencer extends Component {
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          {!this.state.playPause && <button className='btn btn-play' onClick={this.playPause.bind(this)}></button>}
+          {!this.state.playPause && <button className='btn-play' onClick={this.playPause.bind(this)}></button>}
           {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
           tempo
           <input
