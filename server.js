@@ -502,24 +502,32 @@ app.patch('/api/v1/sounds/:id', (request, response) => {
 app.delete('/api/v1/sounds/:id', (request, response) => {
   const { id } = request.params;
 
-  database('sounds').where('id', id).select()
-  .then((sound)=>{
-    if(sound.length<1){
-      response.status(404).send({
-        error: 'ID did not match any existing sounds'
+  database('sounds').where('id', id).del()
+  .then((num) => {
+    if(num > 0) {
+      database('sounds').select()
+      .then(sounds => {
+        response.status(200).send(sounds)
       })
     } else {
-      database('sounds').where('id', id).delete()
-        .then(()=> {
-          database('sounds').select()
-          .then((data)=>{
-            response.status(200).json(data)
-          })
-        })
-        .catch((error) => {
-          console.error(error)
-        });
+      response.status(404).send({ error: 'Unable to delete'})
     }
+  //   if(sound.length<1){
+  //     response.status(404).send({
+  //       error: 'ID did not match any existing sounds'
+  //     })
+  //   } else {
+  //     database('sounds').where('id', id).delete()
+  //       .then(()=> {
+  //         database('sounds').select()
+  //         .then((data)=>{
+  //           response.status(200).json(data)
+  //         })
+  //       })
+  //       .catch((error) => {
+  //         console.error(error)
+  //       });
+  //   }
   })
 })
 
