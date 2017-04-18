@@ -44,7 +44,8 @@ export class UserProfile extends Component {
             name={attributes.soundName}
             trackRacks={attributes.trackRacks}
             tempo={attributes.tempo}
-            handleDelete={() => this.props.deleteComposition(comp.id)}/>
+            handleDelete={() => this.props.deleteComposition(comp.id)}
+            handleEdit={() => this.props.openUserComposition(comp.attributes, comp.id)}/>
         )
       }
     })
