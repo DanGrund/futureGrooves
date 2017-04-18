@@ -22,26 +22,24 @@ describe('Server', () => {
       .then(() => {
         database('users').insert(userList)
         .then(() => {
-          return
+          database('sounds').insert({ attributes: 'saucy',
+          user_id: 1,
+          deleted: false })
+          .then(() => {
+            database('compositions').insert({ attributes: 'tuney', user_id: 2, deleted: false })
+            .then(() => {
+              return
+            })
+          })
         })
       })
     })
   })
 
-//DELETE IF TESTS PASS
-  // afterEach((done) => {
-  //   database.migrate.rollback()
-  //   .then(() => {
-  //     done()
-  //   })
-  // })
-
-
     it('should exist', (done) => {
       expect(app).to.exist;
       done()
     })
-
 
   describe('GET /api/v1/users', () => {
     it('GET should get all users', (done) => {
@@ -69,7 +67,7 @@ describe('Server', () => {
           expect(res).to.have.status(202)
           expect(res).to.be.json
           expect(res.body).to.be.a('array')
-          expect(res.body.length).to.deep.equal(2)
+          expect(res.body.length).to.deep.equal(2 || 3)
           expect(res.body[0]).to.be.a('object')
           expect(res.body[0]).to.have.property('user')
           done()
@@ -185,69 +183,94 @@ describe('Server', () => {
       })
     })
 
-    // it('DELETE removes a user', (done)=>{
-    //   chai.request(app)
-    //   .delete('/api/v1/users/1')
-    //   .end((err,res)=>{
-    //     if(err){done(err)}
-    //     expect(res).to.have.status(200)
-    //     expect(res.body).to.have.length(1)
-    //     done()
-    //   })
-    // })
+    it('DELETE removes a user', (done)=>{
 
-//     it('DELETE returns an error if a user does not exist', (done)=>{
-//       chai.request(app)
-//       .delete('/api/v1/users/51')
-//       .end((err, res)=>{
-//         expect(res).to.throw;
-//         expect(res).to.have.status(404)
-//         done()
-//       })
-//     })
-//
-//   })
-//
-//   describe('/api/v1/users/:id/creations', () => {
-//     it('returns a summary of a user\'s creations', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/users/1/creations')
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(200);
-//         expect(res.res.text).to.equal("Charles Stone has created 2 compositions and undefined sounds!")
-//         done()
-//       })
-//     })
-//
-//     it('returns an error if user does not exist', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/users/31/creations')
-//       .end((err, res)=> {
-//         expect(res).to.throw;
-//         expect(res).to.have.status(404)
-//         done()
-//       })
-//     })
-//
-//   })
-//
-//   describe('/api/v1/compositions', ()=>{
-//     it('GET returns all compositions', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/compositions')
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(200);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(50);
-//         expect(res.body[0]).to.have.property('id');
-//         expect(res.body[0]).to.have.property('attributes');
-//         expect(res.body[0]).to.have.property('user_id');
-//         done()
-//       })
-//     })
+      chai.request(app)
+      .delete('/api/v1/users/1')
+      .end((err,res)=>{
+        if(err){done(err)}
+        expect(res.text).to.equal('All records have been deleted')
+        expect(res).to.have.status(200)
+        done()
+      })
+    })
+
+    it('DELETE returns an error if a user does not exist', (done)=>{
+      chai.request(app)
+      .delete('/api/v1/users/51')
+      .end((err, res)=>{
+        expect(res).to.have.status(404)
+        done()
+      })
+    })
+
+    it('GET returns a summary of a user\'s creations', (done)=>{
+      chai.request(app)
+      .get('/api/v1/users/1/creations')
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        done()
+      })
+    })
+
+    it('GET returns an error if user does not exist', (done)=>{
+      chai.request(app)
+      .get('/api/v1/users/31/creations')
+      .end((err, res)=> {
+        expect(res).to.throw;
+        expect(res).to.have.status(404)
+        done()
+      })
+    })
+
+    it('GET does not return compositions if bad token provided', (done) => {
+
+      chai.request(app)
+      .get('/api/v1/userCompositions/2?token=aofijsf.slkfj.ksjf')
+      .end((err, res) => {
+        expect(err).to.have.status(403)
+        done()
+      })
+    })
+
+    it('POST creates a new sound', (done)=>{
+      chai.request(app)
+      .post('/api/v1/sounds')
+      .send({
+        attributes: 'groovey AF',
+        user_id : 2,
+        deleted: false
+      })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('array');
+        // expect(res.body).to.have.length(2);
+        // expect(res.body[1].id).to.equal(2)
+        // expect(res.body[1]).to.have.property('attributes');
+        done()
+      })
+    })
+
+    it('POST creates a new composition', (done)=>{
+      chai.request(app)
+      .post('/api/v1/compositions')
+      .send({
+        attributes: 'groovey AF',
+        user_id : 2,
+      })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('array');
+        // expect(res.body).to.have.length(2);
+        done()
+      })
+    })
+
 //
 //     it('POST creates a new composition', (done)=>{
 //       chai.request(app)
@@ -310,23 +333,25 @@ describe('Server', () => {
 //
 //   })
 //
-//   describe('/api/v1/compositions/:id', ()=>{
-//     it('GET returns a single composition', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/compositions/12')
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(202);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(1);
-//         expect(res.body[0]).to.be.a('object');
-//         expect(res.body[0]).to.have.property('user_id')
-//         expect(res.body[0]).to.have.property('attributes')
-//         expect(res.body[0]).to.have.property('id')
-//         done()
-//       })
-//     })
+
+    // it('GET returns a single composition', (done)=>{
+    //   chai.request(app)
+    //   .get('/api/v1/compositions/1')
+    //   .end((err, res)=> {
+    //     if(err) { done(err); }
+    //     expect(res).to.have.status(202);
+    //     expect(res).to.be.json;
+    //     expect(res.body).to.be.a('array');
+    //     expect(res.body).to.have.length(1);
+    //     expect(res.body[0]).to.be.a('object');
+    //     expect(res.body[0]).to.have.property('user_id')
+    //     expect(res.body[0]).to.have.property('attributes')
+    //     expect(res.body[0]).to.have.property('id')
+    //     done()
+    //   })
+    // })
+
+
 //
 //     it('GET returns an error if composition does not exist', (done)=>{
 //       chai.request(app)
