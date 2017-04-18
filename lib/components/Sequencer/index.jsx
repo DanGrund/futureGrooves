@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
 import update from 'immutability-helper'
 // import Wad from '../../../vendor/wad.js'
 import './sequencer-style'
 import Slider from '../SoundMaker/Slider'
-import SoundMakerContainer from '../../containers/SoundMakerContainer';
+import SoundMakerContainer from '../../containers/SoundMakerContainer'
+import SequencerContainer from '../../containers/SequencerContainer'
+import UserContainer from '../../containers/UserContainer'
 
 
 export class Sequencer extends Component {
@@ -67,17 +69,14 @@ export class Sequencer extends Component {
   }
 
   componentWillMount() {
-    this.fetchUserData()
+    if(this.props.userData.token) {
+      this.fetchUserData()
+    }
   }
 
   componentWillUnmount() {
     this.loop.stop()
   }
-
-  // componentWillUnmount() {
-  //   this.clearLoop()
-  //   this.setState({loopTimeout: null})
-  // }
 
   fetchUserData = () => {
     this.props.fetchUserData(this.props.user.id, this.props.user.token)
@@ -226,6 +225,24 @@ export class Sequencer extends Component {
   }
 
   render() {
+
+    const togglePlayPause = () => {
+      return this.state.playPause ? 'Pause' : 'Play'
+    }
+
+    const loadSoundDropdown = () => {
+      if(this.props.userData.token) {
+        return this.props.user.sounds.map((sound, i) => {
+          const soundValue = JSON.parse(sound.attributes);
+          return (
+            <option value={soundValue.soundName} key={i}>
+              {soundValue.soundName}
+            </option>
+          )
+        })
+      }
+    }
+
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
@@ -268,15 +285,7 @@ export class Sequencer extends Component {
             <label className='select'>
               <select defaultValue='add track' onChange={(e) => this.setState({ newSound: e.target.value })}>
                 <option value='add track' disabled>add track</option>
-                {!this.props.user.sounds.success && this.props.user.sounds.map((sound, i) => {
-                  const soundValue = JSON.parse(sound.attributes);
-                  return (
-                    <option value={soundValue.soundName} key={i}>
-                      {soundValue.soundName}
-                    </option>
-                  )
-                })
-                }
+                {loadSoundDropdown()}
               </select>
             </label>
             <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
@@ -290,4 +299,4 @@ export class Sequencer extends Component {
   }
 }
 
-export default Sequencer;
+export default UserContainer(SequencerContainer(Sequencer))
