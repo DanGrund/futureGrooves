@@ -24,7 +24,7 @@ export class UserProfile extends Component {
      let title = spec.soundName ? spec.soundName : 'untitled'
      return <div className='sound-container' key={i}>
        <hr className='sound-hr' />
-       <h3 className='sound-title' id={sound.id}>{title}</h3>
+       <h3 className='sound-title' id={sound.id}>{title.substring(0,12)}</h3>
        <div className='composition-controls'>
          <button className='btn-play' onClick={() => this.props.previewSound(spec)}></button>
          <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>

@@ -119,18 +119,16 @@ export class SoundMaker extends Component {
 
   fetchType(method, sound_id = null) {
     let soundName;
-
     method === 'PATCH' ? soundName = this.state.soundName : soundName = this.checkForName()
-    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method, this.setID(method, sound_id)))
+    sound_id === null ? this.setID(method, sound_id) : null
+    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method, sound_id))
     this.setState({ savedchanges: true, newSound: true })
   }
 
   setID(method, sound_id){
-    if(method === 'PATCH'){
+      if(method === 'PATCH'){
       let currentID = this.props.sound.library[this.props.sound.library.length-1].id
-    if (!sound_id) {
       return sound_id = currentID
-    }
     }
   }
 
