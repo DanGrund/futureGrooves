@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './new-user-styles.scss'
 import UserContainer from '../../containers/UserContainer'
+import { NavLink } from 'react-router-dom'
 
 export class CreateNewUser extends Component {
   constructor() {
@@ -61,7 +62,7 @@ export class CreateNewUser extends Component {
               onChange={(e) => this.setState({ password: e.target.value})}/>
           </label>
           <label>
-            I have read and agree to the Terms of Service<sup>*</sup>
+            I have read and agree to the <NavLink to='/terms'>Terms of Service</NavLink><sup>*</sup>
             <input type='checkbox' onChange={() => this.setState({ checkbox: !this.state.checkbox })}/>
           </label>
           <button className='btn btn-submit new-user-submit'
