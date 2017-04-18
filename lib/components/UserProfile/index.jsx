@@ -10,6 +10,10 @@ export class UserProfile extends Component {
     this.props.fetchUserData(id, token)
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    return nextProps.userData.compositions !== this.props.userData.compositions
+  }
+
   stopSound = () => {
     this.props.stopSound()
   }
@@ -36,7 +40,7 @@ loadComps(){
 }
 
   render() {
-    const { compositions, user , userData } = this.props
+    const { user , userData } = this.props
     return (
       <div>
         <div className='user-profile-container'>

@@ -94,7 +94,6 @@ export class SoundMaker extends Component {
   updateSound = () => {
     const {username, selectedSound} = this.props.userData
     const { editsound } = this.props.sound
-    if(username && selectedSound) {
     if(selectedSound){
       this.fetchType('PATCH', this.props.user.sound_id)
       return
@@ -105,9 +104,6 @@ export class SoundMaker extends Component {
     } else {
       this.fetchType('POST')
       return
-    }
-    } else {
-      alert('Please Sign In')
     }
   }
 
