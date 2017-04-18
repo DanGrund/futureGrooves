@@ -288,11 +288,9 @@ export class Sequencer extends Component {
                 {loadSoundDropdown()}
               </select>
             </label>
-            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
+            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add track</button>
+            <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
           </form>}
-        </div>
-        <div>
-          <button className='btn btn-save' onClick={this.saveComp}>save</button>
         </div>
       </div>
     )
