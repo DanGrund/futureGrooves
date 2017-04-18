@@ -40,7 +40,7 @@ export class SoundMaker extends Component {
         },
         reverb: {
           wet: 1,
-          impulse: 'http://localhost:3000/api/v1/impulses?id=BlockInside.wav',
+          impulse: '/api/v1/impulses?id=BlockInside.wav',
         },
         delay: {
           delayTime: 0.5,
@@ -150,7 +150,7 @@ export class SoundMaker extends Component {
     if (target.value === 'sine' || target.value === 'sawtooth' || target.value === 'square' || target.value === 'triangle' || target.value === 'noise') {
       this.setState(update(this.state, { spec: { source: { $set: target.value } } }), () => this.setState({ savedchanges: false }))
     } else {
-      const newNoise = `http://localhost:3000/api/v1/samples?id=${target.value}.wav`
+      const newNoise = `/api/v1/samples?id=${target.value}.wav`
       this.setState(update(this.state, { spec: { source: { $set: newNoise } } }), () => this.setState({ savedchanges: false }))
     }
   }
@@ -174,7 +174,7 @@ export class SoundMaker extends Component {
   }
 
   updateReverbImpulse = ({ target }) => {
-    const newReverbImpulseURL = `http://localhost:3000/api/v1/impulses?id=${target.value}.wav`
+    const newReverbImpulseURL = `/api/v1/impulses?id=${target.value}.wav`
     this.setState(update(this.state, { spec: { reverb: { impulse: { $set: newReverbImpulseURL } } } }), () => this.setState({ savedchanges: false }))
   }
 

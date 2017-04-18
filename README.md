@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/DanGrund/futureGrooves.svg?style=svg)](https://circleci.com/gh/DanGrund/futureGrooves)
+
 # futureGrooves
 WIP: A browser-based DAW built on Web Audio API
 

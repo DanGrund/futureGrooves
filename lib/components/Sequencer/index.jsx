@@ -74,11 +74,17 @@ export class Sequencer extends Component {
     this.loop.stop()
   }
 
+  // componentWillUnmount() {
+  //   this.clearLoop()
+  //   this.setState({loopTimeout: null})
+  // }
+
   fetchUserData = () => {
     this.props.fetchUserData(this.props.user.id, this.props.user.token)
   }
 
   playPause() {
+    this.setState({ playPause: !this.state.playPause })
     if (this.loop.isPlaying()) {
       this.loop.stop()
     } else {
