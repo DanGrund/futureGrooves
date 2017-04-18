@@ -83,6 +83,8 @@ export class Sequencer extends Component {
 
   componentWillUnmount() {
     this.loop.stop()
+    this.props.setSelectedComposition(null, null)
+    // this.props.editSound(null, null)
   }
 
   fetchUserData = () => {
