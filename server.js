@@ -141,7 +141,7 @@ app.post('/api/v1/users', (request, response) => {
     database('users').insert(newUser)
     .then(()=> {
       database('users').where('username', username).select()
-        .then((user) => {
+        .then(user => {
           let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
           currentUser = {
             id: user[0].id,
