@@ -117,8 +117,9 @@ export class IndividualSong extends Component {
   render() {
     return (
       <div className="individual-song">
-        <h3>{this.props.name}</h3>
-        <button className='btn btn-play btn-sm' onClick={this.playPause}>{!this.state.playPause ? 'Play' : 'Pause'}</button>
+        <h3>{this.props.name.substring(0,7)}</h3>
+        {!this.state.playPause && <button className='btn btn-play' onClick={this.playPause.bind(this)}></button>}
+        {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
       </div>
     )
   }

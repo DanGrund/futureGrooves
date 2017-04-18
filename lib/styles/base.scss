@@ -85,8 +85,7 @@ h4 {
 
 .btn-login,
 .btn-submit,
-.btn-save,
-.btn-play {
+.btn-save{
   background-color: $submit-btn-bg-color;
   color: $submit-btn-text-color;
 
@@ -95,8 +94,51 @@ h4 {
   }
 }
 
-.btn-delete,
+.btn-play {
+  background: none repeat scroll 0 0 transparent;
+  margin-left: 165px;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-left: 20px solid $submit-btn-bg-color;
+  border-bottom: 10px solid transparent;
+  &:hover {
+    cursor: pointer;
+    background-color: transparent;
+  }
+  &:focus {
+    outline:none;
+    border-color: none;
+    box-shadow:none;
+  }
+}
+
 .btn-stop {
+  background: none repeat scroll 0 0 transparent;
+  margin-left: 165px;
+  padding: 10px;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0;
+	width: 20px;
+	height: 20px;
+	background: red;
+  &:hover {
+    cursor: pointer;
+    background-color: red;
+  }
+  &:focus {
+    outline:none;
+    border-color: none;
+    box-shadow:none;
+  }
+}
+
+.btn-delete {
   background-color: $delete-btn-bg-color;
   color: $delete-btn-text-color;
 
@@ -225,6 +267,7 @@ label.select:after {
 
 .individual-song{
   margin-bottom: 3px;
+  margin-left: 50px;
   font-size: 24px;
   font-family: monospace;
   width: 300px;

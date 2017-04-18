@@ -25,6 +25,10 @@
   margin: 10px;
 }
 
+.user-headers {
+  margin: 5px;
+}
+
 .sound-container {
   display: grid;
   grid-template-columns: 200px 50px 50px 50px;
@@ -44,6 +48,8 @@
 }
 
 .sound-title {
-  font-family: 'Concert One', sans-serif;
+  // font-family: 'Concert One', sans-serif;
+  font-family: monospace; 
   font-size: 20px;
+  margin-top: 5px;
 }
