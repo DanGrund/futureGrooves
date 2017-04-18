@@ -397,26 +397,17 @@ app.patch('/api/v1/compositions/:id', (request, response) => {
 app.delete('/api/v1/compositions/:id', (request, response) => {
   const { id } = request.params;
 
-  database('compositions').where('id', id).select()
-  .then((composition)=>{
-    if(composition.length<1){
-      response.status(404).send({
-        error: 'ID did not match any existing sounds'
+  database('compositions').where('id', id).del()
+  .then((num) => {
+    if(num > 0) {
+      database('compositions').select()
+      .then(comps => {
+        response.status(200).send(comps)
       })
     } else {
-      database('compositions').where('id', id).delete()
-      .then(()=>{
-        database('compositions').select()
-        .then((compositions)=> {
-          response.status(200).json(compositions)
-        })
-        .catch((error) => {
-          console.error(error)
-        });
-      })
+      response.status(404).send({ error: 'Unable to delete'})
     }
   })
-
 })
 
 //get sounds
@@ -512,22 +503,6 @@ app.delete('/api/v1/sounds/:id', (request, response) => {
     } else {
       response.status(404).send({ error: 'Unable to delete'})
     }
-  //   if(sound.length<1){
-  //     response.status(404).send({
-  //       error: 'ID did not match any existing sounds'
-  //     })
-  //   } else {
-  //     database('sounds').where('id', id).delete()
-  //       .then(()=> {
-  //         database('sounds').select()
-  //         .then((data)=>{
-  //           response.status(200).json(data)
-  //         })
-  //       })
-  //       .catch((error) => {
-  //         console.error(error)
-  //       });
-  //   }
   })
 })
 

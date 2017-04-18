@@ -37,9 +37,16 @@ export class UserProfile extends Component {
   loadComps(){
     return this.props.userData.compositions.map((comp, i) => {
       let attributes = (JSON.parse(comp.attributes))
-      return (
-        <IndividualSong className="btn-play" key={i} name={attributes.soundName} trackRacks={attributes.trackRacks} tempo={attributes.tempo}/>
-      )
+      if(attributes) {
+        return (
+          <IndividualSong className="btn-play"
+            key={i}
+            name={attributes.soundName}
+            trackRacks={attributes.trackRacks}
+            tempo={attributes.tempo}
+            handleDelete={() => this.props.deleteComposition(comp.id)}/>
+        )
+      }
     })
   }
 

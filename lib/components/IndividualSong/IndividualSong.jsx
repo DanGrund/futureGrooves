@@ -115,16 +115,39 @@ export class IndividualSong extends Component {
   }
 
   render() {
-    return (
-      <div className="individual-song">
-        <h3>{this.props.name.substring(0,7)}</h3>
+    console.log('name ', this.props.name);
 
-        <span className='composition-controls'>
-          {!this.state.playPause && <button className='btn-play' onClick={this.playPause.bind(this)}></button>}
-          {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
-          <button className='btn btn-sm btn-edit' onClick={() => console.log('edit comp')}>Edit</button>
-          <button className='btn btn-sm btn-delete' onClick={() => console.log('delete comp')}>Delete</button>
-        </span>
+    const displayComposition = () => {
+      if(this.props.user.compositions.length > 0) {
+        return (
+          <div className="individual-song">
+            <h3>{this.props.name.substring(0,7)}</h3>
+            <span className='composition-controls'>
+              {!this.state.playPause &&
+                <button className='btn-play'
+                        onClick={this.playPause.bind(this)}>
+                </button>}
+              {this.state.playPause &&
+                <button className='btn btn-stop'
+                        onClick={this.playPause.bind(this)}>
+                </button>}
+              <button className='btn btn-sm btn-edit'
+                      onClick={() => console.log('edit comp')}>
+                Edit
+              </button>
+              <button className='btn btn-sm btn-delete'
+                      onClick={() => this.props.handleDelete()}>
+                Delete
+              </button>
+            </span>
+          </div>
+        )
+      }
+    }
+
+    return (
+      <div>
+        {displayComposition()}
       </div>
     )
   }
