@@ -37,7 +37,7 @@
   padding: 10px;
   border: 1px solid $rack-border-color;
   border-radius: 5px;
-  background: $rack-bg-color; 
+  background: $rack-bg-color;
   .sample-name {
     font-family: 'Concert One', sans-serif;
     font-size: 24px;
@@ -74,7 +74,7 @@
   justify-content: center;
   border: 1px solid $single-step-border-color;
   margin: 10px 4px;
-  padding-top: 5px;
+  padding: 5px 0;
   height: 100%;
   width: 50px;
 
@@ -92,7 +92,7 @@
 .current {
    transition: all 0.1s ease-in-out;
    border: 1px solid $current-step-border-color;
-   box-shadow:0 0 10px lighten($current-step-border-color, 20%); 
+   box-shadow:0 0 10px lighten($current-step-border-color, 20%);
 }
 
 .pitch-input {
@@ -100,5 +100,3 @@
   width: 30px;
   padding: 2px 5px;
 }
-
-
