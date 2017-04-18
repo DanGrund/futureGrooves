@@ -5,12 +5,12 @@ module.exports = {
   entry: [
     './lib/index.js',
   ],
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   context: __dirname,
   output: {
     path: resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: '/build/',
   },
   module: {
     loaders: [
@@ -35,7 +35,13 @@ module.exports = {
   plugins: [
     // OccurenceOrderPlugin is needed for webpack 1.x only
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      },
+    }),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
   ],
 }
