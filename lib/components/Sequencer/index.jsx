@@ -78,11 +78,6 @@ export class Sequencer extends Component {
     this.loop.stop()
   }
 
-  // componentWillUnmount() {
-  //   this.clearLoop()
-  //   this.setState({loopTimeout: null})
-  // }
-
   fetchUserData = () => {
     this.props.fetchUserData(this.props.user.id, this.props.user.token)
   }
@@ -230,6 +225,7 @@ export class Sequencer extends Component {
   }
 
   render() {
+
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
     }
@@ -250,9 +246,8 @@ export class Sequencer extends Component {
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          <button className='btn btn-play' id='play-button' onClick={() => this.playPause()} >
-            {togglePlayPause()}
-          </button>
+          {!this.state.playPause && <button className='btn btn-play' onClick={this.playPause.bind(this)}></button>}
+          {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
           tempo
           <input
             value={this.state.spec.tempo}
@@ -288,7 +283,7 @@ export class Sequencer extends Component {
         <div id='new-sounds'>
           {this.props.user.sounds && !this.props.user.sounds.success && <form>
             <label className='select'>
-              <select defaultValue='add track' onChange={(e) => this.setState({ newSound: e.target.value })}  >
+              <select defaultValue='add track' onChange={(e) => this.setState({ newSound: e.target.value })}>
                 <option value='add track' disabled>add track</option>
                 {loadSoundDropdown()}
               </select>

@@ -66,7 +66,6 @@ export class SoundMaker extends Component {
   componentDidMount() {
     const { selectedSound } = this.props.userData
     if (selectedSound) {
-      console.log('hit!!!');
       this.setState({ spec: selectedSound })
     }
   }
@@ -241,8 +240,8 @@ export class SoundMaker extends Component {
         <div>
         </div>
         <div className='btn-group'>
-          <Button className='btn btn-play' text='Play' handleClick={this.previewSound} />
-          <Button className='btn btn-stop' text='Stop' handleClick={this.stopSound} />
+          <Button className='btn btn-submit' text='Play' handleClick={this.previewSound} />
+          <Button className='btn btn-delete' text='Stop' handleClick={this.stopSound} />
           {showUpdateSound()}
           <Button className='btn btn-new' text='Save As' handleClick={this.saveNewSound} />
           { this.props.user.username &&
