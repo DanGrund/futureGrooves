@@ -49,7 +49,18 @@
 
 .sound-title {
   // font-family: 'Concert One', sans-serif;
-  font-family: monospace; 
+  font-family: monospace;
   font-size: 20px;
   margin-top: 5px;
+}
+
+.delete-account-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.delete-account-btn {
+  background-color: $mute-btn-bg-color !important;
 }
