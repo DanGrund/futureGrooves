@@ -16,7 +16,6 @@ describe('Server', () => {
   const userList = [{ username: 'Beans', email: 'beans@sample.com', password: 'password', deleted: false }, { username: 'Greens', email: 'greens@sample.com', password: 'password', deleted: false }]
 
   beforeEach(function() {
-    // this.timeout(15000)
     return database.migrate.rollback()
     .then(() => {
       return database.migrate.latest()
@@ -29,6 +28,7 @@ describe('Server', () => {
     })
   })
 
+//DELETE IF TESTS PASS
   // afterEach((done) => {
   //   database.migrate.rollback()
   //   .then(() => {
@@ -37,12 +37,11 @@ describe('Server', () => {
   // })
 
 
-  describe('server', () => {
     it('should exist', (done) => {
       expect(app).to.exist;
       done()
     })
-  })
+
 
   describe('GET /api/v1/users', () => {
     it('GET should get all users', (done) => {
@@ -61,140 +60,142 @@ describe('Server', () => {
         done()
       })
     })
-})
 
-// describe('/api/v1/users', ()=>{
-//     it('GET returns all users', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/users')
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(200);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(30);
-//         expect(res.body[0]).to.have.property('id');
-//         expect(res.body[0]).to.have.property('name');
-//         expect(res.body[0]).to.have.property('email');
-//         expect(res.body[0]).to.have.property('email');
-//         expect(res.body[0]).to.have.property('deleted');
-//         done()
-//       })
-//     })
-//
-//     it('POST creates a new user', (done)=>{
-//       chai.request(app)
-//       .post('/api/v1/users')
-//       .send({
-//         name: 'Joe Guy',
-//         email : 'email@gmail.com'
-//       })
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(200);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(31);
-//         expect(res.body[30]).to.have.property('id');
-//         expect(res.body[30].id).to.equal(31)
-//         expect(res.body[30]).to.have.property('name');
-//         expect(res.body[30].name).to.equal('Joe Guy');
-//         expect(res.body[30]).to.have.property('email');
-//         expect(res.body[30].email).to.equal('email@gmail.com');
-//         expect(res.body[30]).to.have.property('deleted');
-//         done()
-//       })
-//     })
-//
-//     it('POST returns an error if not all attributes are present', (done)=>{
-//       chai.request(app)
-//       .post('/api/v1/users')
-//       .send({
-//         name: 'Joe Guy',
-//         email : null
-//       })
-//       .end((err, res)=>{
-//         expect(res).to.throw;
-//         expect(res).to.have.status(422)
-//         done()
-//       })
-//     })
-//
-//   })
-//
-//   describe('/api/v1/users/:id', ()=>{
-//     it('GET returns a single user and their creations', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/users/12')
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(202);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(2);
-//         expect(res.body[0]).to.be.a('object');
-//         expect(res.body[0]).to.have.property('user');
-//         expect(res.body[1]).to.have.property('sounds');
-//         done()
-//       })
-//     })
-//
-//     it('GET returns an error if user does not exist', (done)=>{
-//       chai.request(app)
-//       .get('/api/v1/users/51')
-//       .end((err, res)=> {
-//         expect(res).to.throw;
-//         expect(res).to.have.status(404)
-//         done()
-//       })
-//     })
-//
-//     it('PATCH returns an updated user', (done)=>{
-//       chai.request(app)
-//       .patch('/api/v1/users/12')
-//       .send({
-//         name: 'Joe Guy',
-//         email : 'email@gmail.com'
-//       })
-//       .end((err, res)=> {
-//         if(err) { done(err); }
-//         expect(res).to.have.status(200);
-//         expect(res).to.be.json;
-//         expect(res.body).to.be.a('array');
-//         expect(res.body).to.have.length(1);
-//         expect(res.body[0]).to.have.property('name');
-//         expect(res.body[0].name).to.equal('Joe Guy');
-//         expect(res.body[0]).to.have.property('email');
-//         expect(res.body[0].email).to.equal('email@gmail.com');
-//         done()
-//       })
-//     })
-//
-//     it('PATCH returns an error if user does not exist', (done)=>{
-//       chai.request(app)
-//       .patch('/api/v1/users/41')
-//       .send({
-//         name: 'Joe Guy',
-//         email : 'email@gmail.com'
-//       })
-//       .end((err, res)=>{
-//         expect(res).to.throw;
-//         expect(res).to.have.status(404)
-//         done()
-//       })
-//     })
-//
-//     it('DELETE removes a user', (done)=>{
-//       chai.request(app)
-//       .delete('/api/v1/users/1')
-//       .end((err,res)=>{
-//         if(err){done(err)}
-//         expect(res).to.have.status(200)
-//         expect(res.body).to.have.length(29)
-//         done()
-//       })
-//     })
-//
+      it('GET returns a single user and their creations', (done)=>{
+        chai.request(app)
+        .get('/api/v1/users/2')
+        .end((err, res)=> {
+          if(err) { done(err) }
+          expect(res).to.have.status(202)
+          expect(res).to.be.json
+          expect(res.body).to.be.a('array')
+          expect(res.body.length).to.deep.equal(2)
+          expect(res.body[0]).to.be.a('object')
+          expect(res.body[0]).to.have.property('user')
+          done()
+        })
+      })
+
+      it('GET returns an error if user does not exist', (done)=>{
+        chai.request(app)
+        .get('/api/v1/users/51')
+        .end((err, res)=> {
+          expect(res).to.throw;
+          expect(res).to.have.status(404)
+          done()
+        })
+      })
+
+    it('POST doesn\'t allow duplicate users', (done)=>{
+      chai.request(app)
+      .post('/api/v1/users')
+      .send({ username: 'Beans', email: 'beans@sample.com', password: 'password', deleted: false })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('error');
+        done()
+      })
+    })
+
+    it('POST creates a new user and returns that users token', (done)=>{
+      chai.request(app)
+      .post('/api/v1/users')
+      .send({ username: 'Potatoes',
+                 email: 'potatoes@sample.com',
+              password: 'password',
+               deleted: false
+            })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('username');
+        expect(res.body).to.have.property('token');
+        done()
+      })
+    })
+
+    it('POST (login) logs in an existing user and returns their token', (done)=>{
+      chai.request(app)
+      .post('/api/v1/user/login')
+      .send({ email: 'beans@sample.com',
+              password: 'password'
+            })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('username');
+        expect(res.body).to.have.property('token');
+        done()
+      })
+    })
+
+    it('POST (login) returns error if creds do not match', (done) => {
+      chai.request(app)
+      .post('/api/v1/user/login')
+      .send({ email: 'tomatoes@sample.com',
+              password: 'younameit!'
+            })
+      .end((err, res)=> {
+        expect(err).to.have.status(404);
+        done()
+      })
+    })
+
+    it('PATCH returns an updated user', (done) => {
+      chai.request(app)
+      .patch('/api/v1/users/2')
+      .send({
+        username: 'bimbleton',
+        email : 'email@gmail.com'
+      })
+      .end((err, res)=> {
+        if(err) { done(err); }
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('array');
+        expect(res.body).to.have.length(1);
+        expect(res.body[0]).to.have.property('username');
+        expect(res.body[0].username).to.equal('bimbleton');
+        expect(res.body[0]).to.have.property('email');
+        expect(res.body[0].email).to.equal('email@gmail.com');
+        done()
+      })
+    })
+
+    it('PATCH returns an error if user does not exist', (done)=>{
+      chai.request(app)
+      .patch('/api/v1/users/41')
+      .send({
+        username: 'Joe Guy',
+        email : 'email@gmail.com'
+      })
+      .end((err, res)=>{
+        expect(res).to.throw;
+        expect(res).to.have.status(404)
+        done()
+      })
+    })
+
+    // it('DELETE removes a user', (done)=>{
+    //   chai.request(app)
+    //   .delete('/api/v1/users/1')
+    //   .end((err,res)=>{
+    //     if(err){done(err)}
+    //     expect(res).to.have.status(200)
+    //     expect(res.body).to.have.length(1)
+    //     done()
+    //   })
+    // })
+
 //     it('DELETE returns an error if a user does not exist', (done)=>{
 //       chai.request(app)
 //       .delete('/api/v1/users/51')
@@ -529,5 +530,5 @@ describe('Server', () => {
 //     })
 //
 //   })
-
+})
 })

@@ -184,13 +184,13 @@ app.post('/api/v1/user/login', (request, response) => {
 //patch a user
 app.patch('/api/v1/users/:id', (request, response) => {
   const { id } = request.params;
-  const { name, email } = request.body
+  const { username, email } = request.body
 
-  database('users').where('id', id).select().update({ name, email })
-    .then(()=> {
+  database('users').where('id', id).select().update({ username, email })
+    .then(() => {
       database('users').where('id', id).select()
         .then((user) => {
-          if(user.length<1){
+          if(user.length < 1){
             response.status(404).send({
               error: 'ID did not match any existing users'
             })
@@ -206,35 +206,37 @@ app.patch('/api/v1/users/:id', (request, response) => {
 })
 
 //delete a user
-app.delete('/api/v1/users/:id', (request, response) => {
-  const { id } = request.params;
+//not likely using this - will set delete toggle to true instead
 
-  database('compositions').where('id', id).select()
-  .then((composition)=>{
-    if(composition.length<1){
-      response.status(404).send({
-        error: 'ID did not match any existing sounds'
-      })
-    } else {
-      database('sounds').where('user_id',id).update({ user_id: null })
-      .then(()=>{
-        database('compositions').where('user_id',id).delete()
-        .then(()=>{
-          database('users').where('id', id).delete()
-          .then(()=> {
-            database('users').select()
-            .then((users) => {
-              response.status(200).json(users);
-            })
-          })
-        })
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-    }
-  })
-})
+// app.delete('/api/v1/users/:id', (request, response) => {
+//   const { id } = request.params;
+//
+//   database('compositions').where('id', id).select()
+//   .then((composition)=>{
+//     if(composition.length<1){
+//       response.status(404).send({
+//         error: 'ID did not match any existing sounds'
+//       })
+//     } else {
+//       database('sounds').where('user_id',id).update({ user_id: null })
+//       .then(()=>{
+//         database('compositions').where('user_id',id).delete()
+//         .then(()=>{
+//           database('users').where('id', id).delete()
+//           .then(()=> {
+//             database('users').select()
+//             .then((users) => {
+//               response.status(200).json(users);
+//             })
+//           })
+//         })
+//       })
+//       .catch((error) => {
+//         console.error(error)
+//       });
+//     }
+//   })
+// })
 
 //get request that return total number of a users composititons and sounds
 app.get('/api/v1/users/:id/creations', (request, response) => {
