@@ -9,6 +9,7 @@ import SoundMaker from '../../components/SoundMaker'
 import Header from '../Header'
 import Home from '../Home'
 import CreateNewUser from '../CreateNewUser'
+import TsAndCs from '../TsAndCs'
 
 export class App extends Component {
   render() {
@@ -21,6 +22,7 @@ export class App extends Component {
           <Route exact path='/sequencer' component={Sequencer} />
           <Route exact path='/profile/:username' component={UserProfile} />
           <Route exact path='/sign-up' component={CreateNewUser} />
+          <Route exact path='/terms' component={TsAndCs} />
         </Switch>
       </div>
     )
