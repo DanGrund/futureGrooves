@@ -20,7 +20,7 @@ app.use(cors());
 
 app.set('secretKey', jwtconfig.CLIENT_SECRET)
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   const webpack = require('webpack');
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -49,9 +49,8 @@ app.use(express.static(path.join(__dirname, "build")))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 3000);
-app.listen(app.get('port'), () => {
-  console.log(`We running on ${app.get('port')}.`)
-})
+
+
 
 const checkAuth = (request, response, next) => {
   const token = request.body.token ||
@@ -547,5 +546,11 @@ app.get('/api/v1/samples', (request, response) => {
 app.get('*', function (request, response) {
   response.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
+
+if(!module.parent) {
+  app.listen(app.get('port'), () => {
+    console.log(`We running on ${app.get('port')}.`)
+  })
+}
 
 module.exports = app;
