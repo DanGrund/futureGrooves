@@ -6,9 +6,9 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
     "dev": "webpack-dev-server --inline --content-base --history-api-fallback",
-    "testTwo": "mocha -w --compilers js:babel-core/register --require helpers/test-setup.js ./test/**.js",
     "test": "node_modules/.bin/mocha ./test/**.js || true",
-    "start": "NODE_ENV=development nodemon server.js --ignore /lib"
+    "start": "NODE_ENV=development nodemon server.js --ignore /lib",
+    "heroku-postbuild": "npm build"
   },
   "repository": {
     "type": "git",
