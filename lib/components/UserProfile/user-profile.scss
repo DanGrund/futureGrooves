@@ -31,7 +31,7 @@
 
 .sound-container {
   display: grid;
-  grid-template-columns: 200px 50px 50px 50px;
+  grid-template-columns: 180px 120px 50px 50px;
   grid-gap: 10px 15px;
   align-items: center;
   justify-content: center;
@@ -63,4 +63,10 @@
 
 .delete-account-btn {
   background-color: $mute-btn-bg-color !important;
+}
+
+.composition-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
