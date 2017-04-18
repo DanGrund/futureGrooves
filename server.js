@@ -270,25 +270,9 @@ app.get('/api/v1/users/:id/creations', (request, response) => {
 
 //get compositions also, narrow down compositions by complexity
 app.get('/api/v1/compositions', (request, response) => {
-  let complexity = request.query.complexity;
-
   database('compositions').select()
     .then((compositions) => {
-      if(complexity){
-        let complex = compositions.filter((obj)=>{
-          let attributes = JSON.parse(obj.attributes)
-          return attributes.length == complexity;
-        })
-        if(complex.length<1){
-          response.status(404).send({
-            error: 'query did not return any matches'
-          })
-        } else {
-          response.status(200).json(complex)
-        }
-      } else {
         response.status(200).json(compositions);
-      }
     })
     .catch(function(error) {
       response.status(404)
