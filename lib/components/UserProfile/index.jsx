@@ -36,12 +36,13 @@ loadComps(){
 }
 
   render() {
+    const { compositions, user , userData } = this.props
     return (
       <div className='user-profile-container'>
         <section className='user-stream'>
           <header>
             <h2 className='user-headers' className='user-stream-name'>{this.props.user && this.props.user}</h2>
-            <h3 className='user-headers'> / Compositions : {this.props.userData.compositions.length} / </h3>
+            <h3 className='user-headers'> / Compositions : {this.props.userData.compositions.length > 0 && this.props.userData.compositions.length } / </h3>
             <h3 className='user-headers'> Member since 2017</h3>
           </header>
           <section className='user-stream-audio'>
