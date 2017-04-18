@@ -115,7 +115,6 @@ export class IndividualSong extends Component {
   }
 
   render() {
-    console.log('name ', this.props.name);
 
     const displayComposition = () => {
       if(this.props.user.compositions.length > 0) {
@@ -132,7 +131,7 @@ export class IndividualSong extends Component {
                         onClick={this.playPause.bind(this)}>
                 </button>}
               <button className='btn btn-sm btn-edit'
-                      onClick={() => console.log('edit comp')}>
+                      onClick={() => this.props.handleEdit()}>
                 Edit
               </button>
               <button className='btn btn-sm btn-delete'

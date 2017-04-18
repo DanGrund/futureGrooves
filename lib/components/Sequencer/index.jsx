@@ -68,6 +68,13 @@ export class Sequencer extends Component {
     }
   }
 
+  componentDidMount() {
+    const { selectedComposition } = this.props.userData
+    if (selectedComposition) {
+      this.setState({ spec: JSON.parse(selectedComposition) })
+    }
+  }
+
   componentWillMount() {
     if(this.props.userData.token) {
       this.fetchUserData()
