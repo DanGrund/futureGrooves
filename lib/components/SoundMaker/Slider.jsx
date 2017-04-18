@@ -2,22 +2,27 @@ import React from 'react'
 
 export default class Slider extends React.Component {
 
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({inputDraft: nextProps.value})
+  }
+
+
   handleTextInputChange = (e) => {
     this.setState({ inputDraft: e.target.value })
   }
 
   handleKeyUp = (e) => {
-
-     if (e.keyCode === 13 || e.type === 'blur') {
-       this.setState({ inputDraft: e.target.value })
-       if (e.target.value > this.props.max) {
-         e.target.value = this.props.max
-       } else if (e.target.value < this.props.min || e.target.value === '') {
-         e.target.value = this.props.min
-       }
-       if (e.target.value !== '') {
-         this.props.handleChange(e)
-       }
+    if (e.keyCode === 13 || e.type === 'blur') {
+      this.setState({ inputDraft: e.target.value })
+      if (e.target.value > this.props.max) {
+        e.target.value = this.props.max
+      } else if (e.target.value < this.props.min || e.target.value === '') {
+        e.target.value = this.props.min
+      }
+      if (e.target.value !== '') {
+        this.props.handleChange(e)
+      }
       this.handleTextInputChange(e)
     }
   }
@@ -25,11 +30,6 @@ export default class Slider extends React.Component {
   handleSliderChange = (e) => {
     this.setState({inputDraft: e.target.value})
     this.props.handleChange(e)
-  }
-
-  handleClick = (e) => {
-    console.log(e.relatedTarget)
-    console.log(e.target)
   }
 
   state = {

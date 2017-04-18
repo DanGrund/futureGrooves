@@ -23,11 +23,11 @@ export class SoundMaker extends Component {
         detune: 0,
         panning: 0,
         env: {
-          attack: 1,
-          decay: 1,
-          sustain: 0,
-          hold: 0,
-          release: 0,
+          attack: 0.2,
+          decay: 0.2,
+          sustain: 0.1,
+          hold: 0.05,
+          release: 0.05,
         },
         filter: {
           type: 'allpass',
@@ -39,23 +39,23 @@ export class SoundMaker extends Component {
           },
         },
         reverb: {
-          wet: 1,
+          wet: 0,
           impulse: '/api/v1/impulses?id=BlockInside.wav',
         },
         delay: {
-          delayTime: 0.5,
-          wet: 0.25,
-          feedback: 0.25,
+          delayTime: 0,
+          wet: 0,
+          feedback: 0,
         },
         vibrato: {
           shape: 'sine',
-          magnitude: 3,
+          magnitude: 0,
           speed: 4,
           attack: 0,
         },
         tremolo: {
           shape: 'sine',
-          magnitude: 3,
+          magnitude: 0,
           speed: 4,
           attack: 0,
         },
@@ -267,6 +267,7 @@ export class SoundMaker extends Component {
             step={0.1}
             handleChange={this.updateValue('volume')}
             value={this.state.spec.volume}
+            soundName={this.state.soundName}
           />
           <Slider
             label='Detune'
@@ -495,7 +496,7 @@ export class SoundMaker extends Component {
               label='Magnitude'
               className='slider vibrato-magnitude'
               id='slider-vibrato-magnitude'
-              min={1}
+              min={0}
               max={10}
               step={0.1}
               handleChange={this.updateVibrato('magnitude')}
@@ -534,7 +535,7 @@ export class SoundMaker extends Component {
               label='Magnitude'
               className='slider tremolo-magnitude'
               id='slider-tremolo-magnitude'
-              min={1}
+              min={0}
               max={10}
               step={0.1}
               handleChange={this.updateTremolo('magnitude')}
