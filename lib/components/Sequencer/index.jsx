@@ -265,6 +265,7 @@ export class Sequencer extends Component {
           {Object.keys(this.state.spec.trackRacks).map((trackRack, i) =>
             <TrackRack key={i}
                        name={trackRack}
+                       source={this.state.spec.trackRacks[trackRack].sound.source}
                        volume={this.state.spec.trackRacks[trackRack].sound.volume}
                        filter={this.state.spec.trackRacks[trackRack].sound.filter.frequency}
                        steps={this.state.spec.trackRacks[trackRack].steps}
