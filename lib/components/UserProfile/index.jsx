@@ -42,7 +42,7 @@ loadComps(){
         <section className='user-stream'>
           <header>
             <h2 className='user-headers' className='user-stream-name'>{user && user}</h2>
-            <h3 className='user-headers'> / Compositions : {userData.compositions.length > 0 && userData.compositions.length } / </h3>
+            {userData.compositions.length > 0 && <h3 className='user-headers'> / Compositions : { userData.compositions.length } / </h3>}
             <h3 className='user-headers'> Member since 2017</h3>
           </header>
           <section className='user-stream-audio'>
