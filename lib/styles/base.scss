@@ -264,8 +264,8 @@ label.select:after {
   pointer-events: none;
 }
 
-.individual-song{
-  margin-bottom: 3px;
+.individual-song {
+  margin-bottom: 3px; 
   // margin-left: 50px;
   font-size: 24px;
   font-family: monospace;
@@ -274,10 +274,6 @@ label.select:after {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-
-.individual-song .btn {
-  margin-bottom: 3px;
 }
 
 .future-groove-stream {
