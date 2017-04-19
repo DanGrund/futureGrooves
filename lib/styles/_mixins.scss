@@ -7,3 +7,14 @@
   font-size: 16px;
   font-weight: 300;
 }
+
+@mixin comp-sound-row-style {
+  padding: 5px;
+  font-size: 24px;
+  font-family: monospace;
+  width: 300px;
+  border-bottom: 2px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
