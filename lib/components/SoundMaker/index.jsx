@@ -100,7 +100,7 @@ export class SoundMaker extends Component {
       return
     }
     if (editsound) {
-      this.fetchType('PATCH', this.state.id)
+      this.fetchType('PATCH', JSON.parse(this.state.id))
     } else {
       this.fetchType('POST')
     }
@@ -119,7 +119,9 @@ export class SoundMaker extends Component {
   fetchType(method, sound_id = null) {
     let soundName;
     method === 'PATCH' ? soundName = this.state.soundName : soundName = this.checkForName()
-    sound_id === null ? this.setID(method, sound_id) : null
+
+    sound_id === null ? sound_id = this.setID(method, sound_id) : null
+
     let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveSound(JSON.stringify(this.state.spec), this.props.user.id, method, sound_id))
     this.setState({ savedchanges: true, newSound: true })
   }

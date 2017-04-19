@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import TrackRack from './SequencerComponents/TrackRack'
 import Wad from 'web-audio-daw'
 import update from 'immutability-helper'
-// import Wad from '../../../vendor/wad.js'
 import './sequencer-style'
 import Slider from '../SoundMaker/Slider'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
@@ -209,12 +208,9 @@ export class Sequencer extends Component {
 
   saveComp = () => {
     const {username, selectedComposition, composition_id} = this.props.userData
-    if(username) {
+    if(composition_id) {
       if(selectedComposition){
         this.fetchType('PATCH', composition_id)
-        return
-      } else {
-        this.fetchType('POST')
         return
       }
     } else {
