@@ -265,15 +265,7 @@ label.select:after {
 }
 
 .individual-song {
-  margin-bottom: 3px; 
-  // margin-left: 50px;
-  font-size: 24px;
-  font-family: monospace;
-  width: 300px;
-  border-bottom: 2px solid red;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include comp-sound-row-style;
 }
 
 .future-groove-stream {
