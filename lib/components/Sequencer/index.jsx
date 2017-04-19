@@ -207,10 +207,8 @@ export class Sequencer extends Component {
   }
 
   saveComp = () => {
-    console.log('hit!');
     const {username, selectedComposition, composition_id} = this.props.userData
     if(composition_id) {
-      console.log('yup id');
       if(selectedComposition){
         this.fetchType('PATCH', composition_id)
         return
