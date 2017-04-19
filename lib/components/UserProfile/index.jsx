@@ -11,7 +11,7 @@ export class UserProfile extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    return nextProps.userData.compositions !== this.props.userData.compositions
+    return nextProps.userData !== this.props.userData
   }
 
   stopSound = () => {
@@ -24,40 +24,60 @@ export class UserProfile extends Component {
      let title = spec.soundName ? spec.soundName : 'untitled'
      return <div className='sound-container' key={i}>
        <hr className='sound-hr' />
-       <h3 className='sound-title' id={sound.id}>{title}</h3>
-       <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
-       <button className='btn btn-sm btn-submit' onClick={() => this.props.previewSound(spec)}>Play</button>
-       <button className='btn btn-sm btn-delete' onClick={this.stopSound.bind(this)}>Stop</button>
+       <h3 className='sound-title' id={sound.id}>{title.substring(0,12)}</h3>
+       <div className='composition-controls'>
+         <button className='btn-play' onClick={() => this.props.previewSound(spec)}></button>
+         <button className='btn btn-sm btn-edit' onClick={() => this.props.openUserSound(spec, sound.id)}>Edit</button>
+         <button className='btn btn-sm btn-delete' onClick={() => this.props.deleteSound(sound.id)}>Delete</button>
+       </div>
      </div>
    })
-}
+ }
 
-loadComps(){
-  return this.props.userData.compositions.map((comp, i) => {
-    let attributes = (JSON.parse(comp.attributes))
-    return <IndividualSong className="btn-play" key={i} name={attributes.soundName} trackRacks={attributes.trackRacks} tempo={attributes.tempo}/>
-  })
-}
+  loadComps(){
+    return this.props.userData.compositions.map((comp, i) => {
+      let attributes = (JSON.parse(comp.attributes))
+      if(attributes) {
+        return (
+          <IndividualSong className="btn-play"
+            key={i}
+            name={attributes.soundName}
+            trackRacks={attributes.trackRacks}
+            tempo={attributes.tempo}
+            handleDelete={() => this.props.deleteComposition(comp.id)}
+            handleEdit={() => this.props.openUserComposition(comp.attributes, comp.id)}/>
+        )
+      }
+    })
+  }
 
   render() {
-    const { user , userData } = this.props
+    const { user, userData } = this.props
     return (
-      <div className='user-profile-container'>
-        <section className='user-stream'>
-          <header>
-            <h2 className='user-headers' className='user-stream-name'>{user && user}</h2>
-            <h3 className='user-headers'> / Compositions : { userData.compositions.length } / </h3>
-            <h3 className='user-headers'> Member since 2017</h3>
-          </header>
-          <section className='user-stream-audio'>
-            <h2 className='user-headers'> Compositions </h2>
-            {userData.compositions && <div>{this.loadComps()}</div>}
+      <div>
+        <div className='user-profile-container'>
+          <section className='user-stream'>
+
+            <header>
+              <h2 className='user-headers' className='user-stream-name'>{user && user}</h2>
+              <h3 className='user-headers'> / Compositions : {userData.compositions && userData.compositions.length } / </h3>
+              <h3 className='user-headers'> Member since 2017</h3>
+            </header>
+
+            <section className='user-stream-audio'>
+              <h2 className='user-headers'> Compositions </h2>
+              {userData.compositions && <div>{this.loadComps()}</div>}
+            </section>
+
+            <section className='user-sounds'>
+              <h2 className='user-headers'> Sounds</h2>
+              {userData.sounds && <div>{this.loadSounds()}</div>}
+            </section>
           </section>
-          <section className='user-sounds'>
-            <h2 className='user-headers'> Sounds</h2>
-            {userData.sounds && <div>{this.loadSounds()}</div>}
-          </section>
-        </section>
+        </div>
+        <div className='delete-account-section'>
+          <button className='btn delete-account-btn'>Delete Account</button>
+        </div>
       </div>
     )
   }

@@ -36,6 +36,7 @@ const TrackRack = (props) => {
             index={i}
             step={step}
             name={props.name}
+            source={props.source}
             currentStep={props.currentStep}
             toggleStep={props.toggleStep}
             changePitch={props.changePitch}

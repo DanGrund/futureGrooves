@@ -3,7 +3,7 @@
 .header {
   display: flex;
   // grid-template-columns: 25% 75%;
-  // align-content: center;	
+  // align-content: center;
   width: 100vw;
   height: 10vh;
   min-height: 80px;
@@ -15,7 +15,7 @@
 
 .nav {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   flex-wrap: nowrap;
   font-size: 24px;
@@ -39,8 +39,13 @@
 .login-form {
   display: flex;
   flex-direction: row;
-  width: 95%;
+  width: 100%;
   align-items: flex-end;
+  justify-content: space-around;
+
+  .btn-submit {
+    margin-bottom: 10px;
+  }
 }
 
 .not-found-error {
@@ -86,7 +91,7 @@ label {
   font-family: 'Faster One', sans-serif;
   font-size: 36px;
   text-decoration: none;
-  
+
     color: $link-text-color;
 
     &:hover {
@@ -117,7 +122,8 @@ label {
 
 
 
-@media all and (max-width: 1200px) { 
+
+@media all and (max-width: 1200px) {
 
   .nav {
     font-size: 18px;

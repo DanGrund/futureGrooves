@@ -68,6 +68,13 @@ export class Sequencer extends Component {
     }
   }
 
+  componentDidMount() {
+    const { selectedComposition } = this.props.userData
+    if (selectedComposition) {
+      this.setState({ spec: JSON.parse(selectedComposition) })
+    }
+  }
+
   componentWillMount() {
     if(this.props.userData.token) {
       this.fetchUserData()
@@ -76,6 +83,8 @@ export class Sequencer extends Component {
 
   componentWillUnmount() {
     this.loop.stop()
+    this.props.setSelectedComposition(null, null)
+    // this.props.editSound(null, null)
   }
 
   fetchUserData = () => {
@@ -246,7 +255,7 @@ export class Sequencer extends Component {
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
-          {!this.state.playPause && <button className='btn btn-play' onClick={this.playPause.bind(this)}></button>}
+          {!this.state.playPause && <button className='btn-play' onClick={this.playPause.bind(this)}></button>}
           {this.state.playPause && <button className='btn btn-stop' onClick={this.playPause.bind(this)}></button>}
           tempo
           <input
@@ -265,6 +274,7 @@ export class Sequencer extends Component {
           {Object.keys(this.state.spec.trackRacks).map((trackRack, i) =>
             <TrackRack key={i}
                        name={trackRack}
+                       source={this.state.spec.trackRacks[trackRack].sound.source}
                        volume={this.state.spec.trackRacks[trackRack].sound.volume}
                        filter={this.state.spec.trackRacks[trackRack].sound.filter.frequency}
                        steps={this.state.spec.trackRacks[trackRack].steps}
@@ -288,11 +298,9 @@ export class Sequencer extends Component {
                 {loadSoundDropdown()}
               </select>
             </label>
-            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add</button>
+            <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add track</button>
+            <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
           </form>}
-        </div>
-        <div>
-          <button className='btn btn-save' onClick={this.saveComp}>save</button>
         </div>
       </div>
     )

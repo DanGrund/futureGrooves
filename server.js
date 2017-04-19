@@ -141,7 +141,7 @@ app.post('/api/v1/users', (request, response) => {
     database('users').insert(newUser)
     .then(()=> {
       database('users').where('username', username).select()
-        .then((user) => {
+        .then(user => {
           let token = jwt.sign({username: user[0].username, id: user[0].id}, app.get('secretKey'))
           currentUser = {
             id: user[0].id,
@@ -270,25 +270,9 @@ app.get('/api/v1/users/:id/creations', (request, response) => {
 
 //get compositions also, narrow down compositions by complexity
 app.get('/api/v1/compositions', (request, response) => {
-  let complexity = request.query.complexity;
-
   database('compositions').select()
     .then((compositions) => {
-      if(complexity){
-        let complex = compositions.filter((obj)=>{
-          let attributes = JSON.parse(obj.attributes)
-          return attributes.length == complexity;
-        })
-        if(complex.length<1){
-          response.status(404).send({
-            error: 'query did not return any matches'
-          })
-        } else {
-          response.status(200).json(complex)
-        }
-      } else {
         response.status(200).json(compositions);
-      }
     })
     .catch(function(error) {
       response.status(404)
@@ -397,26 +381,17 @@ app.patch('/api/v1/compositions/:id', (request, response) => {
 app.delete('/api/v1/compositions/:id', (request, response) => {
   const { id } = request.params;
 
-  database('compositions').where('id', id).select()
-  .then((composition)=>{
-    if(composition.length<1){
-      response.status(404).send({
-        error: 'ID did not match any existing sounds'
+  database('compositions').where('id', id).del()
+  .then((num) => {
+    if(num > 0) {
+      database('compositions').select()
+      .then(comps => {
+        response.status(200).send(comps)
       })
     } else {
-      database('compositions').where('id', id).delete()
-      .then(()=>{
-        database('compositions').select()
-        .then((compositions)=> {
-          response.status(200).json(compositions)
-        })
-        .catch((error) => {
-          console.error(error)
-        });
-      })
+      response.status(404).send({ error: 'Unable to delete'})
     }
   })
-
 })
 
 //get sounds
@@ -502,23 +477,15 @@ app.patch('/api/v1/sounds/:id', (request, response) => {
 app.delete('/api/v1/sounds/:id', (request, response) => {
   const { id } = request.params;
 
-  database('sounds').where('id', id).select()
-  .then((sound)=>{
-    if(sound.length<1){
-      response.status(404).send({
-        error: 'ID did not match any existing sounds'
+  database('sounds').where('id', id).del()
+  .then((num) => {
+    if(num > 0) {
+      database('sounds').select()
+      .then(sounds => {
+        response.status(200).send(sounds)
       })
     } else {
-      database('sounds').where('id', id).delete()
-        .then(()=> {
-          database('sounds').select()
-          .then((data)=>{
-            response.status(200).json(data)
-          })
-        })
-        .catch((error) => {
-          console.error(error)
-        });
+      response.status(404).send({ error: 'Unable to delete'})
     }
   })
 })
