@@ -209,12 +209,9 @@ export class Sequencer extends Component {
 
   saveComp = () => {
     const {username, selectedComposition, composition_id} = this.props.userData
-    if(username) {
+    if(composition_id) {
       if(selectedComposition){
         this.fetchType('PATCH', composition_id)
-        return
-      } else {
-        this.fetchType('POST')
         return
       }
     } else {
@@ -228,7 +225,7 @@ export class Sequencer extends Component {
       return
     }
     let fType = this.setState(update(this.state, { spec: { compositionName: { $set: compositionName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.userData.id, method, composition_id))
-    this.setState({ savedchanges: true })
+    this.setState({ savedchanges: true, newComp: true })
   }
 
   saveAsNewComposition = () => {
@@ -240,6 +237,14 @@ export class Sequencer extends Component {
 
     const togglePlayPause = () => {
       return this.state.playPause ? 'Pause' : 'Play'
+    }
+
+    const showUpdateComp = () => {
+      const { selectedComposition } = this.props.userData
+      const { newComp } = this.state
+      if (selectedComposition || newComp) {
+        return <button className='btn btn-save' onClick={this.saveComp}>save</button>
+      }
     }
 
     const loadSoundDropdown = () => {
@@ -287,7 +292,7 @@ export class Sequencer extends Component {
           />
           <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span>
           {toggleCompositionName()}
-          <button className='btn btn-save' onClick={this.saveComp}>save</button>
+          {showUpdateComp()}
           <button className='btn btn-save' onClick={this.saveAsNewComposition}>save as</button>
         </div>
 
