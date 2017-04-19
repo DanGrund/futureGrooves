@@ -117,7 +117,7 @@ export class SoundMaker extends Component {
   }
 
   fetchType(method, sound_id = null) {
-    let soundName;
+    let soundName
     method === 'PATCH' ? soundName = this.state.soundName : soundName = this.checkForName()
 
     sound_id === null ? sound_id = this.setID(method, sound_id) : null

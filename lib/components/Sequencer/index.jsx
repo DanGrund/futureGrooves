@@ -12,7 +12,7 @@ import InlineEdit from 'react-edit-inline'
 
 export class Sequencer extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       playPause: false,
       currentStep: 0,
@@ -84,7 +84,6 @@ export class Sequencer extends Component {
   componentWillUnmount() {
     this.loop.stop()
     this.props.setSelectedComposition(null, null)
-    // this.props.editSound(null, null)
   }
 
   fetchUserData = () => {
@@ -150,7 +149,7 @@ export class Sequencer extends Component {
 
   addTrack(newSound) {
     const soundFromDB = this.props.user.sounds.find((sound)=>{
-      const soundValue = JSON.parse(sound.attributes);
+      const soundValue = JSON.parse(sound.attributes)
       if(soundValue.soundName === newSound) {
         return true
       }
@@ -189,13 +188,13 @@ export class Sequencer extends Component {
   }
 
   muteTrack(key) {
-    let newRack = this.state.spec.trackRacks;
-    newRack[key].mute = !newRack[key].mute;
+    let newRack = this.state.spec.trackRacks
+    newRack[key].mute = !newRack[key].mute
     this.setState({ trackRacks: newRack})
   }
 
   soloTrack(key) {
-    let newRack = this.state.spec.trackRacks;
+    let newRack = this.state.spec.trackRacks
     Object.keys(newRack).forEach((rack)=> {
       if (rack !== key) {
         newRack[rack].mute = !newRack[rack].mute
@@ -250,7 +249,7 @@ export class Sequencer extends Component {
     const loadSoundDropdown = () => {
       if(this.props.userData.token) {
         return this.props.user.sounds.map((sound, i) => {
-          const soundValue = JSON.parse(sound.attributes);
+          const soundValue = JSON.parse(sound.attributes)
           return (
             <option value={soundValue.soundName} key={i}>
               {soundValue.soundName}

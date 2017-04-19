@@ -2,11 +2,9 @@ import React from 'react'
 
 export default class Slider extends React.Component {
 
-
   componentWillReceiveProps(nextProps) {
     this.setState({inputDraft: nextProps.value})
   }
-
 
   handleTextInputChange = (e) => {
     this.setState({ inputDraft: e.target.value })

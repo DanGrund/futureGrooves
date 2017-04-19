@@ -1,5 +1,5 @@
-import React from 'react';
-import TrackStep from './TrackStep';
+import React from 'react'
+import TrackStep from './TrackStep'
 import Slider from '../../SoundMaker/Slider'
 
 const TrackRack = (props) => {

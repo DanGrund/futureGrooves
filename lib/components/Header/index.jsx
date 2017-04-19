@@ -23,7 +23,6 @@ export class Header extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    // return nextProps.user !== this.props.user
     return nextProps.activeUser !== this.props.activeUser
   }
 

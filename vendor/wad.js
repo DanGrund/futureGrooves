@@ -235,7 +235,6 @@ var Wad = (function () {
     that.mediaStreamSource = null;
     that.gain = null;
     return getUserMedia({ audio: true, video: false }).then(function (stream) {
-      // console.log('got stream')
       that.mediaStreamSource = context.createMediaStreamSource(stream);
       Wad.micConsent = true
       setUpMic(that, arg);
@@ -250,7 +249,6 @@ var Wad = (function () {
     that.gain.gain.value = valueOrDefault(arg.volume, that.volume);
     that.nodes.push(that.mediaStreamSource);
     that.nodes.push(that.gain);
-    // console.log('that ', arg)
 
     if (that.filter || arg.filter) { createFilters(that, arg); }
 
@@ -351,7 +349,6 @@ var Wad = (function () {
   /** When all the nodes are set up for this Wad, this function plugs them into each other,
   with special handling for nodes with custom interfaces (e.g. reverb, delay). **/
   var plugEmIn = function (that, arg) {
-    // console.log('nodes? ', that.nodes)
     var destination = (arg && arg.destination) || that.destination;
     for (var i = 1; i < that.nodes.length; i++) {
       if (that.nodes[i - 1].interface === 'custom') {
@@ -597,7 +594,6 @@ var Wad = (function () {
         tunaConfig[key] = arg.tuna[key]
       }
     }
-    // console.log('tunaconfig: ', tunaConfig)
     for (var key in tunaConfig) {
       console.log(key)
       var tunaEffect = new Wad.tuna[key](tunaConfig[key])
@@ -730,9 +726,6 @@ var Wad = (function () {
     }
     if (arg.callback) { arg.callback(this); }
 
-    // console.log('Wad: ', this)
-    // console.log(Wad.audioContext)
-    
     return this;
   };
 
@@ -970,7 +963,6 @@ var Wad = (function () {
       if ((correlation > 0.9) && (correlation > lastCorrelation))
         foundGoodCorrelation = true;
       else if (foundGoodCorrelation) {
-        // short-circuit - we found a good correlation, then a bad one, so we'd just be seeing copies from here.
         return sampleRate / best_offset;
       }
       lastCorrelation = correlation;
@@ -980,7 +972,6 @@ var Wad = (function () {
       }
     }
     if (best_correlation > 0.01) {
-      // console.log("f = " + sampleRate/best_offset + "Hz (rms: " + rms + " confidence: " + best_correlation + ")")
       return sampleRate / best_offset;
     }
     return -1;
@@ -1051,7 +1042,7 @@ var Wad = (function () {
 
   /**
       The MIT License (MIT)
-  
+
   Copyright (c) 2014 Chris Wilson
   **/
   Wad.Poly.prototype.updatePitch = function (time) {
@@ -1469,7 +1460,6 @@ var Wad = (function () {
   var midiMap = function (event) {
     console.log(event.receivedTime, event.data);
     if (event.data[0] === 144) { // 144 means the midi message has note data
-      // console.log('note')
       if (event.data[2] === 0) { // noteOn velocity of 0 means this is actually a noteOff message
         console.log('|| stopping note: ', Wad.pitchesArray[event.data[1] - 12]);
         Wad.midiInstrument.stop(Wad.pitchesArray[event.data[1] - 12]);
@@ -1496,7 +1486,6 @@ var Wad = (function () {
 
 
   var onSuccessCallback = function (midiAccess) {
-    // console.log('inputs: ', m.inputs)
 
     Wad.midiInputs = []
     var val = midiAccess.inputs.values();

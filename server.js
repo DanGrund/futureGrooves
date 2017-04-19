@@ -1,18 +1,16 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('./knexfile')[environment];
-const database = require('knex')(configuration);
-// const historyFallback = require('connect-history-api-fallback');
-const jwt = require('jsonwebtoken');
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const fs = require('fs')
+const path = require('path')
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('./knexfile')[environment]
+const database = require('knex')(configuration)
+const jwt = require('jsonwebtoken')
 const jwtconfig = require('dotenv').config().parsed
 
-
-app.use(cors());
+app.use(cors())
 
 // if (!config.CLIENT_SECRET) {
 //   console.log('Make sure you have a CLIENT_SECRET in your .env file')
@@ -22,16 +20,15 @@ if(process.env.NODE_ENV === 'production'){
   app.set('secretKey', process.env.CLIENT_SECRET)
 }
 
-
 if (process.env.NODE_ENV === 'development') {
   app.set( 'secretKey', jwtconfig.CLIENT_SECRET)
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const config = require('./webpack.config.js');
-  const compiler = webpack(config);
+  const webpack = require('webpack')
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
+  const config = require('./webpack.config.js')
+  const compiler = webpack(config)
 
-  app.use(webpackHotMiddleware(compiler));
+  app.use(webpackHotMiddleware(compiler))
   app.use(webpackDevMiddleware(compiler, {
     publicPath: '/',
     stats: {
@@ -40,21 +37,18 @@ if (process.env.NODE_ENV === 'development') {
     hot: true,
     inline: true,
     noInfo: true,
-  }));
-  // app.use(historyFallback());
+  }))
 }
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 app.use(express.static(path.join(__dirname, "build")))
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('port', process.env.PORT || 3000);
-
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.set('port', process.env.PORT || 3000)
 
 const checkAuth = (request, response, next) => {
   const token = request.body.token ||
@@ -70,15 +64,15 @@ const checkAuth = (request, response, next) => {
           message: 'Invalid authorization token.'
         })
       } else {
-        request.decoded = decoded;
-        next();
+        request.decoded = decoded
+        next()
       }
     })
   } else {
     return response.status(403).send({
       success: false,
       message: 'You must be authorized to hit this endpoint'
-    });
+    })
   }
 }
 
@@ -86,19 +80,19 @@ const checkAuth = (request, response, next) => {
 app.get('/api/v1/users', (request, response) => {
   database('users').select()
     .then((users) => {
-      response.status(200).json(users);
+      response.status(200).json(users)
     })
     .catch(function(error) {
       console.error('somethings wrong with db')
       console.log(error)
       response.status(404)
-    });
+    })
 })
 
 //get one user by ID
 app.get('/api/v1/users/:id', (request, response) => {
-  const { id } = request.params;
-  const userFiles = [];
+  const { id } = request.params
+  const userFiles = []
 
   database('users').where('id', id).select()
   .then((user) => {
@@ -148,11 +142,11 @@ app.post('/api/v1/users', (request, response) => {
             username: user[0].username,
             token: token
           }
-          response.status(200).json(currentUser);
+          response.status(200).json(currentUser)
         })
         .catch((error) => {
           response.status(422)
-        });
+        })
     })
     .catch(err => response.send({ error: err.constraint }))
   }
@@ -183,7 +177,7 @@ app.post('/api/v1/user/login', (request, response) => {
 
 //patch a user
 app.patch('/api/v1/users/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
   const { username, email } = request.body
 
   database('users').where('id', id).select().update({ username, email })
@@ -195,21 +189,19 @@ app.patch('/api/v1/users/:id', (request, response) => {
               error: 'ID did not match any existing users'
             })
           } else {
-            response.status(200).json(user);
+            response.status(200).json(user)
           }
         })
     })
     .catch((error) => {
       response.status(422)
       console.error(error)
-    });
+    })
 })
 
 //delete a user
-//not likely using this - will set delete toggle to true instead
-
 app.delete('/api/v1/users/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
 
   database('users').where('id', id).update('deleted', true )
   .then((e) => {
@@ -229,14 +221,14 @@ app.delete('/api/v1/users/:id', (request, response) => {
 
 //get request that return total number of a users composititons and sounds
 app.get('/api/v1/users/:id/creations', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
   let totalCompositions = 0
   let totalSounds = 0
   let userName
   database('compositions').where('user_id', id).select()
   .then((compositions) => {
     if(compositions.length) {
-      totalCompositions = compositions.length;
+      totalCompositions = compositions.length
     }
   })
   .then(()=>{
@@ -255,7 +247,7 @@ app.get('/api/v1/users/:id/creations', (request, response) => {
           error: 'ID did not match any existing users'
         })
       } else {
-        userName = user[0].username;
+        userName = user[0].username
         response.send(`${userName} has created ${totalCompositions} compositions and ${totalSounds} sounds!`)
       }
     })
@@ -272,19 +264,18 @@ app.get('/api/v1/users/:id/creations', (request, response) => {
 app.get('/api/v1/compositions', (request, response) => {
   database('compositions').select()
     .then((compositions) => {
-        response.status(200).json(compositions);
+        response.status(200).json(compositions)
     })
     .catch(function(error) {
       response.status(404)
       console.error('somethings wrong with db')
       console.log(error)
-    });
+    })
 })
 
 //get one composition by ID
 app.get('/api/v1/compositions/:id', (request, response) => {
-  const { id } = request.params;
-  console.log('id ', id);
+  const { id } = request.params
   database('compositions').where('id', id).select()
     .then((composition) => {
       if(composition.length<1){
@@ -304,7 +295,7 @@ app.get('/api/v1/compositions/:id', (request, response) => {
 
 //get compositions by User ID
 app.get('/api/v1/userCompositions/:userID', checkAuth, (request, response) => {
-  const { userID } = request.params;
+  const { userID } = request.params
   database('compositions').where('user_id', userID).select()
     .then(compositions => {
       response.status(200).send(compositions)
@@ -318,7 +309,7 @@ app.get('/api/v1/userCompositions/:userID', checkAuth, (request, response) => {
 
 //get sounds by User ID
 app.get('/api/v1/userSounds/:userID', checkAuth, (request, response) => {
-  const { userID } = request.params;
+  const { userID } = request.params
 
   database('sounds').where('user_id', userID).select()
     .then(sounds => {
@@ -343,19 +334,19 @@ app.post('/api/v1/compositions', (request, response) => {
     .then(()=> {
       database('compositions').select()
       .then((compositions) => {
-        response.status(200).json(compositions);
+        response.status(200).json(compositions)
       })
       .catch((error) => {
         response.status(422)
         console.error(error)
-      });
+      })
     })
   }
 })
 
 //patch a composition
 app.patch('/api/v1/compositions/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
   const { attributes } = request.body
 
   database('compositions').where('id', id).update({ attributes })
@@ -374,12 +365,12 @@ app.patch('/api/v1/compositions/:id', (request, response) => {
     .catch((error) => {
       response.status(404)
       console.error(error)
-    });
+    })
 })
 
 //delete a composition
 app.delete('/api/v1/compositions/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
 
   database('compositions').where('id', id).del()
   .then((num) => {
@@ -398,18 +389,18 @@ app.delete('/api/v1/compositions/:id', (request, response) => {
 app.get('/api/v1/sounds', (request, response) => {
   database('sounds').select()
     .then((sounds) => {
-      response.status(200).json(sounds);
+      response.status(200).json(sounds)
     })
     .catch(function(error) {
       response.status(404)
       console.error('somethings wrong with db')
       console.log(error)
-    });
+    })
 })
 
 //get one sound by ID
 app.get('/api/v1/sounds/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
   database('sounds').where('id', id).select()
     .then((sound) => {
       if(sound.length<1){
@@ -439,19 +430,19 @@ app.post('/api/v1/sounds', (request, response) => {
     .then(()=> {
       database('sounds').select()
         .then((sounds) => {
-          response.status(200).json(sounds);
+          response.status(200).json(sounds)
         })
         .catch((error) => {
           response.status(404)
           console.error(error)
-        });
+        })
     })
   }
 })
 
 //patch a sound
 app.patch('/api/v1/sounds/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
   const { attributes } = request.body
 
   database('sounds').where('id', id).update({ attributes })
@@ -470,12 +461,12 @@ app.patch('/api/v1/sounds/:id', (request, response) => {
     .catch((error) => {
       response.status(404)
       console.error(error)
-    });
+    })
 })
 
 //delete a sound
 app.delete('/api/v1/sounds/:id', (request, response) => {
-  const { id } = request.params;
+  const { id } = request.params
 
   database('sounds').where('id', id).del()
   .then((num) => {
@@ -517,4 +508,4 @@ if(!module.parent) {
   })
 }
 
-module.exports = app;
+module.exports = app

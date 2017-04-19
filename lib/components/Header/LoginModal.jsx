@@ -3,7 +3,7 @@ import onClickOutside from 'react-onclickoutside';
 
 class Login extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       email: '',
       password: ''
@@ -11,7 +11,7 @@ class Login extends Component {
   }
 
   loginUser(event) {
-    const { email, password } = this.state;
+    const { email, password } = this.state
     this.props.login({ email, password })
   }
 
