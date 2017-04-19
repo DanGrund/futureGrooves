@@ -117,7 +117,7 @@ export class IndividualSong extends Component {
   render() {
 
     const displayComposition = () => {
-      if(this.props.user.compositions.length > 0) {
+      if(this.props.user.compositions) {
         return (
           <div className="individual-song">
             <h3>{this.props.name.substring(0,7)}</h3>
