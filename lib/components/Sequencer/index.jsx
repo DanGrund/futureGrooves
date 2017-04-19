@@ -18,6 +18,7 @@ export class Sequencer extends Component {
       currentStep: 0,
       newSound: '',
       spec: {
+        compositionName: 'untitled',
         tempo: 160,
         trackRacks: {
           snare:{
@@ -220,6 +221,9 @@ export class Sequencer extends Component {
 
   fetchType(method, composition_id = null) {
     let compositionName = this.state.compositionName || prompt('What do you want to call your song?')
+    if (!compositionName) {
+      return
+    }
     let fType = this.setState(update(this.state, { spec: { compositionName: { $set: compositionName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.userData.id, method, composition_id))
     this.setState({ savedchanges: true, newComp: true })
   }

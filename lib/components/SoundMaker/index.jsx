@@ -15,7 +15,7 @@ export class SoundMaker extends Component {
     this.round = this.round.bind(this)
     this.state = {
       savedchanges: true,
-      soundName: '',
+      soundName: 'untitled',
       spec: {
         source: 'sine',
         volume: 0.5,
