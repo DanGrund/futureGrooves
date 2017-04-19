@@ -9,7 +9,7 @@ import Slider from '../SoundMaker/Slider'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import SequencerContainer from '../../containers/SequencerContainer'
 import UserContainer from '../../containers/UserContainer'
-
+import InlineEdit from 'react-edit-inline'
 
 export class Sequencer extends Component {
   constructor() {
@@ -247,6 +247,21 @@ export class Sequencer extends Component {
       }
     }
 
+    const toggleCompositionName = () => {
+      return this.state.spec.compositionName
+      ?
+      <div className='composition-name'>
+        <InlineEdit text={this.state.spec.compositionName}
+                    paramName='editedName'
+                    change={(e) => this.setState({ compositionName: e.editedName })} />
+      </div>
+      :
+      <div className='composition-name'>
+        <input placeholder='Name This Composition'
+               onChange={(e) => {this.setState({ compositionName: e.target.value })}}/>
+      </div>
+    }
+
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
@@ -294,6 +309,7 @@ export class Sequencer extends Component {
               </select>
             </label>
             <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add track</button>
+            {toggleCompositionName()}
             <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
           </form>}
         </div>
