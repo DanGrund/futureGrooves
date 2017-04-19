@@ -14,16 +14,13 @@ export default class Slider extends React.Component {
 
   handleKeyUp = (e) => {
     if (e.keyCode === 13 || e.type === 'blur') {
-      this.setState({ inputDraft: e.target.value })
+      this.handleTextInputChange(e)
       if (e.target.value > this.props.max) {
         e.target.value = this.props.max
       } else if (e.target.value < this.props.min || e.target.value === '') {
         e.target.value = this.props.min
       }
-      if (e.target.value !== '') {
-        this.props.handleChange(e)
-      }
-      this.handleTextInputChange(e)
+      this.props.handleChange(e)
     }
   }
 
