@@ -50,13 +50,13 @@ export class SoundMaker extends Component {
         vibrato: {
           shape: 'sine',
           magnitude: 0,
-          speed: 4,
+          speed: 0,
           attack: 0,
         },
         tremolo: {
           shape: 'sine',
           magnitude: 0,
-          speed: 4,
+          speed: 0,
           attack: 0,
         },
       },
@@ -94,22 +94,20 @@ export class SoundMaker extends Component {
   updateSound = () => {
     const {username, selectedSound} = this.props.userData
     const { editsound } = this.props.sound
-    if(selectedSound){
+    if (selectedSound) {
       this.fetchType('PATCH', this.props.user.sound_id)
       return
     }
-    if(editsound) {
+    if (editsound) {
       this.fetchType('PATCH', this.state.id)
-      return
     } else {
       this.fetchType('POST')
-      return
     }
   }
 
   saveNewSound = () => {
     const {username, selectedSound} = this.props.userData
-      return username ? this.fetchType('POST') : alert('Please Sign In')
+    return username ? this.fetchType('POST') : alert('Please Sign In')
   }
 
   checkForName = () => {
@@ -124,7 +122,9 @@ export class SoundMaker extends Component {
   }
 
   loadSound = (id) => {
+    this.setState({ savedchanges: true })
     this.props.loadSound(id)
+
   }
 
   componentWillReceiveProps(nextProps) {
