@@ -223,7 +223,7 @@ export class Sequencer extends Component {
   }
 
   fetchType(method, composition_id = null) {
-    let compositionName = prompt('What do you want to call your song?')
+    let compositionName = this.state.compositionName || prompt('What do you want to call your song?')
     let fType = this.setState(update(this.state, { spec: { compositionName: { $set: compositionName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.userData.id, method, composition_id))
     this.setState({ savedchanges: true })
   }
@@ -277,7 +277,9 @@ export class Sequencer extends Component {
             max={400}
             step={1}
           />
-          <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
+          <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span>
+          {toggleCompositionName()}
+          <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
         </div>
 
         <div id='drum-racks'>
@@ -309,8 +311,6 @@ export class Sequencer extends Component {
               </select>
             </label>
             <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add track</button>
-            {toggleCompositionName()}
-            <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
           </form>}
         </div>
       </div>
