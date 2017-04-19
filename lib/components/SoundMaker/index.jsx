@@ -418,7 +418,7 @@ export class SoundMaker extends Component {
               'CementBlocks1',
               'CementBlocks2',
               'ChateaudeLogneOutside',
-              'ConcLongEchoHall',
+              'ConicLongEchoHall',
               'DeepSpace',
               'DerlonSanctuary',
               'DirectCabinetN1',
