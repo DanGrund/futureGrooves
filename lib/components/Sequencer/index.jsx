@@ -208,28 +208,23 @@ export class Sequencer extends Component {
   }
 
   saveComp = () => {
-    const {username, selectedSound} = this.props.user
-    const { editsound } = this.props.sound
+    const {username, selectedComposition, composition_id} = this.props.userData
     if(username) {
-    if(selectedSound){
-      this.fetchType('PATCH', this.props.user.sound_id)
-      return
-    }
-    if(editsound) {
-      this.fetchType('PATCH', this.state.id)
-      return
+      if(selectedComposition){
+        this.fetchType('PATCH', composition_id)
+        return
+      } else {
+        this.fetchType('POST')
+        return
+      }
     } else {
-      this.fetchType('POST')
-      return
+      alert('Please Sign In')
     }
-  } else {
-    alert('Please Sign In')
   }
-}
 
-  fetchType(method, sound_id = null) {
-    let soundName = prompt('What do you want to call your sound')
-    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.user.id, method, sound_id))
+  fetchType(method, composition_id = null) {
+    let compositionName = prompt('What do you want to call your song?')
+    let fType = this.setState(update(this.state, { spec: { compositionName: { $set: compositionName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.userData.id, method, composition_id))
     this.setState({ savedchanges: true })
   }
 
