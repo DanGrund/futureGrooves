@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchAllCompositions, deleteComposition } from '../actions'
+import { fetchAllCompositions, deleteComposition, fetchUserData } from '../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchAllCompositions,
+  fetchUserData,
   deleteComposition
 }
 
