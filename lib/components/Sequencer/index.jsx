@@ -228,6 +228,11 @@ export class Sequencer extends Component {
     this.setState({ savedchanges: true })
   }
 
+  saveAsNewComposition = () => {
+    const {username, selectedComposition} = this.props.userData
+      return username ? this.fetchType('POST') : alert('Please Sign In')
+  }
+
   render() {
 
     const togglePlayPause = () => {
@@ -279,7 +284,8 @@ export class Sequencer extends Component {
           />
           <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span>
           {toggleCompositionName()}
-          <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
+          <button className='btn btn-save' onClick={this.saveComp}>save</button>
+          <button className='btn btn-save' onClick={this.saveAsNewComposition}>save as</button>
         </div>
 
         <div id='drum-racks'>
