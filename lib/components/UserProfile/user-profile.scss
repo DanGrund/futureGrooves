@@ -1,28 +1,28 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 .user-profile-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   justify-content: center;
 }
 
-.user-sounds {
-  padding: 20px;
-  max-width: 600px;
-}
-
-.user-stream-audio {
-  display: inline-block;
-  width: 45%;
+#user-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-stream {
-  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
-.user-stream h2, h3 {
-  display: inline-block;
-  margin: 10px;
+.user-stream-name{
+  margin-top: 6px;
 }
 
 .user-headers {
@@ -30,15 +30,7 @@
 }
 
 .sound-container {
-  display: grid;
-  grid-template-columns: 180px 120px 50px 50px;
-  grid-gap: 10px 15px;
-  align-items: center;
-  justify-content: center;
-
-  .btn {
-    width: 50px;
-  }
+  @include comp-sound-row-style
 }
 
 .sound-hr {
@@ -48,22 +40,9 @@
 }
 
 .sound-title {
-  // font-family: 'Concert One', sans-serif;
+  font-family: 'Concert One', sans-serif;
   font-family: monospace;
-  font-size: 20px;
-  margin-top: 5px;
-}
-
-.delete-account-section {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-}
-
-.delete-account-btn {
-  background-color: $mute-btn-bg-color !important;
-}
+ }
 
 .composition-controls {
   display: flex;
