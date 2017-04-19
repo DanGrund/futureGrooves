@@ -9,7 +9,7 @@ import Slider from '../SoundMaker/Slider'
 import SoundMakerContainer from '../../containers/SoundMakerContainer'
 import SequencerContainer from '../../containers/SequencerContainer'
 import UserContainer from '../../containers/UserContainer'
-
+import InlineEdit from 'react-edit-inline'
 
 export class Sequencer extends Component {
   constructor() {
@@ -208,29 +208,29 @@ export class Sequencer extends Component {
   }
 
   saveComp = () => {
-    const {username, selectedSound} = this.props.user
-    const { editsound } = this.props.sound
+    const {username, selectedComposition, composition_id} = this.props.userData
     if(username) {
-    if(selectedSound){
-      this.fetchType('PATCH', this.props.user.sound_id)
-      return
-    }
-    if(editsound) {
-      this.fetchType('PATCH', this.state.id)
-      return
+      if(selectedComposition){
+        this.fetchType('PATCH', composition_id)
+        return
+      } else {
+        this.fetchType('POST')
+        return
+      }
     } else {
-      this.fetchType('POST')
-      return
+      alert('Please Sign In')
     }
-  } else {
-    alert('Please Sign In')
   }
-}
 
-  fetchType(method, sound_id = null) {
-    let soundName = prompt('What do you want to call your sound')
-    let fType = this.setState(update(this.state, { spec: { soundName: { $set: soundName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.user.id, method, sound_id))
+  fetchType(method, composition_id = null) {
+    let compositionName = this.state.compositionName || prompt('What do you want to call your song?')
+    let fType = this.setState(update(this.state, { spec: { compositionName: { $set: compositionName } } }), () => this.props.saveComp(JSON.stringify(this.state.spec), this.props.userData.id, method, composition_id))
     this.setState({ savedchanges: true })
+  }
+
+  saveAsNewComposition = () => {
+    const {username, selectedComposition} = this.props.userData
+      return username ? this.fetchType('POST') : alert('Please Sign In')
   }
 
   render() {
@@ -252,6 +252,21 @@ export class Sequencer extends Component {
       }
     }
 
+    const toggleCompositionName = () => {
+      return this.state.spec.compositionName
+      ?
+      <div className='composition-name'>
+        <InlineEdit text={this.state.spec.compositionName}
+                    paramName='editedName'
+                    change={(e) => this.setState({ compositionName: e.editedName })} />
+      </div>
+      :
+      <div className='composition-name'>
+        <input placeholder='Name This Composition'
+               onChange={(e) => {this.setState({ compositionName: e.target.value })}}/>
+      </div>
+    }
+
     return(
       <div id='composition-maker'>
         <div id='play-controls'>
@@ -267,7 +282,10 @@ export class Sequencer extends Component {
             max={400}
             step={1}
           />
-          <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span> (this assumes every fourth pad is a beat)
+          <span>≈{Math.round((60/this.state.spec.tempo)*240)}BPM</span>
+          {toggleCompositionName()}
+          <button className='btn btn-save' onClick={this.saveComp}>save</button>
+          <button className='btn btn-save' onClick={this.saveAsNewComposition}>save as</button>
         </div>
 
         <div id='drum-racks'>
@@ -299,7 +317,6 @@ export class Sequencer extends Component {
               </select>
             </label>
             <button className='btn btn-add' onClick={(e) => {e.preventDefault(); this.addTrack(this.state.newSound)}}>add track</button>
-            <button className='btn btn-save' onClick={this.saveComp}>save sequence</button>
           </form>}
         </div>
       </div>

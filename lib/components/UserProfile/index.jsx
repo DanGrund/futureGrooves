@@ -41,7 +41,7 @@ export class UserProfile extends Component {
         return (
           <IndividualSong className="btn-play"
             key={i}
-            name={attributes.soundName}
+            name={attributes.compositionName}
             trackRacks={attributes.trackRacks}
             tempo={attributes.tempo}
             handleDelete={() => this.props.deleteComposition(comp.id)}
