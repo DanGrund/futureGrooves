@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import UserContainer from '../../containers/UserContainer'
 import './user-profile.scss'
 import IndividualSong from '../IndividualSong/IndividualSong'
@@ -80,4 +80,4 @@ export class UserProfile extends Component {
   }
 }
 
-export default UserContainer(UserProfile);
+export default UserContainer(UserProfile)

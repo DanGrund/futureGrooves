@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const Logout = ({ location, activeUser, handleLogout }) => {
@@ -14,4 +14,4 @@ const Logout = ({ location, activeUser, handleLogout }) => {
   )
 }
 
-export default Logout;
+export default Logout
