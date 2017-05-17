@@ -38,9 +38,9 @@ export class Home extends Component {
         <h1>FutureGrooves Stream</h1>
         {data && <div>{this.loadComps()}</div>}
       </div>
-      <div className="future-groove-gif" >
+      {/* <div className="future-groove-gif" >
         <img src="http://rs233.pbsrc.com/albums/ee50/manicpanicd/Pixels/wackywavinginflatablearmfailingtube.gif~c200" />
-      </div>
+      </div> */}
     </div>
     )
   }
